@@ -1,0 +1,63 @@
+{
+  "id": "day01",
+  "version": "1.0.0",
+  "day": 1,
+  "week": 1,
+  "track": "react-interview",
+  "title": "Your First React Application",
+  "subtitle": "Modern JavaScript, TypeScript foundations, and the React mental model",
+  "mission": "Build your first React application and understand how React works.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 3,
+  "difficulty": "beginner",
+  "tags": ["react", "javascript", "typescript", "vite", "jsx", "components"],
+  "topics": {
+    "javascript": [
+      "let vs const",
+      "arrow functions",
+      "template literals",
+      "import / export",
+      "destructuring",
+      "modules"
+    ],
+    "typescript": [
+      "why TypeScript",
+      "installing TypeScript",
+      "basic types",
+      "type inference"
+    ],
+    "react": [
+      "what is React",
+      "why React",
+      "virtual DOM introduction",
+      "JSX",
+      "React components",
+      "functional components",
+      "project structure",
+      "Vite",
+      "React Developer Tools"
+    ]
+  },
+  "prerequisites": [],
+  "expectedOutcome": [
+    "Create a React project with Vite and TypeScript",
+    "Create reusable functional components with clear props",
+    "Explain JSX and how it differs from HTML",
+    "Explain why React exists and what problem it solves",
+    "Structure a small project with separated components",
+    "Debug common Day 1 mistakes: JSX syntax, missing return, wrong imports"
+  ],
+  "definitionOfDone": [
+    "Landing page project is complete with Hero, Navbar, Features, and Footer",
+    "Layout is responsive on mobile and desktop",
+    "Components are separated into their own files",
+    "Code is pushed to Git",
+    "Quiz is completed with passing score",
+    "Interview questions are answered in writing or out loud"
+  ],
+  "tomorrowPreview": {
+    "day": 2,
+    "title": "Professional Login Page",
+    "summary": "Tomorrow you will manage component state with useState, handle forms as controlled inputs, and build a production-style login page with validation, loading, and error states."
+  }
+}

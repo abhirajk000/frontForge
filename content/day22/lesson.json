@@ -1,0 +1,283 @@
+{
+  "id": "day22-lesson",
+  "metaId": "day22",
+  "title": "Day 22 — Machine Coding Interview",
+  "summary": "Interview Week begins: 15-minute revision sprint, 90-minute Kanban Board machine coding, six debugging fixes, structured code review, and 20 interview questions — no new theory.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Week 4 is Interview Week. You have built weather dashboards, movie search, shopping carts, theme systems, Redux todos, RTK Query products, auth flows, and admin dashboards. Today you prove you can do it cold — under a timer, with an interviewer watching, explaining every decision. No new React concepts. Only review, build, debug, review code, and answer questions like your offer depends on it."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Interview rules",
+      "content": "Set a 90-minute timer for machine coding. Narrate your thinking out loud. When stuck, state what you know and what you would look up in official docs. Do not introduce concepts from outside Weeks 1–3. Today is practice, not learning."
+    },
+    {
+      "type": "heading",
+      "id": "js-review",
+      "level": 2,
+      "text": "JavaScript Review — 5 Minutes Each"
+    },
+    {
+      "type": "table",
+      "headers": ["Topic", "Interview one-liner", "Kanban connection"],
+      "rows": [
+        ["Arrays", "map/filter/reduce return new arrays — never mutate in Redux or React state", "Filter tasks per column; map to TaskCard props"],
+        ["Objects", "Spread copies shallowly; nested updates need nested spread", "Update task status: { ...task, status: 'done' }"],
+        ["Closures", "Inner functions remember outer variables — hooks and debounce depend on this", "Debounce search filter; watch stale closures in effects"],
+        ["Async", "async/await is syntactic sugar over Promises; always try/catch fetch", "fetchTasks on mount; handle 404 and network errors"],
+        ["Event Loop", "Microtasks before macrotasks; explains Promise.then vs setTimeout order", "setTimeout debounce; understand why state updates batch"],
+        ["Debounce", "Wait for pause before firing — reduces API calls on search", "Optional bonus: filter tasks by title with debounced input"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "If you blank on closures",
+      "content": "Say: a function that remembers the environment where it was created. Example: debounce timer id lives in closure. Move on — do not ramble."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react-review",
+      "level": 2,
+      "text": "React Review — Mental Checklist"
+    },
+    {
+      "type": "checklist",
+      "title": "Before you code, confirm you can explain each",
+      "items": [
+        { "id": "rev-components", "text": "Components — functional, single responsibility, composition over inheritance" },
+        { "id": "rev-props", "text": "Props — data down, callbacks up, never mutate props" },
+        { "id": "rev-state", "text": "State — useState for local, lift when siblings need same data" },
+        { "id": "rev-effect", "text": "useEffect — external sync only; correct deps; cleanup for subscriptions" },
+        { "id": "rev-context", "text": "Context — global low-frequency state; memoize value; custom hooks" },
+        { "id": "rev-router", "text": "Router — Route, Link, useParams, Navigate, protected routes" },
+        { "id": "rev-redux", "text": "Redux — slice, actions, selectors, immutable updates via RTK" },
+        { "id": "rev-rtk-query", "text": "RTK Query — useGetTasksQuery, cache tags, mutations with invalidation" },
+        { "id": "rev-perf", "text": "Performance — profile first; memo, useMemo, useCallback where measured" }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "ts-review",
+      "level": 2,
+      "text": "TypeScript Review — Machine Coding Essentials"
+    },
+    {
+      "type": "paragraph",
+      "content": "Interviewers expect typed props and API models even under time pressure. Spend two minutes defining types before JSX."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/kanban.ts",
+      "code": "export type TaskStatus = 'todo' | 'in_progress' | 'done';\n\nexport interface Task {\n  id: string;\n  title: string;\n  status: TaskStatus;\n}\n\nexport interface TaskCardProps {\n  task: Task;\n  onMove: (id: string, status: TaskStatus) => void;\n  onDelete: (id: string) => void;\n}"
+    },
+    {
+      "type": "note",
+      "title": "Props typing rule",
+      "content": "Every component gets an interface. No any. If API shape differs from UI shape, map explicitly — do not cast blindly."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "machine-coding",
+      "level": 2,
+      "text": "Machine Coding Challenge — Kanban Board"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your assigned project today (randomly selected from the interview pool): Kanban Board. Time limit: 90 minutes. Requirements: responsive, TypeScript, API integration, clean architecture, loading, error, and empty states."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Interviewer script — read aloud before starting",
+      "content": "Build a Kanban board with three columns: To Do, In Progress, Done. Fetch initial tasks from an API. User can add tasks, move between columns, and delete. Handle loading, error, and empty states. TypeScript required. You have 90 minutes. Talk me through your approach."
+    },
+    {
+      "type": "checklist",
+      "title": "90-minute timeline (suggested)",
+      "items": [
+        { "id": "t-0-10", "text": "0–10 min: Clarify scope, define types, scaffold folders, static column layout" },
+        { "id": "t-10-30", "text": "10–30 min: Local state — add, move, delete tasks with immutable updates" },
+        { "id": "t-30-50", "text": "30–50 min: API fetch, loading skeleton, error + retry, empty states" },
+        { "id": "t-50-70", "text": "50–70 min: Responsive polish, shared TaskCard component, keyboard basics" },
+        { "id": "t-70-90", "text": "70–90 min: Self-test flows, fix bugs, prepare 60-second architecture explanation" }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging Challenge — Fix Six Bugs"
+    },
+    {
+      "type": "paragraph",
+      "content": "After machine coding, open the provided buggy Kanban starter (or audit your own submission). Find and fix each bug. Document root cause in one sentence per bug — interviewers ask why, not just what you changed."
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-infinite",
+          "title": "Bug 1 — Infinite Rendering",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: app freezes. Look for useEffect without deps that sets state, or setState directly in component body. Fix: dependency array, guard clause, or move logic to event handler."
+            }
+          ]
+        },
+        {
+          "id": "dbg-mutation",
+          "title": "Bug 2 — State Mutation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: UI stale after move. Look for .push(), direct array index assignment, or mutating object inside state. Fix: map/filter/spread returning new references."
+            }
+          ]
+        },
+        {
+          "id": "dbg-deps",
+          "title": "Bug 3 — Missing Dependency",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: stale data when filter changes. Look for empty [] when effect uses props or state. Fix: add deps or extract stable callback with useCallback."
+            }
+          ]
+        },
+        {
+          "id": "dbg-key",
+          "title": "Bug 4 — Wrong Key",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: wrong task deleted. Look for key={index}. Fix: key={task.id} with stable unique ids."
+            }
+          ]
+        },
+        {
+          "id": "dbg-api",
+          "title": "Bug 5 — API Failure",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: crash on 500. Look for missing try/catch and unchecked response.ok. Fix: error state + retry button."
+            }
+          ]
+        },
+        {
+          "id": "dbg-routing",
+          "title": "Bug 6 — Routing Bug",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: task detail page blank. Look for path mismatch between Route and Link, untyped useParams, missing NotFound. Fix: align paths, guard undefined params."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "code-review",
+      "level": 2,
+      "text": "Code Review — Review Your Own Submission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pretend you are the senior engineer reviewing a junior's PR. Score yourself honestly on each axis. Write one improvement per axis — this is exactly Round 4 material on Day 24."
+    },
+    {
+      "type": "table",
+      "headers": ["Axis", "Ask yourself", "Red flag"],
+      "rows": [
+        ["Folder Structure", "Can I find api, types, components in under 10 seconds?", "Everything in App.tsx"],
+        ["Naming", "Do TaskCard, useTasks, fetchTasks read clearly?", "data, handleClick, Component1"],
+        ["Performance", "Any unnecessary re-renders in Profiler?", "memo on every component blindly"],
+        ["Accessibility", "Can I tab through add, move, delete?", "div onClick with no keyboard support"],
+        ["Reusability", "Is TaskCard shared across three columns?", "Copy-pasted JSX three times"]
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Code review output required",
+      "content": "Write 5 bullet points: one strength, four improvements. Bring this to Day 23 production refactor."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Questions — 20 Total"
+    },
+    {
+      "type": "paragraph",
+      "content": "Block 30–60 minutes. Answer all 20 questions out loud. Record yourself if possible — ums, pauses, and circular answers are fixable only if you hear them. Categories: JavaScript, React, TypeScript, Architecture, Performance."
+    },
+    {
+      "type": "quote",
+      "content": "I don't need the perfect answer. I need to see how you think when you don't know.",
+      "attribution": "Typical senior interviewer"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-kanban", "text": "Kanban Board built in 90-minute time box" },
+        { "id": "done-debug", "text": "Six debugging bugs fixed with documented root cause" },
+        { "id": "done-review", "text": "Self code review written — 5 bullets" },
+        { "id": "done-interview", "text": "20 interview questions answered" },
+        { "id": "done-quiz", "text": "Quiz passed" },
+        { "id": "done-git", "text": "Git push" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

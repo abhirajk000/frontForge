@@ -1,0 +1,69 @@
+{
+  "id": "day13-challenge",
+  "metaId": "day13",
+  "title": "Build User Profile & Dynamic Routing",
+  "mission": "Build User Profile & Dynamic Routing.",
+  "description": "Create dynamic user profile routes driven by URL parameters, with safe data access and a Not Found fallback — standard pattern for any route-driven React app.",
+  "estimatedMinutes": 210,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Dynamic route /users/:userId in React Router",
+    "User list page with Link to each profile",
+    "Profile page reads userId from useParams",
+    "Fetch user details by ID from JSONPlaceholder or mock API",
+    "TypeScript types for route params and User model",
+    "useNavigate for programmatic back navigation",
+    "Optional chaining and nullish coalescing for missing profile fields",
+    "Not Found page or inline UI for invalid userId",
+    "Loading and error states on profile fetch",
+    "Cart from Day 12 still accessible via Context on profile route"
+  ],
+  "acceptanceCriteria": [
+    "Navigating to /users/1 shows user 1 profile details",
+    "Navigating to /users/99999 shows Not Found UI",
+    "Direct URL paste loads correct profile (deep linking works)",
+    "Missing avatar field shows fallback — no runtime crash",
+    "Browser back button returns to user list",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Route: { path: 'users/:userId', element: <UserProfilePage /> }",
+    "const { userId } = useParams<{ userId: string }>();",
+    "Parse userId to number; validate before fetch",
+    "404 from API maps to Not Found component",
+    "Reuse optional chaining patterns from Day 08 weather card"
+  ],
+  "bonus": {
+    "title": "Routing polish",
+    "description": "Optional enhancements for portfolio reviews.",
+    "requirements": [
+      "Breadcrumb: Home > Users > John Doe",
+      "Active link styling on navigation",
+      "Redirect /users to user list index page"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-params",
+      "title": "Wrong route params",
+      "symptom": "Profile always shows same user or undefined userId",
+      "cause": "Hardcoded ID instead of useParams; wrong param name in route vs hook",
+      "fix": "Match :userId in route to useParams().userId exactly"
+    },
+    {
+      "id": "dbg-navigation",
+      "title": "Navigation bugs",
+      "symptom": "Link goes to wrong route or full page reload",
+      "cause": "Using <a href> instead of React Router Link",
+      "fix": "Use Link or useNavigate for SPA navigation without reload"
+    },
+    {
+      "id": "dbg-crash",
+      "title": "Profile crash on missing field",
+      "symptom": "White screen when bio or avatar is null",
+      "cause": "Direct property access user.avatar.url without optional chaining",
+      "fix": "user?.avatar ?? defaultAvatar; user?.bio ?? 'No bio available'"
+    }
+  ]
+}

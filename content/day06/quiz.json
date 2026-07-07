@@ -1,0 +1,141 @@
+{
+  "id": "day06-quiz",
+  "metaId": "day06",
+  "title": "Day 06 Quiz — Custom Hooks, Debounce, and Layout",
+  "description": "Verify you understand custom hooks, debounce, responsive layout, and composition before Day 07 machine coding.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "What makes a function a custom hook in React?",
+      "options": [
+        { "id": "a", "text": "It returns JSX" },
+        { "id": "b", "text": "Its name starts with use and it may call other hooks" },
+        { "id": "c", "text": "It must be in node_modules" },
+        { "id": "d", "text": "It replaces useState entirely" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Custom hooks are functions named useSomething that compose built-in hooks. Rules of Hooks apply — only call from components or other hooks.",
+      "difficulty": "easy",
+      "tags": ["react", "custom-hooks"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "Debounce delays invoking a function until the user stops triggering it for a specified wait period.",
+      "correctAnswer": true,
+      "explanation": "Debounce collapses rapid events — typing in search — into one update after pause, reducing API calls.",
+      "difficulty": "easy",
+      "tags": ["javascript", "debounce"]
+    },
+    {
+      "id": "q03",
+      "type": "code-output",
+      "prompt": "useDebounce returns the value after delay. If value changes at t=0 and delay=300ms, when does debouncedValue update?",
+      "code": "// User types 'a' at t=0, 'ab' at t=100, stops typing\n// useDebounce(value, 300) updates 300ms after last change",
+      "language": "typescript",
+      "correctOutput": "t=400ms",
+      "explanation": "Debounce timer resets on each change. Last change at t=100ms + 300ms delay = update around t=400ms.",
+      "difficulty": "medium",
+      "tags": ["debounce", "custom-hooks"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "Why extract debounce logic into useDebounce instead of duplicating setTimeout in two components?",
+      "options": [
+        { "id": "a", "text": "Hooks run faster than functions" },
+        { "id": "b", "text": "Reuse stateful logic with correct cleanup in one tested place" },
+        { "id": "c", "text": "TypeScript requires hooks for timers" },
+        { "id": "d", "text": "Debounce only works inside hooks" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Custom hooks share logic — including useEffect cleanup clearing timers — without copy-paste.",
+      "difficulty": "easy",
+      "tags": ["react", "custom-hooks"]
+    },
+    {
+      "id": "q05",
+      "type": "multiple-choice",
+      "prompt": "Which belong in a useDebounce implementation? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "useState or useEffect to manage delayed value" },
+        { "id": "b", "text": "clearTimeout in effect cleanup" },
+        { "id": "c", "text": "Configurable delay parameter" },
+        { "id": "d", "text": "Calling fetch directly in render" }
+      ],
+      "correctOptionIds": ["a", "b", "c"],
+      "explanation": "Debounce hook uses effect + timer + cleanup. Fetch belongs in effect or handler reacting to debounced value.",
+      "difficulty": "medium",
+      "tags": ["custom-hooks", "debounce"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "Custom hooks that return a tuple should be typed explicitly, e.g. {{blank1}}Debounce<T>(value: T, delay: number): {{blank2}}",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["use"] },
+        { "id": "blank2", "acceptedAnswers": ["T"] }
+      ],
+      "explanation": "Naming convention use prefix; generic return type preserves input value type.",
+      "difficulty": "medium",
+      "tags": ["typescript", "custom-hooks"]
+    },
+    {
+      "id": "q07",
+      "type": "code-completion",
+      "prompt": "Complete the hook name for extracting theme toggle logic.",
+      "code": "function {{hookName}}() {\n  const [theme, setTheme] = useState<'light' | 'dark'>('light');\n  // toggle + localStorage...\n  return { theme, toggleTheme };\n}",
+      "language": "tsx",
+      "blanks": [
+        { "id": "hookName", "acceptedAnswers": ["useTheme"] }
+      ],
+      "explanation": "Custom hooks must start with use — useTheme follows convention.",
+      "difficulty": "easy",
+      "tags": ["custom-hooks"]
+    },
+    {
+      "id": "q08",
+      "type": "single-choice",
+      "prompt": "Mobile sidebar should collapse into a drawer. Which CSS approach fits today's scope?",
+      "options": [
+        { "id": "a", "text": "display:none on desktop only with media queries and toggle state" },
+        { "id": "b", "text": "Remove sidebar component entirely on mobile" },
+        { "id": "c", "text": "Use table layout" },
+        { "id": "d", "text": "Separate app for mobile" }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Media queries + boolean isOpen state for mobile menu is standard responsive pattern without new libraries.",
+      "difficulty": "easy",
+      "tags": ["responsive", "layout"]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "When would you choose a custom hook over a plain utility function?",
+      "acceptedKeywords": ["useState", "useEffect", "hooks", "state", "cleanup", "reuse"],
+      "sampleAnswer": "When the shared logic needs React state, effects, or other hooks — debounce with timers, theme with localStorage, fetch with loading state. Plain functions for pure transforms without React lifecycle.",
+      "explanation": "Core custom hook interview distinction.",
+      "difficulty": "medium",
+      "tags": ["react", "custom-hooks"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "Search fires on every debouncedValue change in useEffect. debouncedValue updates but results flicker. Missing cleanup on fetch effect. Fix?",
+      "options": [
+        { "id": "a", "text": "Remove debounce" },
+        { "id": "b", "text": "AbortController or cancelled flag in useEffect cleanup" },
+        { "id": "c", "text": "Use class components" },
+        { "id": "d", "text": "Store theme in Context" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Debounced search still races requests — combine debounce with abort/cleanup from Day 04.",
+      "difficulty": "hard",
+      "tags": ["custom-hooks", "fetch"]
+    }
+  ]
+}

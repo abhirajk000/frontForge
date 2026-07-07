@@ -1,0 +1,237 @@
+{
+  "id": "day18-lesson",
+  "metaId": "day18",
+  "title": "Day 18 — Authentication Flow",
+  "summary": "Secure your React app with JWT basics, typed auth state, login/logout flows, protected route guards, and token persistence — the frontend auth architecture every interview tests.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 17 gave you open API access. Production apps require authentication — who is the user, are they logged in, can they see this page? Today you build login, logout, protected routes, and session persistence. This is frontend auth architecture: storing tokens, guarding routes, attaching headers. Backend validates JWTs; your job is the client flow."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Security scope",
+      "content": "Today covers client-side auth flow patterns for interviews. Never store sensitive secrets in frontend code. JWT in localStorage has XSS tradeoffs — know them, explain them, and mention httpOnly cookies as the production alternative."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — JWT, localStorage, sessionStorage"
+    },
+    {
+      "type": "paragraph",
+      "content": "JWT (JSON Web Token) is three base64 segments: header.payload.signature. The payload holds claims like user id and expiry — readable but not tamperable without the secret. localStorage persists until cleared; sessionStorage clears when the tab closes. Both are synchronous string stores."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// JWT payload (middle segment) decoded for reading — NOT for trust\nconst payload = JSON.parse(atob(token.split('.')[1]));\nconsole.log(payload.exp); // expiry timestamp\n\nlocalStorage.setItem('token', token);\nconst saved = localStorage.getItem('token');\n\nsessionStorage.setItem('sessionId', id); // cleared on tab close"
+    },
+    {
+      "type": "tip",
+      "title": "Production connection",
+      "content": "Check token expiry client-side for UX (redirect to login early) but always validate server-side. Client expiry checks are not security — they prevent confusing 401 errors mid-action."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Auth Types"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/auth.ts",
+      "code": "export interface User {\n  id: string;\n  email: string;\n  name: string;\n  role: 'user' | 'admin';\n}\n\nexport interface AuthState {\n  user: User | null;\n  token: string | null;\n  status: 'idle' | 'loading' | 'authenticated' | 'error';\n}\n\nexport interface LoginCredentials {\n  email: string;\n  password: string;\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Protected Routes and Auth Flow"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-guard",
+          "label": "Route guards",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "A ProtectedRoute wrapper checks auth state. Unauthenticated users redirect to /login with return URL. Authenticated users hitting /login redirect to dashboard."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "function ProtectedRoute({ children }: { children: React.ReactNode }) {\n  const { isAuthenticated } = useAuth();\n  const location = useLocation();\n  if (!isAuthenticated) {\n    return <Navigate to=\"/login\" state={{ from: location }} replace />;\n  }\n  return children;\n}"
+            }
+          ]
+        },
+        {
+          "id": "tab-flow",
+          "label": "Login flow",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Login dispatches credentials to API, receives token + user, stores token, updates auth state. Logout clears storage and resets state. Extend Day 17 baseQuery to read token from store or storage."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "const baseQuery = fetchBaseQuery({\n  baseUrl: '/api',\n  prepareHeaders: (headers, { getState }) => {\n    const token = (getState() as RootState).auth.token;\n    if (token) headers.set('Authorization', `Bearer ${token}`);\n    return headers;\n  },\n});"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "title": "Auth vs authorization",
+      "content": "Authentication verifies identity (login). Authorization verifies permission (admin vs user). Protected routes handle authentication; role checks on Day 19 handle authorization."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Authentication Module"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        {
+          "id": "req-login",
+          "text": "Login form with email/password"
+        },
+        {
+          "id": "req-logout",
+          "text": "Logout button clears session"
+        },
+        {
+          "id": "req-protected",
+          "text": "Protected routes redirect to login"
+        },
+        {
+          "id": "req-redirect",
+          "text": "Post-login redirect to intended page"
+        },
+        {
+          "id": "req-persist",
+          "text": "Session persists across reload"
+        }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Auth mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-unauth",
+          "title": "Unauthorized access",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Protected page flashes before redirect. Cause: Auth state initializes as authenticated before storage read completes. Fix: Add status: 'loading' during hydration; render null or spinner until check completes."
+            }
+          ]
+        },
+        {
+          "id": "dbg-redirect",
+          "title": "Route redirect bugs",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Infinite redirect loop between login and home. Cause: ProtectedRoute wraps login page or isAuthenticated check wrong. Fix: Public routes outside ProtectedRoute; separate PublicOnlyRoute for login."
+            }
+          ]
+        },
+        {
+          "id": "dbg-token",
+          "title": "Token persistence",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Logged out after refresh. Cause: Token not saved to localStorage or not restored on init. Fix: Persist in login success handler; hydrate auth slice from storage in store preloadedState or auth listener."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Focus — JWT and Protected Routes"
+    },
+    {
+      "type": "paragraph",
+      "content": "Expect: Where do you store JWT? localStorage vs httpOnly cookie tradeoffs. How do protected routes work? What happens on 401 from API? Your answers should mention XSS, CSRF, redirect flows, and token refresh as a follow-up you know exists."
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        {
+          "id": "done-login",
+          "text": "Login and logout work"
+        },
+        {
+          "id": "done-guard",
+          "text": "Protected routes enforce auth"
+        },
+        {
+          "id": "done-persist",
+          "text": "Session survives reload"
+        },
+        {
+          "id": "done-git",
+          "text": "Git push"
+        }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

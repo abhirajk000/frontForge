@@ -1,0 +1,67 @@
+{
+  "id": "day06-challenge",
+  "metaId": "day06",
+  "title": "Custom Hooks, Debounce, and Responsive Dashboard",
+  "mission": "Build reusable layouts and custom hooks.",
+  "description": "Enhance your Day 05 dashboard with useDebounce search, theme toggle, and responsive sidebar/navbar. Extract hooks and layout logic for reuse before tomorrow's machine coding round.",
+  "estimatedMinutes": 180,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Create useDebounce<T>(value: T, delay: number): T with useEffect timer and cleanup",
+    "Search bar in navbar or dashboard using debounced value (300ms) to filter or fetch",
+    "Create useTheme or equivalent hook toggling light/dark with localStorage persistence",
+    "Apply theme via document.documentElement class or data-theme attribute",
+    "Responsive sidebar: visible on desktop, collapsible drawer or overlay on mobile",
+    "Hamburger button on mobile toggles sidebar visibility",
+    "Navbar composes search, theme toggle, and title without duplicating Day 05 markup",
+    "Type custom hook return values explicitly in TypeScript"
+  ],
+  "acceptanceCriteria": [
+    "Typing in search does not fire API/filter on every keystroke — only after debounce delay",
+    "Theme persists after page refresh via localStorage",
+    "Sidebar usable at 375px width — no horizontal scroll from fixed sidebar",
+    "useDebounce clears timeout on unmount — no setState on unmounted component warnings",
+    "Dashboard routes still work from Day 05",
+    "npm run build passes",
+    "Changes pushed to Git"
+  ],
+  "hints": [
+    "useDebounce: useEffect(() => { const id = setTimeout(() => setDebounced(value), delay); return () => clearTimeout(id); }, [value, delay]);",
+    "Fetch or filter in separate useEffect depending on debouncedQuery, not raw input.",
+    "useTheme: read localStorage on init, sync class on documentElement when theme changes.",
+    "CSS: @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar--open { transform: translateX(0); } }",
+    "Keep hooks in src/hooks/ — one file per hook."
+  ],
+  "bonus": {
+    "title": "useMediaQuery hook",
+    "description": "Extract responsive breakpoint detection.",
+    "requirements": [
+      "Create useMediaQuery(query: string): boolean",
+      "Auto-close mobile sidebar when resizing to desktop",
+      "Keyboard Escape closes mobile drawer"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-hook-deps",
+      "title": "Hook dependency issues",
+      "symptom": "Debounce never updates or updates too often",
+      "cause": "Missing value or delay in useEffect deps; unstable delay object",
+      "fix": "Include [value, delay] in dependency array; pass number literal or memoized delay"
+    },
+    {
+      "id": "dbg-duplicate",
+      "title": "Duplicate logic",
+      "symptom": "Two components copy same setTimeout debounce pattern",
+      "cause": "Did not extract useDebounce",
+      "fix": "Move to hooks/useDebounce.ts; import in SearchBar and anywhere else needed"
+    },
+    {
+      "id": "dbg-layout",
+      "title": "Mobile layout broken",
+      "symptom": "Sidebar covers content and cannot dismiss",
+      "cause": "Fixed width sidebar without overlay toggle on small screens",
+      "fix": "Add isSidebarOpen state, hamburger toggle, backdrop click to close, media query styles"
+    }
+  ]
+}

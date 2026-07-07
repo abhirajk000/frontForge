@@ -1,0 +1,129 @@
+{
+  "id": "day11-interview",
+  "metaId": "day11",
+  "title": "Day 11 Interview Prep",
+  "description": "Practice event loop, infinite scroll, pagination, and Intersection Observer patterns.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Explain the JavaScript event loop in simple terms.",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Async fundamentals beyond async/await syntax.",
+      "keyPoints": [
+        "Single-threaded call stack",
+        "Microtask queue before macrotask queue",
+        "Event loop picks tasks when stack empty",
+        "Non-blocking I/O model"
+      ],
+      "sampleAnswer": "JavaScript runs one call stack at a time. Synchronous code runs to completion. Async callbacks queue up — microtasks like Promise.then run before macrotasks like setTimeout. The event loop continuously checks: stack empty? Run microtasks. Then run one macrotask. Repeat.",
+      "followUps": ["What is a microtask?", "Can microtasks starve macrotasks?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is the difference between microtasks and macrotasks?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Day 11 core topic — must answer with examples.",
+      "keyPoints": [
+        "Microtasks: Promise.then, queueMicrotask",
+        "Macrotasks: setTimeout, setInterval, I/O",
+        "Microtasks drain fully before next macrotask",
+        "fetch .then is microtask"
+      ],
+      "sampleAnswer": "Microtasks include Promise callbacks and queueMicrotask. Macrotasks include setTimeout, setInterval, and message events. After sync code, ALL microtasks execute before the next macrotask. So Promise.then runs before setTimeout(0).",
+      "followUps": ["Where does requestAnimationFrame fit?", "Async/await desugaring?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "How does infinite scroll work in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Practical implementation knowledge.",
+      "keyPoints": [
+        "Intersection Observer on sentinel element",
+        "Append pages to existing list",
+        "Guard isLoading and hasMore",
+        "Cleanup observer on unmount"
+      ],
+      "sampleAnswer": "I place a sentinel div at the list bottom with a ref. IntersectionObserver fires when it enters viewport. Callback calls loadNextPage if not loading and hasMore. Append new items with setItems(prev => [...prev, ...newItems]). Disconnect observer in useEffect cleanup.",
+      "followUps": ["Scroll listener alternative?", "Virtualization?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Walk through output order: sync, Promise.then, setTimeout.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Classic event loop whiteboard question.",
+      "keyPoints": [
+        "Sync first",
+        "All microtasks next",
+        "One macrotask at a time",
+        "Nested promises add more microtasks"
+      ],
+      "sampleAnswer": "console.log sync runs immediately. Promise.then enqueues microtask — runs after sync, before setTimeout. setTimeout(0) is macrotask — runs last. If Promise.then schedules another .then, that nested microtask runs before any macrotask.",
+      "followUps": ["async function execution?", "await scheduling?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type Intersection Observer callbacks in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "DOM API typing confidence.",
+      "keyPoints": [
+        "IntersectionObserverEntry[]",
+        "isIntersecting property",
+        "Ref typed as HTMLDivElement | null",
+        "Optional chaining on entries[0]"
+      ],
+      "sampleAnswer": "Callback receives entries: IntersectionObserverEntry[]. Check entries[0]?.isIntersecting. Ref is useRef<HTMLDivElement>(null). Observer typed as IntersectionObserver from DOM lib. Guard sentinelRef.current before observe.",
+      "followUps": ["Generic ref types?", "Custom root element?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "Duplicate items appear after infinite scroll. How do you debug?",
+      "difficulty": "medium",
+      "category": "scenario",
+      "whatInterviewerTests": "Pagination edge case handling.",
+      "keyPoints": [
+        "Same page fetched twice",
+        "Missing isLoading guard",
+        "Append without deduplication",
+        "Page counter off-by-one"
+      ],
+      "sampleAnswer": "I check Network tab for duplicate page requests — missing isLoading guard lets observer fire twice. I add guard at top of loadNextPage. If requests are unique but items duplicate, I dedupe by id when appending or verify page increment logic.",
+      "followUps": ["Idempotent API design?", "Cursor vs offset pagination?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Compare button pagination (Day 09), infinite scroll (Day 11), and virtualized lists.",
+      "difficulty": "hard",
+      "category": "architecture",
+      "whatInterviewerTests": "Trade-off analysis for large datasets.",
+      "keyPoints": [
+        "Button pagination: explicit, SEO-friendly, simpler state",
+        "Infinite scroll: seamless UX, harder deep linking",
+        "Virtualization: renders visible rows only — thousands of items",
+        "Choose based on UX and data size"
+      ],
+      "sampleAnswer": "Button pagination gives explicit page control and shareable URLs — good for search results. Infinite scroll suits social feeds. Neither solves DOM bloat at 10k items — virtualization (react-window) renders only visible rows. I pick based on product UX and list size.",
+      "followUps": ["SEO impact of infinite scroll?", "react-window vs react-virtualized?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "User navigates away mid-fetch. Observer still fires. What went wrong?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Cleanup discipline from Day 08 extended to observers.",
+      "keyPoints": [
+        "Missing observer.disconnect()",
+        "setState on unmounted component",
+        "AbortController for fetch",
+        "useEffect cleanup pattern"
+      ],
+      "sampleAnswer": "Missing useEffect cleanup. Observer callback still runs after unmount and may call setState on unmounted component. Fix: return () => observer.disconnect() from effect. Also AbortController.abort() on fetch in cleanup — same pattern as Day 08 race handling.",
+      "followUps": ["Strict Mode double mount?", "Custom useIntersectionObserver hook?"],
+      "redFlags": ["Cleanup optional for observers", "Cannot connect observer to useEffect lifecycle"]
+    }
+  ]
+}

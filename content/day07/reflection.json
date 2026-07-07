@@ -1,0 +1,32 @@
+{
+  "id": "day07-reflection",
+  "metaId": "day07",
+  "title": "Day 07 Reflection — Week 1 Retrospective",
+  "description": "Honest retrospective after machine coding — this feeds your Week 2 focus plan.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "What did you complete in 90 minutes? What was left unfinished?",
+      "guidance": "Be specific: login validation, routes, responsive, etc.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "List your three weakest Week 1 topics and one action per topic to improve before Day 08.",
+      "guidance": "useEffect, Router, forms — pick yours honestly.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-03",
+      "question": "Where did you reach for banned help (AI/Google/copy-paste)? What will you change in Week 2?",
+      "guidance": "No judgment — improvement plan matters.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "What Week 1 concept felt easiest under pressure? How can you lean on that strength in Week 2 API projects?",
+      "guidance": "Balance weak areas with confidence builders.",
+      "minWords": 30
+    }
+  ]
+}

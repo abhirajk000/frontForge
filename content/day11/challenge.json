@@ -1,0 +1,69 @@
+{
+  "id": "day11-challenge",
+  "metaId": "day11",
+  "title": "Build Infinite Scrolling",
+  "mission": "Build Infinite Scrolling.",
+  "description": "Create an infinite scroll feed that auto-loads paginated content as the user scrolls — the pattern behind Twitter, Instagram, and LinkedIn feeds.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Paginated API or mock data with page parameter",
+    "Intersection Observer on a sentinel element at list bottom",
+    "Auto-load next page when sentinel enters viewport",
+    "Append new items to existing list — do not replace",
+    "Loading indicator while fetching next page",
+    "End-of-list message when no more pages",
+    "Retry button on fetch failure without losing loaded items",
+    "useEffect cleanup disconnects IntersectionObserver on unmount",
+    "TypeScript types for observer callback entries",
+    "Stable keys on list items — no duplicates after append"
+  ],
+  "acceptanceCriteria": [
+    "Scrolling to bottom triggers exactly one fetch for next page",
+    "Page 1 and page 2 items both visible after scroll load",
+    "No duplicate items in the list",
+    "End message appears when API returns empty or last page",
+    "Retry re-fetches failed page without clearing existing items",
+    "Observer disconnected on component unmount — no console warnings",
+    "npm run build passes with strict TypeScript"
+  ],
+  "hints": [
+    "Use a ref on a div at the bottom of the list as the observer target.",
+    "Track page, hasMore, isLoading, and error in separate state variables.",
+    "Guard fetch: if (isLoading || !hasMore) return before loading next page.",
+    "Append: setItems(prev => [...prev, ...newItems]) — immutable update preview for Day 12.",
+    "TMDB, JSONPlaceholder, or mock paginated API work well."
+  ],
+  "bonus": {
+    "title": "Feed polish",
+    "description": "Optional enhancements for portfolio reviews.",
+    "requirements": [
+      "Pull-to-refresh or scroll-to-top button",
+      "Skeleton rows while loading first page",
+      "Lazy load images with loading=\"lazy\" attribute"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-duplicate",
+      "title": "Duplicate API calls",
+      "symptom": "Same page fetched twice; duplicate items in list",
+      "cause": "Missing isLoading guard or observer firing multiple times before state updates",
+      "fix": "Guard with isLoading && !hasMore; set isLoading true synchronously before fetch"
+    },
+    {
+      "id": "dbg-infinite-render",
+      "title": "Infinite rendering",
+      "symptom": "Browser freezes; console shows repeated renders",
+      "cause": "setState in render body or effect with unstable deps causing loop",
+      "fix": "Move fetch to observer callback or guarded effect; stable dependency array"
+    },
+    {
+      "id": "dbg-observer-cleanup",
+      "title": "Observer cleanup",
+      "symptom": "Memory leak warnings; fetch continues after navigate away",
+      "cause": "IntersectionObserver not disconnected in useEffect cleanup",
+      "fix": "return () => observer.disconnect() in useEffect cleanup"
+    }
+  ]
+}

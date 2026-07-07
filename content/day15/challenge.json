@@ -1,0 +1,72 @@
+{
+  "id": "day15-challenge",
+  "metaId": "day15",
+  "title": "Build a Theme Management System",
+  "mission": "Build a Theme Management System.",
+  "description": "Implement a scalable global theme system using React Context, a custom useTheme hook, three theme modes, and localStorage persistence — the pattern used in production apps from Vercel to GitHub.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Create ThemeContext with TypeScript types for preference and setter function types",
+    "Build ThemeProvider component that wraps the entire application",
+    "Implement light, dark, and system theme modes",
+    "Resolve system mode using prefers-color-scheme media query",
+    "Apply resolved theme to document root via data-theme attribute or class",
+    "Extract useTheme custom hook that throws if used outside provider",
+    "Persist theme preference to localStorage on change",
+    "Restore persisted preference on initial load",
+    "Build a theme toggle UI control accessible from the app shell",
+    "Responsive layout that works on mobile and desktop"
+  ],
+  "acceptanceCriteria": [
+    "Switching to dark mode updates all themed components immediately",
+    "System mode follows OS preference and updates when OS theme changes",
+    "Reloading the page restores the last selected theme preference",
+    "Components outside ThemeProvider are not part of the build — provider is at app root",
+    "useTheme returns { theme, setTheme } or equivalent typed API",
+    "No unnecessary re-renders from unstable context value objects",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Define ThemePreference as 'light' | 'dark' | 'system' union type.",
+    "Keep resolved theme separate from preference — system resolves at runtime.",
+    "Memoize context value with useMemo so consumers do not re-render on unrelated parent updates.",
+    "Read localStorage in useState initializer: () => stored ?? 'system'.",
+    "Listen to matchMedia('(prefers-color-scheme: dark)') for system mode changes.",
+    "Place ThemeProvider above routes but inside any router if navigation needs theme."
+  ],
+  "bonus": {
+    "title": "Production polish",
+    "description": "Optional enhancements that demonstrate senior-level theme architecture.",
+    "requirements": [
+      "Prevent flash of wrong theme on first paint with inline script or CSS default",
+      "Split ThemeProvider into context definition file and provider implementation",
+      "Add keyboard shortcut to cycle themes",
+      "Document theme tokens in a CSS variables file consumed by data-theme"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-rerender",
+      "title": "Context re-render issues",
+      "symptom": "Every component re-renders when any unrelated state changes in the provider",
+      "cause": "Context value is a new object literal on every render without useMemo",
+      "fix": "Memoize value with useMemo([theme, setTheme]); split read/write into separate contexts if needed"
+    },
+    {
+      "id": "dbg-placement",
+      "title": "Wrong provider placement",
+      "symptom": "useTheme throws or theme does not apply to navbar or routed pages",
+      "cause": "ThemeProvider placed inside a route or below components that need theme",
+      "fix": "Wrap entire app at root — typically in main.tsx or AppProviders above RouterProvider"
+    },
+    {
+      "id": "dbg-persistence",
+      "title": "Theme persistence bugs",
+      "symptom": "Theme resets to default on reload or flashes wrong theme before correcting",
+      "cause": "Reading localStorage in useEffect after first render instead of initializer; writing on every render",
+      "fix": "Initialize state from localStorage synchronously; persist in useEffect only when preference changes"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "day04-resources",
+  "metaId": "day04",
+  "title": "Day 04 Resources",
+  "description": "Official docs for useEffect, fetch, promises, and typing API data.",
+  "resources": [
+    {
+      "id": "res-effects",
+      "title": "React — Synchronizing with Effects",
+      "url": "https://react.dev/learn/synchronizing-with-effects",
+      "type": "documentation",
+      "description": "Official useEffect mental model — read before building.",
+      "recommended": true
+    },
+    {
+      "id": "res-effect-deps",
+      "title": "React — Specifying Effect Dependencies",
+      "url": "https://react.dev/learn/synchronizing-with-effects#step-2-specifying-your-effects-dependencies",
+      "type": "documentation",
+      "description": "Dependency array rules and stale closure pitfalls.",
+      "recommended": true
+    },
+    {
+      "id": "res-fetch",
+      "title": "MDN — Using the Fetch API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "type": "documentation",
+      "description": "fetch, response.ok, json(), and error handling.",
+      "recommended": true
+    },
+    {
+      "id": "res-promises",
+      "title": "MDN — Promise",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+      "type": "documentation",
+      "description": "Promise fundamentals underlying async/await.",
+      "recommended": false
+    },
+    {
+      "id": "res-async",
+      "title": "MDN — async function",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+      "type": "documentation",
+      "description": "async/await syntax for readable fetch code.",
+      "recommended": false
+    },
+    {
+      "id": "res-github-api",
+      "title": "GitHub REST API — Users",
+      "url": "https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user",
+      "type": "documentation",
+      "description": "Endpoint and response schema for today's build.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts-json",
+      "title": "TypeScript — Everyday Types (object types)",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean",
+      "type": "documentation",
+      "description": "Optional properties for nullable API fields like bio and name.",
+      "recommended": false
+    },
+    {
+      "id": "res-react-you-might-not-need-effect",
+      "title": "React — You Might Not Need an Effect",
+      "url": "https://react.dev/learn/you-might-not-need-an-effect",
+      "type": "article",
+      "description": "When to fetch on event vs effect — skim after building.",
+      "recommended": true
+    }
+  ]
+}

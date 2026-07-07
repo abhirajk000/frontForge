@@ -1,0 +1,72 @@
+{
+  "id": "day17-resources",
+  "metaId": "day17",
+  "title": "Day 17 Resources",
+  "description": "Official RTK Query documentation for API setup, hooks, and cache management.",
+  "resources": [
+    {
+      "id": "res-overview",
+      "title": "Redux Toolkit — RTK Query Overview",
+      "url": "https://redux-toolkit.js.org/rtk-query/overview",
+      "type": "documentation",
+      "description": "Introduction to RTK Query architecture and setup.",
+      "recommended": true
+    },
+    {
+      "id": "res-api",
+      "title": "Redux Toolkit — createApi",
+      "url": "https://redux-toolkit.js.org/rtk-query/api/createApi",
+      "type": "documentation",
+      "description": "API reference for defining endpoints and hooks.",
+      "recommended": true
+    },
+    {
+      "id": "res-queries",
+      "title": "Redux Toolkit — Queries",
+      "url": "https://redux-toolkit.js.org/rtk-query/usage/queries",
+      "type": "documentation",
+      "description": "Query hooks, loading states, and refetching.",
+      "recommended": true
+    },
+    {
+      "id": "res-mutations",
+      "title": "Redux Toolkit — Mutations",
+      "url": "https://redux-toolkit.js.org/rtk-query/usage/mutations",
+      "type": "documentation",
+      "description": "Mutation hooks and cache invalidation patterns.",
+      "recommended": true
+    },
+    {
+      "id": "res-cache",
+      "title": "Redux Toolkit — Cache Behavior",
+      "url": "https://redux-toolkit.js.org/rtk-query/usage/cache-behavior",
+      "type": "documentation",
+      "description": "Tags, invalidation, and deduplication.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts",
+      "title": "Redux Toolkit — RTK Query TypeScript",
+      "url": "https://redux-toolkit.js.org/rtk-query/usage-with-typescript",
+      "type": "documentation",
+      "description": "Typing endpoints and generated hooks.",
+      "recommended": true
+    },
+    {
+      "id": "res-promises",
+      "title": "MDN — Using Promises",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+      "type": "documentation",
+      "description": "Promise chaining fundamentals for async interviews.",
+      "recommended": true
+    },
+    {
+      "id": "res-async",
+      "title": "MDN — async function",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+      "type": "documentation",
+      "description": "async/await syntax reference.",
+      "recommended": false
+    }
+  ]
+}

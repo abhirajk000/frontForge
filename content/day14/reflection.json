@@ -1,0 +1,38 @@
+{
+  "id": "day14-reflection",
+  "metaId": "day14",
+  "title": "Day 14 Reflection",
+  "description": "Review Week 2 machine coding performance and prepare for Week 3.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "What did you complete in 120 minutes? What did you cut and why?",
+      "guidance": "Be honest about time pressure decisions — interviewers value prioritization.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Which Week 2 topic slowed you down most: debounce, filters, infinite scroll, Context, or routing?",
+      "guidance": "Name specific moments where you got stuck.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Explain your cart architecture out loud: Context, reducer, actions, and immutability.",
+      "guidance": " Pretend an interviewer asked 'walk me through your state management'.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-04",
+      "question": "What would you do differently with an extra 30 minutes?",
+      "guidance": "Prioritize by interview impact — tests, types, UX polish.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "List three Week 2 concepts you can now explain confidently and three to revisit before Week 3.",
+      "guidance": "Be specific: 'useReducer ADD_ITEM' not just 'Context'.",
+      "minWords": 40
+    }
+  ]
+}

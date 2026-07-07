@@ -1,0 +1,38 @@
+{
+  "id": "day21-reflection",
+  "metaId": "day21",
+  "title": "Day 21 Reflection",
+  "description": "Honest Week 3 self-assessment before Week 4 interview simulation.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Did you finish within 150 minutes? What did you cut and why?",
+      "guidance": "Honest time management assessment.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Which Week 3 topic slowed you most — Redux, RTK Query, auth, or dashboard?",
+      "guidance": "Identify weak area for Day 22 revision.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-03",
+      "question": "Explain your state architecture choices without looking at code.",
+      "guidance": "Theme vs Redux vs RTK Query separation.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-04",
+      "question": "What would you do differently in the first 15 minutes next time?",
+      "guidance": "Scaffolding and time boxing.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-05",
+      "question": "Are you ready for Day 22 machine coding interview simulation?",
+      "guidance": "List 2 specific topics to revise tonight.",
+      "minWords": 35
+    }
+  ]
+}

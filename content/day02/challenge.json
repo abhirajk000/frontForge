@@ -1,0 +1,72 @@
+{
+  "id": "day02-challenge",
+  "metaId": "day02",
+  "title": "Build a Professional Login Page",
+  "mission": "Build a professional Login Page.",
+  "description": "Create a production-style login form with validation, loading, error handling, and accessibility. Simulate authentication — no real backend required today.",
+  "estimatedMinutes": 180,
+  "difficulty": "beginner",
+  "requirements": [
+    "Email input with controlled value and onChange handler",
+    "Password input with controlled value and validation (minimum 8 characters)",
+    "Show/hide password toggle that switches input type between password and text",
+    "Remember me checkbox bound to boolean state",
+    "Client-side validation before submit with per-field error messages",
+    "Submit handler with preventDefault and async simulated login (setTimeout)",
+    "Loading state: disabled submit button and loading label while request runs",
+    "Error message displayed when simulated login fails",
+    "TypeScript interfaces for form data and component props",
+    "Responsive layout centered on page for mobile and desktop"
+  ],
+  "acceptanceCriteria": [
+    "Empty email shows validation error without calling login",
+    "Invalid email format shows validation error",
+    "Password under 8 characters shows validation error",
+    "Successful simulated login clears error and exits loading state",
+    "Failed simulated login shows error message and re-enables submit",
+    "Show password toggle changes input type without clearing password value",
+    "Remember me state updates when checkbox is toggled",
+    "Pressing Enter in password field submits the form",
+    "npm run build completes without TypeScript errors",
+    "Changes pushed to Git"
+  ],
+  "hints": [
+    "Keep validation in a pure validateLoginForm function returning { isValid, errors }.",
+    "Use separate state for fieldErrors and global login error.",
+    "Simulate API: await new Promise(r => setTimeout(r, 1500)); then check credentials.",
+    "Use aria-invalid and aria-describedby on inputs with errors.",
+    "Button: type=\"submit\" disabled={isLoading} — loading text replaces label."
+  ],
+  "bonus": {
+    "title": "Polish",
+    "description": "Signals that separate you from tutorial copy-paste.",
+    "requirements": [
+      "Disable submit until email and password are non-empty (in addition to validation on submit)",
+      "Add focus management: move focus to error summary on failed login",
+      "Extract a reusable InputField component — preview of Day 03"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-state",
+      "title": "Wrong state update",
+      "symptom": "Checkbox or field appears stuck; React DevTools shows state changed but UI did not",
+      "cause": "Direct mutation of state object followed by setState with same reference",
+      "fix": "Use functional updates and spread: setForm(prev => ({ ...prev, rememberMe: checked }))"
+    },
+    {
+      "id": "dbg-input",
+      "title": "Input not updating",
+      "symptom": "Cannot type in email or password field",
+      "cause": "Controlled input missing onChange, or value bound to wrong state variable",
+      "fix": "Ensure value and onChange both reference the same state slice; remove conflicting defaultValue"
+    },
+    {
+      "id": "dbg-event",
+      "title": "Wrong event handling",
+      "symptom": "Page reloads on submit or double submissions occur",
+      "cause": "Missing preventDefault or submit button not disabled during loading",
+      "fix": "handleSubmit starts with event.preventDefault(); set isLoading true before async work and disable button"
+    }
+  ]
+}

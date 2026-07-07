@@ -1,0 +1,67 @@
+{
+  "id": "day20-challenge",
+  "metaId": "day20",
+  "title": "Performance Lab — Optimize Product List and Routes",
+  "mission": "Optimize React Performance.",
+  "description": "Profile and optimize your Day 17 product list and Day 19 dashboard routes — memoized components, useMemo/useCallback, lazy loading, and documented before/after comparison.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Profile product list with React DevTools Profiler — note render counts before optimization",
+    "Extract ProductRow as React.memo component with typed props",
+    "Wrap filter/sort pipeline in useMemo with correct dependencies",
+    "Pass stable onSelect/onDelete handlers via useCallback",
+    "Lazy load AdminDashboard and other heavy routes with React.lazy",
+    "Wrap lazy routes in Suspense with loading fallback",
+    "Verify no inline object/function props break memo on list rows",
+    "Document before/after: render count, commit duration, or bundle size delta"
+  ],
+  "acceptanceCriteria": [
+    "Product list rows skip re-render when unrelated parent state changes",
+    "Filtered product list recalculates only when products or filter deps change",
+    "Admin route chunk loads on navigation not initial page load",
+    "Suspense shows fallback during chunk load",
+    "README or PERFORMANCE.md documents before/after metrics",
+    "npm run build passes; analyze bundle shows separate admin chunk",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Toggle unrelated state in parent to verify memoized rows stay idle in Profiler.",
+    "useCallback deps must include values read inside handler.",
+    "Compare with Day 10 memo introduction — today goes deeper with measurement.",
+    "vite build --mode analyze or rollup-plugin-visualizer for bundle diff.",
+    "Do not memo everything — profile identifies real bottlenecks."
+  ],
+  "bonus": {
+    "title": "Senior polish",
+    "description": "Optional advanced performance work.",
+    "requirements": [
+      "Custom memo comparison function for ProductRow",
+      "Virtualize long product list with react-window",
+      "Prefetch lazy route on sidebar hover"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-rerender",
+      "title": "Unnecessary re-renders",
+      "symptom": "Profiler shows all rows on minor state change",
+      "cause": "Inline handlers or unstable props",
+      "fix": "useCallback; extract stable props"
+    },
+    {
+      "id": "dbg-deps",
+      "title": "Wrong dependency arrays",
+      "symptom": "Stale data or infinite loops",
+      "cause": "Missing or unstable deps",
+      "fix": "Fix exhaustive-deps warnings; memoize dep objects"
+    },
+    {
+      "id": "dbg-memo",
+      "title": "Memoization mistakes",
+      "symptom": "Zero perf improvement after memo",
+      "cause": "Props always new reference",
+      "fix": "Stabilize props or remove ineffective memo"
+    }
+  ]
+}

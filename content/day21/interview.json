@@ -1,0 +1,159 @@
+{
+  "id": "day21-interview",
+  "metaId": "day21",
+  "title": "Day 21 Interview Prep",
+  "description": "Week 3 capstone interview questions — Redux, RTK Query, auth, performance, architecture.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Summarize Week 3 architecture in one app.",
+      "difficulty": "easy",
+      "category": "architecture",
+      "whatInterviewerTests": "Holistic Week 3 understanding.",
+      "keyPoints": [
+        "Theme Context",
+        "Redux client state",
+        "RTK Query server state",
+        "Auth flow",
+        "Dashboard UI"
+      ],
+      "sampleAnswer": "Week 3 builds a medium app: Context for theme, Redux Toolkit for auth and client state, RTK Query for API cache and mutations, protected routes for auth, admin dashboard with role UI, and performance optimizations with memo and lazy routes on Day 20.",
+      "followUps": [
+        "What would you simplify?",
+        "Monorepo structure?"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "Redux vs Context — how did you use both this week?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "State tool selection after Days 15-16.",
+      "keyPoints": [
+        "Context for theme",
+        "Redux for complex state",
+        "Not either-or",
+        "Interview judgment"
+      ],
+      "sampleAnswer": "Day 15 theme uses Context — infrequent updates, many readers. Day 16+ Redux for todos, auth, and RTK Query integration where DevTools, middleware, and predictable reducers matter. I do not put everything in Redux.",
+      "followUps": [
+        "Zustand?",
+        "When too much Redux?"
+      ]
+    },
+    {
+      "id": "int-m01",
+      "question": "Walk through RTK Query product delete updating the UI.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Cache invalidation narrative.",
+      "keyPoints": [
+        "Mutation hook",
+        "invalidatesTags",
+        "Query refetch",
+        "Loading states"
+      ],
+      "sampleAnswer": "User clicks delete. Component calls deleteProduct mutation. On success RTK Query invalidates Product tags. getProducts query refetches automatically. List re-renders with updated cache data. I show isLoading on button during mutation.",
+      "followUps": [
+        "Optimistic delete?",
+        "undo?"
+      ]
+    },
+    {
+      "id": "int-m02",
+      "question": "Design auth + API together — where does token live?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Integrated auth architecture.",
+      "keyPoints": [
+        "Auth slice",
+        "prepareHeaders",
+        "localStorage hydrate",
+        "Protected routes"
+      ],
+      "sampleAnswer": "Token and user in auth slice. Login mutation or thunk sets both and persists token. prepareHeaders reads token for RTK Query. ProtectedRoute checks auth status after hydration. Logout clears slice and storage.",
+      "followUps": [
+        "Refresh token?",
+        "Multiple tabs?"
+      ]
+    },
+    {
+      "id": "int-m03",
+      "question": "How would you structure features folder for this app?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Scalable folder organization.",
+      "keyPoints": [
+        "Feature modules",
+        "Shared ui",
+        "App layer",
+        "Colocation"
+      ],
+      "sampleAnswer": "features/auth, features/dashboard, features/products, features/theme each with components, hooks, types. app/ has store, router, providers. shared/ui for Button, Table, Badge. API slices in features/products/productsApi.ts.",
+      "followUps": [
+        "Barrel exports?",
+        "Cross-feature imports?"
+      ]
+    },
+    {
+      "id": "int-h01",
+      "question": "150 minutes in — auth works but dashboard empty. Interviewer asks why. Respond.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Honest prioritization under pressure.",
+      "keyPoints": [
+        "Time boxing",
+        "Core vs polish",
+        "What shipped",
+        "Next steps"
+      ],
+      "sampleAnswer": "I prioritized auth and store setup in first 90 minutes per my strategy. Dashboard table is stubbed — RTK Query users endpoint wired but pagination incomplete. I would next add search filter and analytics derived from cached data. I communicate tradeoffs proactively in real interviews.",
+      "followUps": [
+        "How estimate tasks?",
+        "MVP definition?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "Interviewer asks why you did not use React Query instead of RTK Query.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Library choice defense.",
+      "keyPoints": [
+        "Already on Redux",
+        "Unified DevTools",
+        "Team consistency",
+        "Know React Query too"
+      ],
+      "sampleAnswer": "This app already uses Redux Toolkit for auth and client state. RTK Query integrates in one store with one DevTools timeline. For greenfield without Redux I would consider TanStack Query. Choice is context-dependent not religious.",
+      "followUps": [
+        "Bundle size?",
+        "Learning curve?"
+      ]
+    },
+    {
+      "id": "int-s01",
+      "question": "Senior review: what would you refactor before production?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Production readiness eye.",
+      "keyPoints": [
+        "Error boundaries",
+        "httpOnly cookies",
+        "Server pagination",
+        "Testing",
+        "Accessibility"
+      ],
+      "sampleAnswer": "Move JWT to httpOnly cookies with CSRF protection. Add global error boundary and 401 handler. Server-side pagination on dashboard. Tests for auth reducers and RTK Query endpoints with MSW. a11y on table and login form. Environment-based API URLs. Monitoring for Core Web Vitals.",
+      "followUps": [
+        "CI/CD?",
+        "Feature flags?"
+      ],
+      "redFlags": [
+        "JWT in localStorage with no caveats",
+        "No backend auth validation mentioned",
+        "Cannot explain state separation"
+      ]
+    }
+  ]
+}

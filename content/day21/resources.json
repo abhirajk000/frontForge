@@ -1,0 +1,72 @@
+{
+  "id": "day21-resources",
+  "metaId": "day21",
+  "title": "Day 21 Resources",
+  "description": "Official documentation allowed during machine coding — bookmark these before starting the timer.",
+  "resources": [
+    {
+      "id": "res-react",
+      "title": "React — Documentation",
+      "url": "https://react.dev/",
+      "type": "documentation",
+      "description": "Core React APIs and patterns.",
+      "recommended": true
+    },
+    {
+      "id": "res-rtk",
+      "title": "Redux Toolkit — Documentation",
+      "url": "https://redux-toolkit.js.org/",
+      "type": "documentation",
+      "description": "Store, slices, and RTK Query.",
+      "recommended": true
+    },
+    {
+      "id": "res-router",
+      "title": "React Router — Documentation",
+      "url": "https://reactrouter.com/",
+      "type": "documentation",
+      "description": "Routing and protected routes.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts",
+      "title": "TypeScript — Handbook",
+      "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+      "type": "documentation",
+      "description": "Types and interfaces reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn",
+      "title": "MDN Web Docs — JavaScript",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "type": "documentation",
+      "description": "JavaScript APIs including storage and promises.",
+      "recommended": true
+    },
+    {
+      "id": "res-redux",
+      "title": "Redux — Usage with React",
+      "url": "https://react-redux.js.org/",
+      "type": "documentation",
+      "description": "Provider and hooks.",
+      "recommended": true
+    },
+    {
+      "id": "res-rtk-query",
+      "title": "RTK Query — Quick Start",
+      "url": "https://redux-toolkit.js.org/tutorials/rtk-query",
+      "type": "documentation",
+      "description": "RTK Query tutorial for timed builds.",
+      "recommended": true
+    },
+    {
+      "id": "res-vite",
+      "title": "Vite — Guide",
+      "url": "https://vite.dev/guide/",
+      "type": "documentation",
+      "description": "Project scaffolding if starting fresh.",
+      "recommended": false
+    }
+  ]
+}

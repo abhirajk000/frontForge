@@ -1,0 +1,237 @@
+{
+  "id": "day21-lesson",
+  "metaId": "day21",
+  "title": "Day 21 — Machine Coding Round 3",
+  "summary": "150-minute Week 3 review build under interview conditions — authentication, dashboard, Redux store, RTK Query API, and theme system from scratch without referring to previous code.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 14 tested Week 2 under pressure. Day 21 tests Week 3. You have 150 minutes to build a medium React app from scratch: theme system, Redux store, RTK Query API, authentication, and admin dashboard. No AI. No Google. Only official docs. No opening previous day folders. This is the capstone before Week 4 interview simulation."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Exam conditions",
+      "content": "Start a timer. Close AI tools and search engines. Allowed: react.dev, redux-toolkit.js.org, reactrouter.com, typescriptlang.org, developer.mozilla.org. Do NOT open Days 15–20 project folders — rebuild muscle memory."
+    },
+    {
+      "type": "heading",
+      "id": "review",
+      "level": 2,
+      "text": "Week 3 Concept Review"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Day",
+        "Concept",
+        "Today's build use"
+      ],
+      "rows": [
+        [
+          "15",
+          "Theme Context, persistence",
+          "Global theme with light/dark"
+        ],
+        [
+          "16",
+          "Redux Toolkit slices",
+          "Client state slice in store"
+        ],
+        [
+          "17",
+          "RTK Query CRUD",
+          "Products or users API layer"
+        ],
+        [
+          "18",
+          "JWT auth, protected routes",
+          "Login, logout, route guards"
+        ],
+        [
+          "19",
+          "Dashboard, role UI",
+          "Analytics cards, user table"
+        ],
+        [
+          "20",
+          "memo, lazy routes",
+          "Optional polish if time permits"
+        ]
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "strategy",
+      "level": 2,
+      "text": "150-Minute Strategy"
+    },
+    {
+      "type": "checklist",
+      "title": "Time boxes",
+      "items": [
+        {
+          "id": "tb-0-15",
+          "text": "0–15 min: Scaffold — Vite, routes, folder structure, ThemeProvider, store shell"
+        },
+        {
+          "id": "tb-15-45",
+          "text": "15–45 min: Redux store + RTK Query API + product/user fetch"
+        },
+        {
+          "id": "tb-45-75",
+          "text": "45–75 min: Auth slice, login page, protected routes, token persistence"
+        },
+        {
+          "id": "tb-75-110",
+          "text": "75–110 min: Admin dashboard — cards, table, search/filter"
+        },
+        {
+          "id": "tb-110-135",
+          "text": "110–135 min: Wire navigation, role badges, error/loading states"
+        },
+        {
+          "id": "tb-135-150",
+          "text": "135–150 min: Fix build errors, smoke test, README self-review, git push"
+        }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Prioritization rule",
+      "content": "Working auth + protected dashboard beats perfect analytics with no login. Ship core paths first: theme → store → API → auth → dashboard shell. Polish and memoization only if time remains."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-architecture",
+          "label": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "src/app/store.ts — configureStore with client slice + RTK Query API. src/features/auth/ — login, ProtectedRoute. src/features/dashboard/ — cards, UserTable. src/features/theme/ — ThemeProvider from Day 15 patterns. src/app/router.tsx — public login, protected admin routes."
+            }
+          ]
+        },
+        {
+          "id": "tab-interview",
+          "label": "Explain aloud",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "While building, narrate: why Redux for auth token vs Context for theme, why RTK Query for server data, how invalidatesTags refreshes list, why ProtectedRoute checks hydration loading state."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "rules",
+      "level": 2,
+      "text": "Rules — No AI, No Google"
+    },
+    {
+      "type": "paragraph",
+      "content": "Machine coding rounds test recall and architecture under pressure. Official documentation mirrors what you can use in a proctored interview with doc access. Cheating today hides gaps that Day 22 will expose."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-focus",
+      "level": 2,
+      "text": "Interview Focus — Week 3 Architecture"
+    },
+    {
+      "type": "checklist",
+      "title": "Be ready to explain",
+      "items": [
+        {
+          "id": "exp-redux",
+          "text": "Redux Toolkit vs Context — theme vs auth vs server state"
+        },
+        {
+          "id": "exp-rtk",
+          "text": "RTK Query caching and invalidation"
+        },
+        {
+          "id": "exp-auth",
+          "text": "JWT flow, protected routes, storage tradeoffs"
+        },
+        {
+          "id": "exp-perf",
+          "text": "When you would add memo and lazy routes"
+        },
+        {
+          "id": "exp-structure",
+          "text": "Feature folder structure and separation of concerns"
+        }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "review-self",
+      "level": 2,
+      "text": "Self-Review After Build"
+    },
+    {
+      "type": "paragraph",
+      "content": "After the timer stops, list weak areas honestly: Did auth hydration trip you? Did RTK Query tags confuse you? Did dashboard pagination break? These notes drive Week 4 revision. Day 22 is pure interview simulation — no new theory."
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        {
+          "id": "done-timer",
+          "text": "150-minute timed build completed"
+        },
+        {
+          "id": "done-stack",
+          "text": "Theme + Redux + RTK Query + auth + dashboard"
+        },
+        {
+          "id": "done-review",
+          "text": "Self-review weak areas documented"
+        },
+        {
+          "id": "done-git",
+          "text": "Git push"
+        }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

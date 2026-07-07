@@ -1,0 +1,85 @@
+{
+  "id": "day24",
+  "version": "1.0.0",
+  "day": 24,
+  "week": 4,
+  "track": "react-interview",
+  "title": "Mock Frontend Interview",
+  "subtitle": "Final day — five timed rounds, self-evaluation, graduation checklist, and FrontForge React Interview Track complete",
+  "mission": "Mock Frontend Interview",
+  "readingTimeMinutes": 10,
+  "estimatedBuildHours": 4,
+  "difficulty": "advanced",
+  "tags": [
+    "interview",
+    "graduation",
+    "mock-interview",
+    "machine-coding",
+    "debugging",
+    "self-evaluation",
+    "final"
+  ],
+  "topics": {
+    "javascript": [
+      "closures",
+      "event loop",
+      "async",
+      "promises",
+      "arrays",
+      "debounce",
+      "this",
+      "call",
+      "bind",
+      "apply"
+    ],
+    "typescript": [
+      "props",
+      "interfaces",
+      "types",
+      "API models",
+      "debugging errors"
+    ],
+    "react": [
+      "JSX",
+      "components",
+      "props",
+      "state",
+      "useEffect",
+      "useMemo",
+      "useCallback",
+      "useRef",
+      "Context",
+      "Redux",
+      "RTK Query",
+      "routing",
+      "performance",
+      "debugging"
+    ]
+  },
+  "prerequisites": [
+    "week1 — components, props, useState, forms, routing fundamentals",
+    "week2 — APIs, custom hooks, Context, dynamic routes, machine coding Round 2",
+    "week3 — Redux Toolkit, RTK Query, authentication, performance, dashboards",
+    "day22 — machine coding interview, debugging drills, code review",
+    "day23 — production refactor, architecture discussion, senior interview prep"
+  ],
+  "expectedOutcome": [
+    "Complete five timed mock interview rounds under realistic conditions",
+    "Demonstrate JavaScript, React, machine coding, project discussion, and debugging fluency",
+    "Explain FrontForge architecture, JSON renderer, and design decisions confidently",
+    "Self-evaluate honestly across JavaScript, React, TypeScript, Redux, performance, machine coding, project discussion, and communication",
+    "Finish the FrontForge React Interview Track ready to apply for frontend engineer roles"
+  ],
+  "definitionOfDone": [
+    "Round 1 JavaScript completed in 30-minute time box",
+    "Round 2 React completed in 30-minute time box",
+    "Round 3 Machine Coding completed in 60-minute time box — no AI, no Google, official docs only",
+    "Round 4 Project Discussion — FrontForge architecture, JSON renderer, challenges, improvements",
+    "Round 5 Debugging — React bugs, performance, TypeScript errors, routing issues fixed",
+    "Self-evaluation rubric completed for all eight categories",
+    "Final graduation checklist verified",
+    "10+ interview questions answered",
+    "Quiz passed with 70% or higher",
+    "Reflection submitted — last entry in the track"
+  ]
+}

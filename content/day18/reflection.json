@@ -1,0 +1,38 @@
+{
+  "id": "day18-reflection",
+  "metaId": "day18",
+  "title": "Day 18 Reflection",
+  "description": "Solidify auth patterns before the admin dashboard tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Where did you store the JWT and why? What are the tradeoffs?",
+      "guidance": "Compare localStorage and alternatives.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "Did you hit a redirect loop or auth flash? How did you fix it?",
+      "guidance": "Mention loading/hydration state.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "How does prepareHeaders connect Day 17 RTK Query to today's auth?",
+      "guidance": "Trace token from login to API call.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-04",
+      "question": "Explain authentication vs authorization with examples from your app.",
+      "guidance": "Login vs admin-only features preview.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "What role-based UI will you add on Day 19?",
+      "guidance": "Preview dashboard permissions.",
+      "minWords": 30
+    }
+  ]
+}

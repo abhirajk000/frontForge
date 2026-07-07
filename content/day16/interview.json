@@ -1,0 +1,156 @@
+{
+  "id": "day16-interview",
+  "metaId": "day16",
+  "title": "Day 16 Interview Prep",
+  "description": "Practice Redux vs Context, Redux Toolkit benefits, pure functions, and immutable updates.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Redux vs Context — when do you use each?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "State architecture judgment after Day 15 theme Context.",
+      "keyPoints": [
+        "Context for low-frequency global reads like theme",
+        "Redux for complex client state with many actions",
+        "DevTools and middleware with Redux",
+        "Neither replaces local useState"
+      ],
+      "sampleAnswer": "I used Context on Day 15 for theme — infrequent updates, many readers. I pick Redux Toolkit when multiple features dispatch many actions to shared state — todos, cart, UI flags — and I want DevTools, middleware, and predictable reducers. Local form state stays in useState.",
+      "followUps": [
+        "Can you combine both?",
+        "What about Zustand?"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "Why Redux Toolkit over plain Redux?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Awareness of modern Redux ergonomics.",
+      "keyPoints": [
+        "createSlice reduces boilerplate",
+        "Immer built in",
+        "configureStore defaults",
+        "Official recommendation"
+      ],
+      "sampleAnswer": "Plain Redux required action types, action creators, and switch reducers by hand. RTK createSlice generates those automatically, Immer lets me write concise reducers, and configureStore wires DevTools and thunk. It is the official recommended approach — less code, fewer bugs.",
+      "followUps": [
+        "What is Immer?",
+        "Do you still need reducers?"
+      ]
+    },
+    {
+      "id": "int-m01",
+      "question": "What is a pure function and why do Redux reducers need to be pure?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Functional programming fundamentals.",
+      "keyPoints": [
+        "Same input same output",
+        "No side effects",
+        "No mutating arguments",
+        "Enables time travel and testing"
+      ],
+      "sampleAnswer": "A pure function always returns the same result for the same inputs and does not cause side effects or mutate inputs. Redux reducers must be pure so the store update is predictable, DevTools can replay actions, and I can test reducers as simple functions without mounting React.",
+      "followUps": [
+        "Is Immer pure?",
+        "What about async in reducers?"
+      ]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type a Redux slice and RootState in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Production Redux typing.",
+      "keyPoints": [
+        "Interface for slice state",
+        "PayloadAction for payloads",
+        "ReturnType for RootState",
+        "Typed hooks"
+      ],
+      "sampleAnswer": "I define TodosState interface for initial state shape. createSlice reducers use PayloadAction<T> for typed payloads. I export RootState = ReturnType<typeof store.getState> and AppDispatch = typeof store.dispatch, then create useAppSelector and useAppDispatch typed hooks.",
+      "followUps": [
+        "How type selectors?",
+        "What about createAsyncThunk?"
+      ]
+    },
+    {
+      "id": "int-m03",
+      "question": "Explain actions, reducers, and selectors in Redux data flow.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Unidirectional data flow understanding.",
+      "keyPoints": [
+        "UI dispatches actions",
+        "Reducers compute next state",
+        "Store holds state",
+        "Selectors derive view data"
+      ],
+      "sampleAnswer": "User interaction dispatches an action object with a type and payload. Redux calls the matching reducer with current state and action, producing next state immutably. Components use selectors via useSelector to read derived data. The flow is action → reducer → store → UI.",
+      "followUps": [
+        "What is middleware?",
+        "Can reducers call APIs?"
+      ]
+    },
+    {
+      "id": "int-h01",
+      "question": "Todos do not update in the UI after dispatch. Walk through debugging.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Redux debugging process.",
+      "keyPoints": [
+        "Redux DevTools action log",
+        "Reducer registration",
+        "Selector path",
+        "Reference equality"
+      ],
+      "sampleAnswer": "I open Redux DevTools — if action appears but state unchanged, reducer logic or registration is wrong. I verify the reducer is in configureStore under the key my selector uses. If state changes but UI does not, selector may return same reference or component not subscribed. I add logging middleware and check useSelector path.",
+      "followUps": [
+        "What is serializable check?",
+        "Shallow vs deep equality?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "A teammate mutates state.todos.push() outside createSlice. What breaks?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Immutability consequences.",
+      "keyPoints": [
+        "React-Redux uses reference equality",
+        "DevTools inconsistency",
+        "Time travel breaks",
+        "Immer only inside reducers"
+      ],
+      "sampleAnswer": "Mutating state outside reducers changes data in place without a new reference — useSelector may not detect change and skip re-render. Redux expects immutable updates; DevTools and time travel become unreliable. I refactor to dispatch addTodo and let Immer inside createSlice produce the new state.",
+      "followUps": [
+        "How detect mutations in dev?",
+        "Structural sharing?"
+      ]
+    },
+    {
+      "id": "int-s01",
+      "question": "Design todo state: one slice vs split todos and ui slices?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Slice organization for growing apps.",
+      "keyPoints": [
+        "Co-locate filter with todos for small apps",
+        "Split when domains grow",
+        "Normalized state for large lists",
+        "Selector colocation"
+      ],
+      "sampleAnswer": "For a todo app I keep items and filter in one todos slice — they change together and selectors are simple. As the app grows I split ui slice for modals and filters, keep entities normalized by id for large lists. I colocate selectors with slices and avoid a god-slice anti-pattern.",
+      "followUps": [
+        "Normalized state shape?",
+        "Feature folder structure?"
+      ],
+      "redFlags": [
+        "One global object with everything",
+        "Filters in component local state only when global filter bar exists"
+      ]
+    }
+  ]
+}

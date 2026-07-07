@@ -1,0 +1,74 @@
+{
+  "id": "day14-challenge",
+  "metaId": "day14",
+  "title": "Machine Coding Round 2 — E-Commerce Mini App",
+  "mission": "Machine Coding Round 2",
+  "description": "120-minute timed build combining Week 2 skills: product listing, search, filter, pagination, and shopping cart — without referring to previous code.",
+  "estimatedMinutes": 120,
+  "difficulty": "intermediate",
+  "requirements": [
+    "TIMED: 120 minutes maximum — treat as real interview",
+    "RULES: No AI assistants, no Google — React, MDN, React Router, and TypeScript official docs only",
+    "Do NOT copy-paste from previous day projects — rebuild from scratch",
+    "Product listing page with responsive grid",
+    "Search products by name (debounced or submit-based)",
+    "Category filter and price range filter",
+    "Sort by price or name",
+    "Pagination (button or infinite scroll)",
+    "Shopping cart via Context + useReducer",
+    "Add to cart, remove, quantity controls, cart total",
+    "Cart badge in navbar",
+    "Loading and error states on product fetch",
+    "TypeScript strict mode — no any",
+    "Git commit with message 'machine-coding-round-2'"
+  ],
+  "acceptanceCriteria": [
+    "Build completed within 120 minutes (log start/end time in README)",
+    "All core features functional: list, search, filter, pagination, cart",
+    "Cart state shared across pages without prop drilling",
+    "No console errors during normal user flow",
+    "npm run build passes",
+    "Self-review section in README lists 3 weak areas and 3 strengths from Week 2",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "First 10 minutes: scaffold routes, types, and folder structure — do not code UI yet.",
+    "Next 30 minutes: product fetch, list, filters, search.",
+    "Next 30 minutes: pagination and cart Context/reducer.",
+    "Final 50 minutes: wire pages, navbar badge, polish, fix build errors.",
+    "If stuck >10 minutes on one feature, skip and return — partial working app beats perfect one feature.",
+    "Official docs: react.dev, reactrouter.com, typescriptlang.org, developer.mozilla.org."
+  ],
+  "bonus": {
+    "title": "If time remains after core requirements",
+    "description": "Optional points that impress interviewers — only after cart and pagination work.",
+    "requirements": [
+      "Dynamic product detail route /products/:productId",
+      "React.memo on product cards",
+      "Empty cart and empty search result states"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-time",
+      "title": "Running out of time",
+      "symptom": "60 minutes in and only product list exists",
+      "cause": "Perfecting UI before core features; no time budget",
+      "fix": "Follow hint time boxes; ship cart with add-only first, then remove and quantity"
+    },
+    {
+      "id": "dbg-context",
+      "title": "Cart not shared across routes",
+      "symptom": "Cart empty on cart page after adding on listing page",
+      "cause": "CartProvider inside one route or state in local useState",
+      "fix": "CartProvider wraps entire app above Router — Day 12 pattern"
+    },
+    {
+      "id": "dbg-search-filter",
+      "title": "Search and filter conflict",
+      "symptom": "Applying filter clears search or vice versa",
+      "cause": "Separate derived lists overwriting each other",
+      "fix": "Single useMemo pipeline: products → search → category → price → sort → paginate"
+    }
+  ]
+}

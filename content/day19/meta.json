@@ -1,0 +1,64 @@
+{
+  "id": "day19",
+  "version": "1.0.0",
+  "day": 19,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Admin Dashboard",
+  "subtitle": "Advanced array methods, dashboard models, role-based UI, search, filter, and pagination",
+  "mission": "Build Admin Dashboard.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": [
+    "react",
+    "dashboard",
+    "admin",
+    "role-based",
+    "pagination",
+    "search",
+    "filter"
+  ],
+  "topics": {
+    "javascript": [
+      "advanced array methods",
+      "object manipulation"
+    ],
+    "typescript": [
+      "dashboard models"
+    ],
+    "react": [
+      "conditional rendering",
+      "role-based UI",
+      "dashboard layout"
+    ]
+  },
+  "prerequisites": [
+    "day18 — authentication flow, protected routes, User role types",
+    "day17 — RTK Query for fetching user/product data",
+    "day10 — filter, sort, and list patterns from Week 2",
+    "day09 — debounced search from Week 2"
+  ],
+  "expectedOutcome": [
+    "Use map, filter, reduce, find, and sort for dashboard data pipelines",
+    "Type DashboardStats, UserRow, and filter state models",
+    "Build analytics summary cards with conditional rendering",
+    "Render role badges and hide admin actions from regular users",
+    "Implement search, category filter, and paginated user table",
+    "Structure dashboard layout with sidebar and content area",
+    "Explain dashboard folder architecture in interviews"
+  ],
+  "definitionOfDone": [
+    "Analytics cards display summary metrics",
+    "User table with search and role filter works",
+    "Role badges render correctly per user",
+    "Pagination controls navigate pages",
+    "Non-admin users cannot see admin-only UI",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 20,
+    "title": "Optimize React Performance",
+    "summary": "Tomorrow you will optimize your product list and routes with React.memo, useMemo, useCallback, lazy loading, and code splitting — with before/after performance comparison."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "day04-reflection",
+  "metaId": "day04",
+  "title": "Day 04 Reflection",
+  "description": "Solidify useEffect and fetch patterns — you will reuse them every week of this track.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "In your own words, why does useEffect exist? What problem would you have fetching in render?",
+      "guidance": "Side effects, infinite loops, purity of render.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "Walk through your loading → success → error state flow for GitHub search. Which state variables did you use?",
+      "guidance": "Name each piece of state and when it changes.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Did you hit an infinite loop or stale data bug? What caused it and how did you fix it?",
+      "guidance": "Reference debugging scenarios if you avoided bugs.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "What fields did you put on your GitHubUser type? What would you add for a production app?",
+      "guidance": "Think optional fields, null handling, runtime validation.",
+      "minWords": 30
+    }
+  ]
+}

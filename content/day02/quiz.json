@@ -1,0 +1,142 @@
+{
+  "id": "day02-quiz",
+  "metaId": "day02",
+  "title": "Day 02 Quiz — Props, State, and Controlled Forms",
+  "description": "Verify you understand objects/spread/rest, TypeScript props, useState, controlled inputs, and event handling before Day 03.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "What is the primary difference between props and state?",
+      "options": [
+        { "id": "a", "text": "Props are mutable; state is read-only" },
+        { "id": "b", "text": "Props are passed from parent; state is owned and updated inside the component" },
+        { "id": "c", "text": "Props use useState; state uses useEffect" },
+        { "id": "d", "text": "There is no difference in functional components" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Props configure a component from outside and should be treated as read-only by the child. State is internal data that changes over time via setters.",
+      "difficulty": "easy",
+      "tags": ["react", "props", "state"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "In a controlled input, the DOM holds the authoritative value and React reads it on submit.",
+      "correctAnswer": false,
+      "explanation": "Controlled inputs store the value in React state. The input's value prop is driven by state; onChange updates state on every keystroke.",
+      "difficulty": "easy",
+      "tags": ["react", "controlled-components"]
+    },
+    {
+      "id": "q03",
+      "type": "code-output",
+      "prompt": "What is logged?",
+      "code": "const user = { email: 'a@b.com', role: 'admin' };\nconst { role, ...contact } = user;\nconsole.log(contact.email);",
+      "language": "typescript",
+      "correctOutput": "a@b.com",
+      "explanation": "Rest collects remaining properties into contact. role is removed; email remains on contact.",
+      "difficulty": "easy",
+      "tags": ["javascript", "rest"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "Why should you call event.preventDefault() in a form submit handler?",
+      "options": [
+        { "id": "a", "text": "To prevent React from re-rendering" },
+        { "id": "b", "text": "To stop the browser's default full-page form submission and reload" },
+        { "id": "c", "text": "To enable TypeScript strict mode" },
+        { "id": "d", "text": "To clear useState automatically" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Without preventDefault, the browser performs a native submit and reloads the page, destroying the SPA experience.",
+      "difficulty": "easy",
+      "tags": ["react", "events"]
+    },
+    {
+      "id": "q05",
+      "type": "multiple-choice",
+      "prompt": "Which are valid ways to update form state immutably? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "setForm((prev) => ({ ...prev, email: value }))" },
+        { "id": "b", "text": "form.email = value; setForm(form)" },
+        { "id": "c", "text": "setForm({ ...form, email: value }) when form is current state from the same render" },
+        { "id": "d", "text": "Object.assign({}, form, { email: value }) then setForm(result)" }
+      ],
+      "correctOptionIds": ["a", "c", "d"],
+      "explanation": "Option b mutates the existing object before setState — React may bail out. Functional updates (a) are safest when depending on prior state. (c) works when form is fresh from current render. (d) creates a new object correctly.",
+      "difficulty": "medium",
+      "tags": ["javascript", "spread", "react"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "A controlled input pairs {{blank1}}={state} with {{blank2}} that updates that state.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["value"] },
+        { "id": "blank2", "acceptedAnswers": ["onChange", "onchange"] }
+      ],
+      "explanation": "value + onChange is the controlled component contract in React.",
+      "difficulty": "easy",
+      "tags": ["react", "controlled-components"]
+    },
+    {
+      "id": "q07",
+      "type": "code-completion",
+      "prompt": "Complete the hook that stores a string password field.",
+      "code": "const [password, {{setter}}] = {{hook}}('');",
+      "language": "tsx",
+      "blanks": [
+        { "id": "setter", "acceptedAnswers": ["setPassword"] },
+        { "id": "hook", "acceptedAnswers": ["useState"] }
+      ],
+      "explanation": "useState returns a tuple: current value and setter function named by convention set + PascalCase field name.",
+      "difficulty": "easy",
+      "tags": ["react", "useState"]
+    },
+    {
+      "id": "q08",
+      "type": "single-choice",
+      "prompt": "What does one-way data flow mean in React forms?",
+      "options": [
+        { "id": "a", "text": "Data only flows from child to parent" },
+        { "id": "b", "text": "Props flow down; events/callbacks flow up with new data" },
+        { "id": "c", "text": "State is stored only in the root App component" },
+        { "id": "d", "text": "Inputs cannot use onChange" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Parents pass props down. Children notify parents via callbacks. State may live in child or parent depending on design, but the flow direction is consistent.",
+      "difficulty": "medium",
+      "tags": ["react", "architecture"]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Why is mutating state directly (e.g. form.email = 'x') dangerous with useState?",
+      "acceptedKeywords": ["reference", "re-render", "immutable", "mutation", "same object"],
+      "sampleAnswer": "useState compares object references. Mutating the existing object does not create a new reference, so React may not re-render. It also breaks time-travel debugging and predictable updates.",
+      "explanation": "Interviewers use this to probe immutability understanding before Redux and complex state.",
+      "difficulty": "medium",
+      "tags": ["react", "debugging"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "An input appears frozen while typing. value={email} is set but onChange is missing. What happens?",
+      "options": [
+        { "id": "a", "text": "React throws an error immediately" },
+        { "id": "b", "text": "The input is read-only from React's perspective — keystrokes cannot update displayed value" },
+        { "id": "c", "text": "useState resets to empty string" },
+        { "id": "d", "text": "The browser ignores value prop" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Without onChange, state never updates, so value stays fixed. This is a classic controlled component mistake.",
+      "difficulty": "easy",
+      "tags": ["react", "debugging"]
+    }
+  ]
+}

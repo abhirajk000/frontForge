@@ -1,0 +1,47 @@
+{
+  "id": "day04",
+  "version": "1.0.0",
+  "day": 4,
+  "week": 1,
+  "track": "react-interview",
+  "title": "GitHub User Search",
+  "subtitle": "Promises, async/await, fetch, useEffect, and API-driven UI states",
+  "mission": "Understand side effects by building API-based UI.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 3,
+  "difficulty": "beginner",
+  "tags": ["react", "useEffect", "fetch", "async", "api", "loading", "error"],
+  "topics": {
+    "javascript": ["promises", "async await", "fetch API"],
+    "typescript": ["API response types"],
+    "react": ["useEffect", "loading state", "error state"]
+  },
+  "prerequisites": [
+    "day03 — reusable components and controlled inputs",
+    "day02 — useState for form and UI state",
+    "day01 — component composition and TypeScript props"
+  ],
+  "expectedOutcome": [
+    "Fetch data from a public API with async/await and fetch",
+    "Type API responses with TypeScript interfaces",
+    "Run side effects with useEffect and correct dependency arrays",
+    "Handle loading, error, empty, and success UI states",
+    "Explain why useEffect exists and when not to fetch in render",
+    "Debug infinite render loops and missing cleanup patterns"
+  ],
+  "definitionOfDone": [
+    "GitHub user search fetches profile by username",
+    "Loading spinner or message shows during fetch",
+    "Error message shows for failed or missing users",
+    "Empty state prompts user before first search",
+    "No infinite re-render from useEffect",
+    "API response typed with TypeScript",
+    "Code pushed to Git",
+    "Quiz and interview completed"
+  ],
+  "tomorrowPreview": {
+    "day": 5,
+    "title": "Dashboard Layout with React Router",
+    "summary": "Tomorrow you will add React Router with nested layouts — sidebar, navbar, dashboard, profile, settings, and a 404 page — turning your app into a multi-page SPA."
+  }
+}

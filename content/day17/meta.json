@@ -1,0 +1,66 @@
+{
+  "id": "day17",
+  "version": "1.0.0",
+  "day": 17,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Product Management using RTK Query",
+  "subtitle": "Promise chaining, API models, query and mutation hooks, cache, and invalidations",
+  "mission": "Build Product Management using RTK Query.",
+  "readingTimeMinutes": 30,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": [
+    "react",
+    "rtk-query",
+    "redux",
+    "api",
+    "cache",
+    "mutations",
+    "products"
+  ],
+  "topics": {
+    "javascript": [
+      "promise chaining",
+      "async patterns"
+    ],
+    "typescript": [
+      "API models",
+      "generic responses"
+    ],
+    "react": [
+      "RTK Query",
+      "query hooks",
+      "mutation hooks",
+      "cache",
+      "invalidations"
+    ]
+  },
+  "prerequisites": [
+    "day16 — Redux Toolkit store, createSlice, typed hooks, selectors",
+    "day08 — fetch APIs, loading and error UI states from Week 2",
+    "day15 — Provider placement at app root (ThemeProvider pattern)"
+  ],
+  "expectedOutcome": [
+    "Chain promises and explain async patterns that underpin RTK Query",
+    "Type API models and generic response wrappers in TypeScript",
+    "Configure createApi with baseQuery and inject endpoints",
+    "Use useGetProductsQuery and mutation hooks for product CRUD",
+    "Handle loading, error, and success states in the UI",
+    "Invalidate cache tags so lists refresh after mutations",
+    "Compare RTK Query vs React Query in interviews"
+  ],
+  "definitionOfDone": [
+    "Fetch and display products with loading and error states",
+    "Add, update, and delete products via mutation hooks",
+    "Cache updates correctly after mutations via tag invalidation",
+    "No duplicate fetch storms on remount",
+    "API types defined for Product and list responses",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 18,
+    "title": "Authentication Flow",
+    "summary": "Tomorrow you will secure your app with JWT basics, auth types, protected routes, login/logout, and session persistence — building on today's API layer."
+  }
+}

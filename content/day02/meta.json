@@ -1,0 +1,47 @@
+{
+  "id": "day02",
+  "version": "1.0.0",
+  "day": 2,
+  "week": 1,
+  "track": "react-interview",
+  "title": "Professional Login Page",
+  "subtitle": "Props, state, controlled forms, and production-grade event handling",
+  "mission": "Build a professional Login Page.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 3,
+  "difficulty": "beginner",
+  "tags": ["react", "useState", "forms", "controlled-components", "props", "typescript"],
+  "topics": {
+    "javascript": ["objects", "arrays", "spread operator", "rest operator"],
+    "typescript": ["interfaces", "type aliases", "component props"],
+    "react": ["props", "useState", "controlled components", "forms", "event handling"]
+  },
+  "prerequisites": [
+    "day01 — Vite + React + TypeScript project setup",
+    "day01 — functional components with typed props",
+    "day01 — JSX and component composition"
+  ],
+  "expectedOutcome": [
+    "Manage component state with useState",
+    "Build controlled form inputs where React state is the single source of truth",
+    "Handle submit and change events with correct typing",
+    "Explain the difference between props and state in an interview",
+    "Implement validation, loading, and error UI states on a login form"
+  ],
+  "definitionOfDone": [
+    "Email and password validation works with visible error messages",
+    "Loading state disables the submit button and shows feedback",
+    "Error state displays when login fails",
+    "Show password toggle works",
+    "Remember me checkbox persists intent in component state",
+    "Layout is responsive on mobile and desktop",
+    "Code is pushed to Git",
+    "Quiz is completed with passing score",
+    "Interview questions are answered"
+  ],
+  "tomorrowPreview": {
+    "day": 3,
+    "title": "Reusable Form Components",
+    "summary": "Tomorrow you will extract today's login inputs into a reusable input library using map, filter, composition, and the children prop — without rewriting form logic from scratch."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "id": "day05-challenge",
+  "metaId": "day05",
+  "title": "Build Dashboard Layout with Nested Routes",
+  "mission": "Learn routing by building a dashboard.",
+  "description": "Add React Router to your app and build a dashboard shell with sidebar, navbar, and nested pages for dashboard home, profile, and settings — plus a 404 page.",
+  "estimatedMinutes": 180,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Install react-router-dom and wrap app with BrowserRouter",
+    "Create DashboardLayout with Sidebar, Navbar, and Outlet",
+    "Routes: / (redirect or landing), /dashboard, /profile, /settings",
+    "Nested routes so sidebar and navbar persist across dashboard pages",
+    "Use Link or NavLink for sidebar navigation",
+    "Active link styling on current route",
+    "Profile and Settings pages with distinct content",
+    "404 Not Found page for path='*'",
+    "Type route-related props if using useParams (optional today)"
+  ],
+  "acceptanceCriteria": [
+    "Clicking sidebar links changes URL and main content without full reload",
+    "Sidebar and navbar remain visible on dashboard, profile, settings",
+    "Unknown URL shows 404 page",
+    "Browser back/forward works between routes",
+    "NavLink or equivalent highlights active route",
+    "npm run build passes",
+    "Changes pushed to Git"
+  ],
+  "hints": [
+    "Structure: <Routes><Route element={<DashboardLayout />}> nested children </Route></Routes>",
+    "DashboardLayout returns div with Sidebar, Navbar, main with <Outlet />.",
+    "index route on /dashboard for default child: { index: true, element: <DashboardHome /> }.",
+    "404 as sibling: <Route path='*' element={<NotFound />} /> outside layout if needed.",
+    "Use createBrowserRouter or JSX Routes — match React Router v6 docs."
+  ],
+  "bonus": {
+    "title": "Route-aware navbar",
+    "description": "Polish without new week concepts.",
+    "requirements": [
+      "Navbar title reflects current page name from route",
+      "Breadcrumb or subtitle on profile/settings",
+      "Redirect / to /dashboard"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-route",
+      "title": "Wrong route",
+      "symptom": "Blank page or router error in console",
+      "cause": "Typo in path, missing element, or parent path not matching Link to",
+      "fix": "Align Link to with route path; check relative vs absolute paths in nested config"
+    },
+    {
+      "id": "dbg-nav",
+      "title": "Broken navigation",
+      "symptom": "URL changes but Outlet content does not update",
+      "cause": "Outlet missing from layout or child routes not nested under layout Route",
+      "fix": "Place Outlet in layout; nest child Route elements inside parent layout route"
+    },
+    {
+      "id": "dbg-reload",
+      "title": "Full page reload",
+      "symptom": "White flash on navigation, network reloads document",
+      "cause": "Using <a href> instead of Link for internal routes",
+      "fix": "Replace with <Link to='/profile'> or NavLink"
+    }
+  ]
+}

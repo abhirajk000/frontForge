@@ -1,0 +1,161 @@
+{
+  "id": "day15-interview",
+  "metaId": "day15",
+  "title": "Day 15 Interview Prep",
+  "description": "Practice Context vs props, when NOT to use Context, global state decisions, and this/call/apply/bind from today's roadmap.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Context vs Props — when do you use each?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Practical state-sharing judgment, not Context for everything.",
+      "keyPoints": [
+        "Props for direct parent-child and shallow trees",
+        "Context for widely consumed global data like theme, locale, auth",
+        "Prop drilling is not always bad for 2–3 levels",
+        "Composition can replace some Context needs"
+      ],
+      "sampleAnswer": "I use props when data flows one or two levels and the parent owns the state. I use Context when many distant components need the same data — theme, auth, locale. I do not reach for Context just to avoid passing two props. I also consider composition: passing children as props sometimes removes drilling without Context.",
+      "followUps": ["What is prop drilling?", "Can composition replace Context for theme?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "When should you NOT use React Context?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Awareness of Context limitations and overuse.",
+      "keyPoints": [
+        "Frequently changing data causes wide re-renders",
+        "Not a full state management replacement",
+        "Server state belongs in data-fetching libraries",
+        "Local UI state stays in components"
+      ],
+      "sampleAnswer": "I avoid Context for high-frequency updates like keystroke search or mouse position — every consumer re-renders. I avoid it when props or composition suffice. I do not use Context alone for complex server-cache logic — that is RTK Query or React Query territory. Context fits stable, globally read preferences like theme.",
+      "followUps": ["How split context to reduce re-renders?", "Context vs Redux?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is global state and what belongs in it?",
+      "difficulty": "easy",
+      "category": "architecture",
+      "whatInterviewerTests": "Architectural boundaries for medium apps.",
+      "keyPoints": [
+        "State needed across many unrelated components",
+        "Theme, auth session, user preferences",
+        "Not every useState should be global",
+        "Single source of truth principle"
+      ],
+      "sampleAnswer": "Global state is data many parts of the app read or write without a common parent — theme mode, authenticated user, feature flags. Local state stays local: form inputs, modal open, hover. I promote to global only when prop drilling hurts maintainability or multiple features need the same truth.",
+      "followUps": ["Where store global state without Redux?", "What is derived state?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain call, apply, and bind with examples.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Classic JS fundamentals still asked at Indian product companies.",
+      "keyPoints": [
+        "All three control this",
+        "call and apply invoke immediately",
+        "bind returns a new function",
+        "Arrow functions ignore bind/call/apply for this"
+      ],
+      "sampleAnswer": "call and apply invoke a function with an explicit this. greet.call(user, 'Hi') passes args individually; greet.apply(user, ['Hi']) passes an array. bind returns a new function with this locked: const bound = greet.bind(user) — useful for passing methods as callbacks without losing this. Arrow functions inherit lexical this so bind does not change their this.",
+      "followUps": ["What is this in strict mode?", "Why do React class components use bind?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type a React Context in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Production typing for provider/hook patterns.",
+      "keyPoints": [
+        "createContext with default or null",
+        "Interface for context value shape",
+        "Function types for setters",
+        "Custom hook throws if context is null"
+      ],
+      "sampleAnswer": "I define ThemeContextValue with theme: ThemePreference and setTheme: (t: ThemePreference) => void. I create context with createContext<ThemeContextValue | null>(null). My useTheme hook reads context, throws if null — meaning used outside provider — and returns the typed value. This gives compile-time safety and runtime guardrails.",
+      "followUps": ["undefined vs null default?", "How type children in provider?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "How would you build a theme system with light, dark, and system modes?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "End-to-end feature design without Redux.",
+      "keyPoints": [
+        "Preference vs resolved theme",
+        "matchMedia for system detection",
+        "data-theme or class on html",
+        "localStorage persistence",
+        "Memoized provider value"
+      ],
+      "sampleAnswer": "I store user preference as light | dark | system. Resolved theme is light or dark — system reads prefers-color-scheme. ThemeProvider holds preference state, resolves theme, applies data-theme on documentElement, persists to localStorage. useTheme exposes both. I memoize context value and subscribe to media query changes for system mode.",
+      "followUps": ["How prevent theme flash?", "CSS variables vs Tailwind dark mode?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Your app re-renders 50 components when theme toggles. How do you investigate and optimize?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Context performance debugging.",
+      "keyPoints": [
+        "React DevTools highlight updates",
+        "Unstable context value object",
+        "Split contexts: state vs dispatch",
+        "React.memo on heavy children",
+        "Theme change should re-render themed UI — that is expected"
+      ],
+      "sampleAnswer": "I use React DevTools profiler and highlight updates to see which components re-render. If everything re-renders on unrelated parent state, the provider likely passes a new object each render — fix with useMemo. I split ThemeStateContext and ThemeDispatchContext so consumers that only call setTheme do not re-render on theme change. Some re-render on theme change is correct — CSS variables need to apply.",
+      "followUps": ["Context selector patterns?", "When is React.memo enough?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Theme resets to light on every refresh despite localStorage. Walk through your debug process.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Persistence and initialization bugs.",
+      "keyPoints": [
+        "Check localStorage key and value in DevTools Application tab",
+        "useState initializer vs useEffect timing",
+        "SSR hydration mismatch",
+        "Writing default before read completes"
+      ],
+      "sampleAnswer": "I check Application → Local Storage for the key and value. If write works but read fails, I likely read in useEffect — first render uses default before effect runs. Fix: useState(() => localStorage.getItem(KEY) ?? 'system'). If key mismatch between write and read, align constants. If flash then correct, add synchronous read or inline head script.",
+      "followUps": ["JSON.parse errors in storage?", "How handle private browsing quota?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "A junior puts cart state, theme, and API cache all in one Context. How do you refactor?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Separation of concerns and state architecture mentoring.",
+      "keyPoints": [
+        "Single context with unrelated data causes massive re-renders",
+        "Split by update frequency and domain",
+        "Server cache is not Context",
+        "Preview Redux for cart without implementing today"
+      ],
+      "sampleAnswer": "I explain that one mega-context means any cart quantity change re-renders theme consumers. I split: ThemeContext for stable preference, cart moves to useReducer+Context or Redux Toolkit tomorrow, API cache to RTK Query next week. I draw boundaries by update frequency and consumer count. I pair on extracting ThemeProvider first as the smallest win.",
+      "followUps": ["How many contexts is too many?", "Feature-based folder structure?"],
+      "redFlags": ["One context for everything is simpler", "Re-renders do not matter"]
+    },
+    {
+      "id": "int-s02",
+      "question": "Compare three approaches to global theme: CSS class on html, Context, and Redux. Which do you pick and why?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Trade-off reasoning across solutions.",
+      "keyPoints": [
+        "CSS/data-attribute is the rendering mechanism",
+        "Context is the React state layer",
+        "Redux adds DevTools and middleware for large apps",
+        "Theme is low-frequency — Context usually sufficient"
+      ],
+      "sampleAnswer": "CSS class or data-theme on html is how the browser applies styles — every approach needs that DOM hook. Context provides React state and a useTheme hook for components. Redux adds persistence middleware, time-travel, and consistency when theme interacts with many slices — overkill for theme alone. I pick Context + localStorage for most apps; Redux when theme is one piece of a unified global store already using RTK.",
+      "followUps": ["Redux vs Context tomorrow?", "CSS-in-JS theme tokens?"]
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "id": "day20-lesson",
+  "metaId": "day20",
+  "title": "Day 20 — Optimize React Performance",
+  "summary": "Run a performance lab on your product list and routes — React.memo, useMemo, useCallback, lazy loading, code splitting, and before/after comparison with interview-ready optimization judgment.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your app works — but does it scale renders? Day 10 introduced React.memo lightly. Today you go deep: profile unnecessary re-renders, memoize product rows, stabilize callbacks, lazy load admin routes, and document before/after. Interviewers ask when to optimize — the answer is measure first, memoize surgically, not everywhere."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Measure before memoizing",
+      "content": "Premature memoization adds complexity without benefit. Use React DevTools Profiler to find actual bottlenecks on your Day 17 product list and Day 19 dashboard before applying fixes."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Memory and Garbage Collection"
+    },
+    {
+      "type": "paragraph",
+      "content": "JavaScript engines allocate objects on the heap. When references drop to zero, garbage collection reclaims memory. Closures keep variables alive. Event listeners and timers left uncleaned cause leaks. In React, stale closures in effects and unstable object references trigger extra renders — related but distinct problems."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Closure keeps largeData alive while handler exists\nfunction createHandler(largeData) {\n  return () => console.log(largeData.length);\n}\n\n// GC can reclaim when no references remain\nlet cache = bigObject;\ncache = null; // eligible for GC"
+    },
+    {
+      "type": "tip",
+      "title": "Production connection",
+      "content": "Memory leaks in SPAs often come from subscriptions not cleaned in useEffect return, or global caches growing unbounded. Always return cleanup functions."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Performance-friendly Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Types erase at compile time — zero runtime cost. Still, prefer narrow unions over string, const assertions for literal stability, and avoid unnecessary generic widening that forces casts downstream. Readonly arrays signal immutability intent to teammates."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "type Role = 'user' | 'admin'; // narrow union\n\ninterface ProductRowProps {\n  readonly product: Product;\n  onSelect: (id: string) => void;\n}\n\n// Memo component typed props\nconst ProductRow = React.memo(function ProductRow({ product, onSelect }: ProductRowProps) {\n  return <tr onClick={() => onSelect(product.id)}>...</tr>;\n});"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Memoization and Code Splitting"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-memo",
+          "label": "React.memo",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "React.memo wraps a component and skips re-render if props are shallow-equal. Use on expensive list rows — ProductRow, UserRow — when parent re-renders often but row props unchanged."
+            }
+          ]
+        },
+        {
+          "id": "tab-hooks",
+          "label": "useMemo & useCallback",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "const filtered = useMemo(\n  () => products.filter(p => p.category === cat),\n  [products, cat]\n);\n\nconst handleSelect = useCallback((id: string) => {\n  dispatch(selectProduct(id));\n}, [dispatch]);"
+            },
+            {
+              "type": "paragraph",
+              "content": "useMemo caches computed values. useCallback caches function references — needed when passing to React.memo children. Wrong dependency arrays cause stale data or defeat memoization."
+            }
+          ]
+        },
+        {
+          "id": "tab-lazy",
+          "label": "Lazy & Suspense",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "const AdminDashboard = lazy(() => import('./features/dashboard/AdminDashboard'));\n\n<Suspense fallback={<PageSpinner />}>\n  <Routes>\n    <Route path=\"/admin\" element={<AdminDashboard />} />\n  </Routes>\n</Suspense>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "title": "When NOT to memoize",
+      "content": "Do not wrap every component in memo. Cheap renders cost less than comparison overhead. Memoize list items, heavy charts, and components receiving stable props that re-render due to unrelated parent state."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Performance Lab"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        {
+          "id": "req-profile",
+          "text": "Profile product list renders with React DevTools"
+        },
+        {
+          "id": "req-memo-row",
+          "text": "Memoize ProductRow or equivalent list item"
+        },
+        {
+          "id": "req-usememo",
+          "text": "Wrap expensive filter/sort in useMemo"
+        },
+        {
+          "id": "req-callback",
+          "text": "Stabilize handlers with useCallback"
+        },
+        {
+          "id": "req-lazy",
+          "text": "Lazy load admin/dashboard routes"
+        },
+        {
+          "id": "req-compare",
+          "text": "Document before/after render counts or timings"
+        }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Performance mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-rerender",
+          "title": "Unnecessary re-renders",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: All rows re-render on single checkbox toggle. Cause: Inline arrow functions or object props break memo equality. Fix: useCallback for handlers; avoid style={{}} inline objects."
+            }
+          ]
+        },
+        {
+          "id": "dbg-deps",
+          "title": "Wrong dependency arrays",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Stale filtered list or infinite effect loop. Cause: Missing deps or unstable deps like {} in array. Fix: ESLint exhaustive-deps; hoist stable refs; memoize objects passed as deps."
+            }
+          ]
+        },
+        {
+          "id": "dbg-memo",
+          "title": "Memoization mistakes",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: memo has no effect. Cause: Parent passes new object every render or memo on component that is always cheap. Fix: Profile first; stabilize props; remove useless memo wrappers."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Focus — Performance Optimization"
+    },
+    {
+      "type": "paragraph",
+      "content": "Classic question: React.memo vs useMemo vs useCallback? memo wraps components; useMemo caches values; useCallback caches functions. Code splitting reduces initial bundle — lazy routes load admin code only when needed. Always say: profile first, optimize bottlenecks, avoid premature abstraction."
+    },
+    {
+      "type": "quote",
+      "content": "You should only rely on useMemo and useCallback for performance optimization.",
+      "attribution": "React documentation"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        {
+          "id": "done-memo",
+          "text": "Memoized list components"
+        },
+        {
+          "id": "done-lazy",
+          "text": "Lazy routes with Suspense fallback"
+        },
+        {
+          "id": "done-compare",
+          "text": "Before/after documented"
+        },
+        {
+          "id": "done-git",
+          "text": "Git push"
+        }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

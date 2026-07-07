@@ -1,0 +1,49 @@
+{
+  "id": "day14",
+  "version": "1.0.0",
+  "day": 14,
+  "week": 2,
+  "track": "react-interview",
+  "title": "Machine Coding Round 2",
+  "subtitle": "120-minute Week 2 review — product listing, search, filter, pagination, and cart",
+  "mission": "Machine Coding Round 2",
+  "readingTimeMinutes": 20,
+  "estimatedBuildHours": 2,
+  "difficulty": "intermediate",
+  "tags": ["react", "machine-coding", "review", "interview", "week2"],
+  "topics": {
+    "javascript": ["week 2 review", "event loop", "immutability", "debouncing"],
+    "typescript": ["week 2 review", "generics", "cart types", "route params"],
+    "react": ["APIs", "custom hooks", "Context API", "routing", "performance", "lists"]
+  },
+  "prerequisites": [
+    "day08 — fetch, loading/error/empty states, API interfaces",
+    "day09 — debouncing, custom hooks, paginated search",
+    "day10 — filtering, sorting, keys, React.memo",
+    "day11 — infinite scroll, event loop, Intersection Observer",
+    "day12 — Context API, useReducer, cart immutability",
+    "day13 — dynamic routes, URL params, navigation"
+  ],
+  "expectedOutcome": [
+    "Build product listing with search, filter, pagination, and cart in 120 minutes without copying old code",
+    "Demonstrate Week 2 concepts under interview time pressure",
+    "Explain architectural decisions: hooks, Context, routing, performance",
+    "Identify personal weak areas before Week 3"
+  ],
+  "definitionOfDone": [
+    "Timed 120-minute build completed under exam conditions",
+    "Product listing with category/price filter and sort",
+    "Debounced or optimized search",
+    "Pagination or infinite scroll for products",
+    "Shopping cart with add, remove, quantity, and total via Context",
+    "No AI, no Google — official docs only during build",
+    "Self-review notes listing weak Week 2 topics",
+    "Quiz and interview completed",
+    "Git push of machine coding attempt"
+  ],
+  "tomorrowPreview": {
+    "day": 15,
+    "title": "Theme Management",
+    "summary": "Week 3 begins with advanced React patterns — tomorrow you will build theme switching with Context, preparing for Redux Toolkit and authentication flows."
+  }
+}

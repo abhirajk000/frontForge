@@ -1,0 +1,72 @@
+{
+  "id": "day24-resources",
+  "metaId": "day24",
+  "title": "Day 24 Resources",
+  "description": "Official documentation tabs to keep open during the mock interview — allowed for Round 3 machine coding only.",
+  "resources": [
+    {
+      "id": "res-react-learn",
+      "title": "React — Quick Start",
+      "url": "https://react.dev/learn",
+      "type": "documentation",
+      "description": "Round 2 React revision and Round 3 component patterns.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-event-loop",
+      "title": "MDN — Event Loop",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
+      "type": "documentation",
+      "description": "Round 1 JavaScript — async, promises, and event loop order.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-fetch",
+      "title": "MDN — Using the Fetch API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "type": "documentation",
+      "description": "Round 3 machine coding API integration — official reference allowed.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-this",
+      "title": "MDN — this",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this",
+      "type": "documentation",
+      "description": "Round 1 — this, call, bind, apply reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-router",
+      "title": "React Router — Tutorial",
+      "url": "https://reactrouter.com/en/main/start/tutorial",
+      "type": "documentation",
+      "description": "Routing and useParams for Round 2 and Round 5 debugging.",
+      "recommended": true
+    },
+    {
+      "id": "res-rtk",
+      "title": "Redux Toolkit — Quick Start",
+      "url": "https://redux-toolkit.js.org/tutorials/quick-start",
+      "type": "documentation",
+      "description": "Round 2 Redux and RTK Query discussion reference.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts",
+      "title": "TypeScript — Handbook",
+      "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+      "type": "documentation",
+      "description": "Round 5 TypeScript error debugging and Round 3 typing.",
+      "recommended": true
+    },
+    {
+      "id": "res-devtools",
+      "title": "React — Developer Tools",
+      "url": "https://react.dev/learn/react-developer-tools",
+      "type": "documentation",
+      "description": "Round 5 debugging — Profiler and component inspection.",
+      "recommended": true
+    }
+  ]
+}

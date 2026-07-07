@@ -1,0 +1,68 @@
+{
+  "id": "day01-challenge",
+  "metaId": "day01",
+  "title": "Build a Responsive Landing Page",
+  "mission": "Build your first React application and understand how React works.",
+  "description": "Create a portfolio-worthy landing page using Vite, React 19, and TypeScript. Practice component composition, typed props, and responsive layout. This is your first GitHub project in the FrontForge track.",
+  "estimatedMinutes": 180,
+  "difficulty": "beginner",
+  "requirements": [
+    "Scaffold a new project with Vite + React + TypeScript",
+    "Create a Navbar component with brand name and navigation links",
+    "Create a Hero component with title, subtitle, and primary CTA",
+    "Create a Features section with at least 3 feature cards from an array using map()",
+    "Create a Footer component with copyright text",
+    "Use separate files for each component under src/components/",
+    "Type all component props with TypeScript interfaces or type aliases",
+    "Make the layout responsive for mobile and desktop using CSS"
+  ],
+  "acceptanceCriteria": [
+    "npm run dev starts without errors",
+    "All four page sections render in correct order: Navbar, Hero, Features, Footer",
+    "Feature cards are generated from data — not hardcoded as three separate JSX blocks",
+    "No component file exceeds 80 lines",
+    "Page is usable at 375px viewport width without horizontal scroll",
+    "npm run build completes successfully",
+    "Repository is pushed to GitHub with a meaningful README describing the project"
+  ],
+  "hints": [
+    "Create App.tsx as composition only — import and arrange components, avoid business logic there.",
+    "Define a Feature type and a features array, then map to a FeatureCard component.",
+    "Use semantic HTML: header, main, section, footer.",
+    "If styles feel messy, use a single index.css with simple flexbox — design polish comes later.",
+    "When stuck on imports, check named vs default export in the component file."
+  ],
+  "bonus": {
+    "title": "Polish pass",
+    "description": "Add interview-visible quality signals without new React concepts.",
+    "requirements": [
+      "Add aria-label or aria-labelledby on the Hero section",
+      "Add hover styles on feature cards and the primary CTA",
+      "Add a favicon and update index.html title to your product name",
+      "Take a screenshot for your README"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-jsx",
+      "title": "JSX syntax error",
+      "symptom": "Vite error overlay: Unexpected token or unclosed tag",
+      "cause": "Invalid JSX — often class instead of className, missing closing tag, or adjacent elements without a wrapper",
+      "fix": "Replace class with className, close all tags, wrap multiple siblings in a fragment <>...</>"
+    },
+    {
+      "id": "dbg-return",
+      "title": "Missing return",
+      "symptom": "Component mounts but renders blank area",
+      "cause": "Function body uses { } without return statement",
+      "fix": "Add return before JSX or remove braces and use implicit return with parentheses"
+    },
+    {
+      "id": "dbg-import",
+      "title": "Wrong component import",
+      "symptom": "Element type is invalid: expected a string or a class/function but got undefined",
+      "cause": "Named/default export mismatch or incorrect file path",
+      "fix": "Verify export in source file matches import syntax and path is correct relative to importer"
+    }
+  ]
+}

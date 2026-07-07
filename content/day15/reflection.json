@@ -1,0 +1,38 @@
+{
+  "id": "day15-reflection",
+  "metaId": "day15",
+  "title": "Day 15 Reflection",
+  "description": "Solidify Context API patterns and global state thinking before Redux Toolkit tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "When would you pass theme via props instead of Context? When is Context the right choice?",
+      "guidance": "Think about prop drilling depth and update frequency.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Did you encounter unnecessary re-renders from your ThemeProvider? How did you diagnose and fix them?",
+      "guidance": "Mention React DevTools highlight updates or useMemo.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Explain call, apply, and bind in your own words with one example each.",
+      "guidance": "Connect to interview questions about this keyword.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-04",
+      "question": "How does your system theme mode detect and respond to OS preference changes?",
+      "guidance": "Describe matchMedia and cleanup.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "What state belongs in Context vs what should stay local or move to Redux tomorrow?",
+      "guidance": "Preview Day 16 without implementing Redux today.",
+      "minWords": 30
+    }
+  ]
+}

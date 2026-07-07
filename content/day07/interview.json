@@ -1,0 +1,89 @@
+{
+  "id": "day07-interview",
+  "metaId": "day07",
+  "title": "Day 07 Interview Prep — Week 1 Cumulative",
+  "description": "Cumulative interview practice across all Week 1 topics — answer as if the machine coding round just ended.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Explain JSX vs HTML in 30 seconds.",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Day 01 foundation still sharp.",
+      "keyPoints": ["className", "expressions in {}", "compiled to JS", "single parent"],
+      "sampleAnswer": "JSX looks like HTML but compiles to JavaScript. I use className not class, embed expressions with curly braces, and close all tags. It describes UI declaratively inside React components.",
+      "followUps": ["Fragment syntax?", "Why not template strings?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "Props vs state — quick distinction.",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Day 02 — must be automatic by Day 07.",
+      "keyPoints": ["props from parent", "state internal", "controlled forms use state", "props read-only"],
+      "sampleAnswer": "Props are passed in from parent to configure a component. State is owned inside and changes over time. Login email is state; onSubmit callback might be a prop if form is reusable.",
+      "followUps": ["Lift state up?", "When Context?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Why keys in lists?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Day 03 retention.",
+      "keyPoints": ["reconciliation", "stable identity", "avoid index when reordering"],
+      "sampleAnswer": "Keys help React track which list item is which across updates. Stable ids prevent wrong DOM reuse. I avoid index keys when items can be deleted or reordered.",
+      "followUps": ["Key on wrong element?", "UUID for new rows?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "Explain useEffect and dependency array.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Day 04 — common mid-level question.",
+      "keyPoints": ["side effects after render", "deps control re-run", "[] mount", "fetch cleanup"],
+      "sampleAnswer": "useEffect runs after paint to sync with external systems like APIs. Dependency array lists what triggers re-run. Empty array runs on mount. I include values read inside the effect. Cleanup aborts stale fetches.",
+      "followUps": ["You might not need an effect?", "Strict Mode double invoke?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "Nested routes and Outlet — explain with dashboard example.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Day 05 architecture.",
+      "keyPoints": ["layout persists", "Outlet swaps child", "URL reflects page", "Link no reload"],
+      "sampleAnswer": "DashboardLayout wraps sidebar and navbar. Child routes for profile and settings render inside Outlet. URL is /profile but chrome stays. Link navigates client-side without document reload.",
+      "followUps": ["Protected routes?", "Index route?"]
+    },
+    {
+      "id": "int-m04",
+      "question": "What is a custom hook and give an example from Week 1.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Day 06 — reuse logic.",
+      "keyPoints": ["use prefix", "composes hooks", "useDebounce example", "share logic"],
+      "sampleAnswer": "Custom hooks extract reusable stateful logic. useDebounce delays a value update with useEffect and setTimeout cleanup. useTheme toggles light/dark and persists to localStorage. Components stay thin.",
+      "followUps": ["Hook vs util?", "Testing hooks?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Walk through how you would build today's machine coding app in 90 minutes.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Planning and prioritization under pressure.",
+      "keyPoints": ["scaffold first", "login then layout", "minimal viable polish", "time checkpoints"],
+      "sampleAnswer": "I scaffold Vite and router in 15 minutes. Login with controlled fields and fake submit next 25 minutes. Dashboard layout with sidebar, navbar, Outlet, two routes in 30 minutes. Wire navigation and fix build last 20 minutes. CSS stays minimal until core flows work.",
+      "followUps": ["What do you cut first?", "How test without tests?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "You finished machine coding but routing was shaky. How do you recover before Week 2?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Self-directed learning maturity.",
+      "keyPoints": ["targeted rebuild", "official docs", "smaller drills", "not repeat whole week blindly"],
+      "sampleAnswer": "I spend one evening rebuilding only DashboardLayout + three routes from blank file without solutions. I read React Router nested routes tutorial and write route tree on paper. I drill Outlet until automatic, then continue Week 2 weather app where routing appears again.",
+      "followUps": ["Spaced repetition?", "Pair review?"],
+      "redFlags": ["Skip Week 2", "Only rewatch videos"]
+    }
+  ]
+}

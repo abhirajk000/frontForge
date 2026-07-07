@@ -1,0 +1,38 @@
+{
+  "id": "day24-reflection",
+  "metaId": "day24",
+  "title": "Day 24 Reflection — Graduation",
+  "description": "Final reflection in the FrontForge React Interview Track. Honest self-assessment across all five mock rounds and your graduation readiness.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Rate yourself 1–5 on all eight self-evaluation categories. Which two are strongest and which two need the most work?",
+      "guidance": "JavaScript, React, TypeScript, Redux, Performance, Machine Coding, Project Discussion, Communication.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Round 3 machine coding: did you finish MVP in 60 minutes? If not, where did time go?",
+      "guidance": "Same honesty as Day 21–22 — time management is interview skill.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-03",
+      "question": "Round 4 project discussion: how did you explain FrontForge JSON renderer and your refactored project?",
+      "guidance": "What landed well? What question stumped you?",
+      "minWords": 50
+    },
+    {
+      "id": "refl-04",
+      "question": "Looking back at Week 1 vs today — what is the single biggest skill you gained?",
+      "guidance": "Be specific: not just learned React but can explain/build/debug under pressure.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-05",
+      "question": "You graduated. What is your first action in the next 48 hours — application, portfolio, or focused drill?",
+      "guidance": "Commit to one concrete next step. Interviews are practice.",
+      "minWords": 35
+    }
+  ]
+}

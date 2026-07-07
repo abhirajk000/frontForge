@@ -1,0 +1,69 @@
+{
+  "id": "day10-challenge",
+  "metaId": "day10",
+  "title": "Build an E-Commerce Product Listing",
+  "mission": "Build an E-Commerce Product Listing.",
+  "description": "Create a filterable, sortable, searchable product catalog with a responsive grid — the foundation of every e-commerce browse page.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Fetch or load a product dataset with id, name, price, category, and image",
+    "Category filter dropdown or chip buttons",
+    "Price range filter with min and max inputs",
+    "Search input filtering by product name (client-side or debounced)",
+    "Sort controls for price and name (ascending/descending)",
+    "Responsive product grid using CSS Grid or Flexbox",
+    "ProductCard component with React.memo",
+    "Stable keys using product.id — never array index",
+    "TypeScript Product interface in src/types/product.ts",
+    "Empty state when filters match no products"
+  ],
+  "acceptanceCriteria": [
+    "Selecting 'Electronics' shows only electronics products",
+    "Price filter 100–500 excludes products outside range",
+    "Search 'phone' shows matching products only",
+    "Sort by price low-to-high orders correctly",
+    "Changing parent filter state does not re-render unchanged ProductCards unnecessarily (verify with React DevTools)",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Derive filteredProducts with useMemo from products + filter state — do not mutate original array.",
+    "Chain: products.filter(...).filter(...).sort(...) or pipe through helper functions.",
+    "Extract ProductCard as memoized component; pass primitive props where possible.",
+    "Keep sort state as 'price-asc' | 'price-desc' | 'name-asc' enum string.",
+    "Use Fake Store API or a static JSON file for product data."
+  ],
+  "bonus": {
+    "title": "Catalog polish",
+    "description": "Optional enhancements for portfolio reviews.",
+    "requirements": [
+      "Show active filter count badge",
+      "Clear all filters button",
+      "Product count label: 'Showing 12 of 48 products'"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-keys",
+      "title": "Wrong keys",
+      "symptom": "Input focus lost in list item, or wrong item updates after sort",
+      "cause": "Using array index as key when list order changes",
+      "fix": "Use product.id as key — stable unique identifier"
+    },
+    {
+      "id": "dbg-rerenders",
+      "title": "Unnecessary re-renders",
+      "symptom": "All cards flash in React DevTools when one filter changes",
+      "cause": "Inline arrow functions or object props passed to every ProductCard",
+      "fix": "React.memo on ProductCard; useMemo for filtered list; stable callbacks with useCallback if needed"
+    },
+    {
+      "id": "dbg-filter",
+      "title": "Filter bugs",
+      "symptom": "Price filter shows wrong products or mutates original list",
+      "cause": "Mutating products array with .sort() in place or wrong comparison operators",
+      "fix": "Spread or slice before sort: [...filtered].sort(); use >= and <= for price range"
+    }
+  ]
+}

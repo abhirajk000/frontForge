@@ -1,0 +1,32 @@
+{
+  "id": "day03-reflection",
+  "metaId": "day03",
+  "title": "Day 03 Reflection",
+  "description": "Capture how composition and list rendering clicked — these patterns appear in every dashboard you will build this month.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "How did extracting TextInput change your LoginForm compared to Day 02? What props does the parent still own?",
+      "guidance": "Name value, onChange, errors — who is the single source of truth?",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "Explain why keys matter using a specific list you rendered today (errors, fields, or features).",
+      "guidance": "What key did you choose? What would break with index keys if the list reordered?",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Where did you use map, filter, or reduce? Could any of that logic live outside JSX?",
+      "guidance": "Interviewers care about readable render functions.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "What duplication remains in your codebase after today? What would you extract next?",
+      "guidance": "Honest audit — senior engineers always see the next refactor.",
+      "minWords": 30
+    }
+  ]
+}

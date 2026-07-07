@@ -1,0 +1,252 @@
+{
+  "id": "day16-quiz",
+  "metaId": "day16",
+  "title": "Day 16 Quiz — Redux Toolkit and Pure Functions",
+  "description": "Verify Redux Toolkit concepts, pure functions, slice typing, and immutable updates.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "Redux reducers must be pure functions that do not mutate their arguments.",
+      "correctAnswer": true,
+      "explanation": "Pure reducers enable predictable updates, DevTools time travel, and testability.",
+      "difficulty": "easy",
+      "tags": [
+        "redux",
+        "javascript"
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What does createSlice from Redux Toolkit generate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only a reducer function"
+        },
+        {
+          "id": "b",
+          "text": "Reducer, action creators, and action types"
+        },
+        {
+          "id": "c",
+          "text": "A React Context provider"
+        },
+        {
+          "id": "d",
+          "text": "An API client"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "createSlice bundles reducers with auto-generated action creators and action type strings.",
+      "difficulty": "easy",
+      "tags": [
+        "redux-toolkit"
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "Where should configureStore be called?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inside every component that dispatches"
+        },
+        {
+          "id": "b",
+          "text": "Once at app setup, passed to Provider"
+        },
+        {
+          "id": "c",
+          "text": "Inside each reducer file"
+        },
+        {
+          "id": "d",
+          "text": "Only in test files"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "One store per app, provided at root via react-redux Provider.",
+      "difficulty": "easy",
+      "tags": [
+        "redux"
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which are advantages of Redux Toolkit over hand-written Redux? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Less boilerplate with createSlice"
+        },
+        {
+          "id": "b",
+          "text": "Built-in Immer for immutable updates"
+        },
+        {
+          "id": "c",
+          "text": "Replaces the need for React components"
+        },
+        {
+          "id": "d",
+          "text": "configureStore with good defaults"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "RTK reduces boilerplate, includes Immer, and configures store defaults. It does not replace React.",
+      "difficulty": "medium",
+      "tags": [
+        "redux-toolkit"
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Derive typed RootState with {{blank1}} and typed dispatch with {{blank2}} from the configured store.",
+      "blanks": [
+        {
+          "id": "blank1",
+          "acceptedAnswers": [
+            "ReturnType<typeof store.getState>",
+            "ReturnType"
+          ]
+        },
+        {
+          "id": "blank2",
+          "acceptedAnswers": [
+            "typeof store.dispatch"
+          ]
+        }
+      ],
+      "explanation": "These type exports power typed useAppSelector and useAppDispatch hooks.",
+      "difficulty": "medium",
+      "tags": [
+        "typescript",
+        "redux"
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "With Immer inside createSlice, what happens to state.items.push()?",
+      "code": "reducers: {\n  add(state, action) {\n    state.items.push(action.payload);\n  }\n}",
+      "language": "typescript",
+      "correctOutput": "immutable update",
+      "explanation": "Immer drafts produce immutable next state despite mutating syntax — the correct mental answer is immutable update is produced.",
+      "difficulty": "hard",
+      "tags": [
+        "redux-toolkit",
+        "immer"
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "When is Redux Toolkit preferred over Context from Day 15?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Theme preference with three modes"
+        },
+        {
+          "id": "b",
+          "text": "Complex client state with many actions and DevTools needs"
+        },
+        {
+          "id": "c",
+          "text": "Passing props one level deep"
+        },
+        {
+          "id": "d",
+          "text": "Static configuration never changing"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "RTK shines for complex mutable client state; Context fits simpler global preferences.",
+      "difficulty": "medium",
+      "tags": [
+        "architecture"
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "code-completion",
+      "prompt": "Complete the typed selector hook.",
+      "code": "export const useAppSelector: TypedUseSelectorHook<{{type}}> = useSelector;",
+      "language": "typescript",
+      "blanks": [
+        {
+          "id": "type",
+          "acceptedAnswers": [
+            "RootState"
+          ]
+        }
+      ],
+      "explanation": "RootState types the selector state parameter.",
+      "difficulty": "medium",
+      "tags": [
+        "typescript"
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Why must reducer functions be pure?",
+      "acceptedKeywords": [
+        "predictable",
+        "same input",
+        "immutable",
+        "side effects",
+        "test"
+      ],
+      "sampleAnswer": "Pure reducers return the same output for the same input without side effects or mutating arguments. This makes state predictable, enables Redux DevTools time travel, and simplifies unit testing.",
+      "explanation": "Purity is foundational to Redux architecture.",
+      "difficulty": "medium",
+      "tags": [
+        "javascript",
+        "redux"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "What hook connects React components to the Redux store for reading state?",
+      "options": [
+        {
+          "id": "a",
+          "text": "useContext"
+        },
+        {
+          "id": "b",
+          "text": "useSelector"
+        },
+        {
+          "id": "c",
+          "text": "useReducer only"
+        },
+        {
+          "id": "d",
+          "text": "useQuery"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "useSelector (or typed useAppSelector) subscribes to store slices.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "redux"
+      ]
+    }
+  ]
+}

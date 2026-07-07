@@ -1,0 +1,267 @@
+{
+  "id": "day16-lesson",
+  "metaId": "day16",
+  "title": "Day 16 — Todo Manager using Redux Toolkit",
+  "summary": "Learn pure functions, type Redux slices and stores, and build a production todo manager with Redux Toolkit — the standard for scalable React global state.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 15 gave you Context for theme — low-frequency, widely read preference state. Today you graduate to Redux Toolkit for state that many components write to with predictable updates: todos with add, delete, update, filter, and completed tracking. Every Indian product company interview asks Redux vs Context. Your todo manager is the proof point."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 3 scope",
+      "content": "Today covers Redux Toolkit only. Do NOT introduce RTK Query (Day 17), authentication (Day 18), admin dashboards (Day 19), or performance memoization labs (Day 20)."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Functions vs Classes, Pure Functions"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reducers in Redux are plain functions — not classes. Interviewers test whether you understand why. A pure function always returns the same output for the same input and never mutates arguments or external state. Redux reducers must be pure so time-travel debugging, middleware, and predictable updates work."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Impure — mutates input\nfunction addTodoBad(todos, text) {\n  todos.push({ id: Date.now(), text, done: false });\n  return todos;\n}\n\n// Pure — returns new array\nfunction addTodoPure(todos, text) {\n  return [...todos, { id: Date.now(), text, done: false }];\n}"
+    },
+    {
+      "type": "heading",
+      "id": "functions-vs-classes",
+      "level": 3,
+      "text": "Functions vs classes for state logic"
+    },
+    {
+      "type": "paragraph",
+      "content": "Classes bundle data and methods with this. Redux favors plain objects and functions — easier to test, serialize, and reason about. createSlice generates action creators and reducers as functions, not class methods. In interviews, say: \"I use functions for reducers because they are pure, composable, and map directly to the Redux data flow.\""
+    },
+    {
+      "type": "tip",
+      "title": "Production connection",
+      "content": "Immer inside Redux Toolkit lets you write \"mutating\" syntax in reducers while producing immutable updates. Under the hood it is still pure — never mutate state outside createSlice reducers."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Slice Types and Store Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Untyped Redux is a maintenance nightmare. Define Todo and TodosState interfaces, let createSlice infer action types, and export RootState and AppDispatch from your store for typed useSelector and useDispatch."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "features/todos/todosSlice.ts",
+      "code": "export interface Todo {\n  id: string;\n  text: string;\n  completed: boolean;\n}\n\nexport type Filter = 'all' | 'active' | 'completed';\n\nexport interface TodosState {\n  items: Todo[];\n  filter: Filter;\n}\n\nconst initialState: TodosState = { items: [], filter: 'all' };"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "app/store.ts",
+      "code": "import { configureStore } from '@reduxjs/toolkit';\nimport todosReducer from '../features/todos/todosSlice';\n\nexport const store = configureStore({\n  reducer: { todos: todosReducer },\n});\n\nexport type RootState = ReturnType<typeof store.getState>;\nexport type AppDispatch = typeof store.dispatch;"
+    },
+    {
+      "type": "warning",
+      "title": "Type the hooks",
+      "content": "Never use raw useDispatch or useSelector in TypeScript apps. Create typed hooks useAppDispatch and useAppSelector that know RootState — catches selector typos at compile time."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Redux Toolkit"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-store",
+          "label": "Store",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "configureStore sets up the Redux store with good defaults: Redux DevTools, thunk middleware, and immutable checks in development. Wrap your app with <Provider store={store}> at the root — same placement discipline as ThemeProvider on Day 15."
+            }
+          ]
+        },
+        {
+          "id": "tab-slice",
+          "label": "Slice",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "createSlice combines reducers, actions, and initial state. Name reducers in reducers: { addTodo(state, action) { ... } } and RTK generates action creators automatically: todosSlice.actions.addTodo(payload)."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "const todosSlice = createSlice({\n  name: 'todos',\n  initialState,\n  reducers: {\n    addTodo(state, action: PayloadAction<string>) {\n      state.items.push({ id: crypto.randomUUID(), text: action.payload, completed: false });\n    },\n    toggleTodo(state, action: PayloadAction<string>) {\n      const todo = state.items.find(t => t.id === action.payload);\n      if (todo) todo.completed = !todo.completed;\n    },\n  },\n});"
+            }
+          ]
+        },
+        {
+          "id": "tab-selectors",
+          "label": "Selectors",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Selectors derive data from state. Keep filtering logic out of components — create selectFilteredTodos and selectCompletedCount in the slice file or a selectors.ts module."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "export const selectFilteredTodos = (state: RootState) => {\n  const { items, filter } = state.todos;\n  if (filter === 'active') return items.filter(t => !t.completed);\n  if (filter === 'completed') return items.filter(t => t.completed);\n  return items;\n};"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "title": "Actions vs reducers",
+      "content": "Components dispatch actions. Reducers handle them. Never call reducers directly from UI — dispatch keeps the unidirectional data flow interviewers expect."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Todo Manager"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        {
+          "id": "req-add",
+          "text": "Add new todos via input and dispatch"
+        },
+        {
+          "id": "req-delete",
+          "text": "Delete individual todos"
+        },
+        {
+          "id": "req-update",
+          "text": "Update todo text or toggle completed"
+        },
+        {
+          "id": "req-filter",
+          "text": "Filter: all, active, completed"
+        },
+        {
+          "id": "req-completed",
+          "text": "Show completed tasks count or section"
+        }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Redux mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-mutation",
+          "title": "State mutation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Redux DevTools shows state changed but UI does not update, or warnings about mutation. Cause: Mutating state outside Immer reducers or spreading wrong nesting level. Fix: Only \"mutate\" inside createSlice reducers; return new objects if not using Immer."
+            }
+          ]
+        },
+        {
+          "id": "dbg-wrong-update",
+          "title": "Wrong store updates",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Action dispatches but state unchanged. Cause: Wrong action type string, reducer not registered in configureStore, or typo in slice name. Fix: Log action in middleware; verify reducer key matches useSelector path state.todos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Focus — Redux vs Context"
+    },
+    {
+      "type": "paragraph",
+      "content": "Theme from Day 15 fits Context. Todos with filters, many writers, and DevTools needs fit Redux Toolkit. Say: \"Context for infrequent global reads; Redux for complex client state with many actions and middleware.\""
+    },
+    {
+      "type": "quote",
+      "content": "Redux Toolkit is the official recommended way to write Redux logic.",
+      "attribution": "Redux documentation"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        {
+          "id": "done-crud",
+          "text": "Todo CRUD and filters work"
+        },
+        {
+          "id": "done-immutable",
+          "text": "No reducer mutations outside Immer"
+        },
+        {
+          "id": "done-typed",
+          "text": "Typed store and hooks"
+        },
+        {
+          "id": "done-git",
+          "text": "Git push"
+        }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

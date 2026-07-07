@@ -1,0 +1,71 @@
+{
+  "id": "day19-challenge",
+  "metaId": "day19",
+  "title": "Build an Admin Dashboard",
+  "mission": "Build Admin Dashboard.",
+  "description": "Implement analytics cards, searchable/filterable/paginated user table, role badges, and role-gated admin UI — protected by Day 18 authentication.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Define DashboardStats and UserRow TypeScript interfaces",
+    "Build dashboard layout with sidebar and main content area",
+    "Create analytics cards showing total users, products, and revenue",
+    "Fetch users via RTK Query or mock data",
+    "Build UserTable with columns: name, email, role, status",
+    "Implement RoleBadge component with admin/user styles",
+    "Add search input filtering by name or email",
+    "Add role filter dropdown: all, user, admin",
+    "Implement client-side pagination with page controls",
+    "Hide admin-only actions (delete, edit roles) from non-admin users",
+    "Wrap dashboard in ProtectedRoute from Day 18"
+  ],
+  "acceptanceCriteria": [
+    "Analytics cards display computed or fetched metrics",
+    "Search narrows table rows in real time or debounced",
+    "Role filter shows only matching users",
+    "Pagination shows correct page of filtered results",
+    "Non-admin users see table but not destructive admin actions",
+    "Admin users see full management UI",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Pipeline: filter by search → filter by role → sort → slice for page.",
+    "Reset page to 0 in useEffect when search or roleFilter changes.",
+    "Reuse useDebounce from Week 2 for search optimization.",
+    "Stats can derive from users/products arrays with reduce.",
+    "RequireAdmin wrapper: if (user?.role !== 'admin') return <Navigate to=\"/\" />."
+  ],
+  "bonus": {
+    "title": "Senior polish",
+    "description": "Optional dashboard enhancements.",
+    "requirements": [
+      "Sync filters to URL search params for shareable dashboard views",
+      "Sortable column headers on user table",
+      "Loading skeletons for cards and table rows"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-conditional",
+      "title": "Wrong conditional rendering",
+      "symptom": "Admin actions visible to regular users",
+      "cause": "Loose truthy check or wrong role property",
+      "fix": "Strict user.role === 'admin' guard"
+    },
+    {
+      "id": "dbg-permission",
+      "title": "Permission bugs",
+      "symptom": "User accesses /admin via URL",
+      "cause": "No route-level role guard",
+      "fix": "RequireAdmin route wrapper beyond sidebar hiding"
+    },
+    {
+      "id": "dbg-pagination",
+      "title": "Pagination issues",
+      "symptom": "Empty table page after search",
+      "cause": "Page index not reset on filter change",
+      "fix": "setPage(0) when search or roleFilter updates"
+    }
+  ]
+}

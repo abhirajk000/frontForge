@@ -1,0 +1,46 @@
+{
+  "id": "day03",
+  "version": "1.0.0",
+  "day": 3,
+  "week": 1,
+  "track": "react-interview",
+  "title": "Reusable Form Components",
+  "subtitle": "Array methods, composition, children, lists, and keys for a shared input library",
+  "mission": "Build reusable form components.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 3,
+  "difficulty": "beginner",
+  "tags": ["react", "composition", "lists", "keys", "map", "filter", "reduce", "typescript"],
+  "topics": {
+    "javascript": ["map()", "filter()", "reduce()"],
+    "typescript": ["reusable interfaces", "generic component props"],
+    "react": ["component reusability", "children", "lists", "keys"]
+  },
+  "prerequisites": [
+    "day02 — useState and controlled form inputs",
+    "day02 — TypeScript interfaces for props and form data",
+    "day02 — login page with email, password, validation, and error states"
+  ],
+  "expectedOutcome": [
+    "Use map, filter, and reduce to transform and render lists in React",
+    "Extract Day 02 login inputs into reusable TextInput, PasswordInput, Checkbox, Button, and Error components",
+    "Compose UI with the children prop without duplicating markup",
+    "Assign stable keys when rendering lists and explain why in interviews",
+    "Debug missing keys, wrong list rendering, and duplicate component logic"
+  ],
+  "definitionOfDone": [
+    "Reusable input library components live in src/components/ui/ or similar",
+    "Day 02 login page refactored to use the library — behavior unchanged",
+    "Field list or error list rendered with map() and correct keys",
+    "No duplicate input markup across components",
+    "Layout remains responsive",
+    "Code is pushed to Git",
+    "Quiz completed with passing score",
+    "Interview questions answered"
+  ],
+  "tomorrowPreview": {
+    "day": 4,
+    "title": "GitHub User Search",
+    "summary": "Tomorrow you will learn useEffect, async fetch, and loading/error/empty states by building a GitHub user search that calls a real API."
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "id": "day09-interview",
+  "metaId": "day09",
+  "title": "Day 09 Interview Prep",
+  "description": "Practice debouncing, custom hooks, and controlled component patterns from today's roadmap.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is debouncing and why use it in search?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Practical optimization knowledge, not just definition.",
+      "keyPoints": [
+        "Delays action until input stops changing",
+        "Reduces API calls and server load",
+        "Typical delay 300–500ms for search",
+        "Different from throttle"
+      ],
+      "sampleAnswer": "Debouncing waits until the user stops typing before firing an action. In search, typing 'batman' without debounce sends six API calls. With 400ms debounce, one call fires after the last keystroke. This reduces server load, saves bandwidth, and prevents race conditions from overlapping requests.",
+      "followUps": ["Debounce vs throttle?", "What delay would you pick and why?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What are the rules for custom hooks in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Can they extract logic correctly?",
+      "keyPoints": [
+        "Name must start with use",
+        "Can call other hooks",
+        "Same rules of hooks as components",
+        "Extract reusable stateful logic"
+      ],
+      "sampleAnswer": "Custom hooks must start with use and can call other hooks like useState and useEffect. They follow the same rules of hooks — only call at top level, only from React functions. I extract useDebounce when debounce logic is reused or when the component gets too large.",
+      "followUps": ["When NOT extract a hook?", "How test custom hooks?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is a controlled component in the context of search?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Week 1 foundation applied to search UIs.",
+      "keyPoints": [
+        "React state is single source of truth",
+        "value and onChange on input",
+        "Input reflects state, state updates on change",
+        "Enables debounce layer between input and fetch"
+      ],
+      "sampleAnswer": "A controlled search input stores the term in useState. The input value={search} and onChange updates state. React owns the value — not the DOM. This lets me show instant UI feedback on every keystroke while debouncing the value that triggers fetch.",
+      "followUps": ["Controlled vs uncontrolled?", "When use defaultValue?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Implement useDebounce verbally — what state, effects, and cleanup do you need?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Can they write the hook from memory?",
+      "keyPoints": [
+        "useState for debounced value",
+        "useEffect on value and delay",
+        "setTimeout inside effect",
+        "clearTimeout in cleanup"
+      ],
+      "sampleAnswer": "I keep debouncedValue in useState initialized to the input value. useEffect watches value and delay. Inside, setTimeout updates debouncedValue after delay ms. Return cleanup that clearTimeout. Export debouncedValue. Fetch effect depends on debouncedValue, not raw search.",
+      "followUps": ["What if delay prop changes?", "useDeferredValue alternative?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type a paginated movie search API response in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Generics beyond Day 08 nested interfaces.",
+      "keyPoints": [
+        "PaginatedResponse<T> generic wrapper",
+        "Movie interface for result items",
+        "Type alias MovieSearchResponse = PaginatedResponse<Movie>",
+        "Separate API types from UI view models if needed"
+      ],
+      "sampleAnswer": "I define PaginatedResponse<T> with page, total_pages, total_results, and results: T[]. Movie has id, title, poster_path, release_date. MovieSearchResponse is PaginatedResponse<Movie>. fetchMovies returns Promise<MovieSearchResponse>. Components map over results typed as Movie[].",
+      "followUps": ["Zod for runtime validation?", "Partial<T> for updates?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "User searches 'star' then quickly 'star wars'. Old 'star' results appear briefly. How do you fix it?",
+      "difficulty": "medium",
+      "category": "scenario",
+      "whatInterviewerTests": "Race condition handling from Day 08 applied to search.",
+      "keyPoints": [
+        "Stale response from slower first request",
+        "AbortController or cancelled boolean",
+        "Clear results when query changes",
+        "Ignore responses that do not match current query"
+      ],
+      "sampleAnswer": "This is a race condition. The 'star' request may resolve after 'star wars'. I use AbortController in useEffect cleanup to cancel in-flight fetch, or a cancelled flag. I also clear movies when debouncedSearch changes so stale data never displays.",
+      "followUps": ["AbortController with fetch?", "React Query deduplication?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Explain how setTimeout relates to the JavaScript event loop at a high level.",
+      "difficulty": "hard",
+      "category": "javascript",
+      "whatInterviewerTests": "Event loop intro required by roadmap — depth comes Day 11.",
+      "keyPoints": [
+        "Single-threaded call stack",
+        "setTimeout schedules macrotask",
+        "Runs after current stack clears",
+        "Not exact timing — minimum delay"
+      ],
+      "sampleAnswer": "JavaScript runs one call stack. setTimeout does not run immediately — it schedules a callback as a macrotask. After current synchronous code and microtasks finish, the event loop picks up the timer callback. Debounce relies on this — each clearTimeout cancels a pending macrotask.",
+      "followUps": ["Microtasks vs macrotasks?", "What runs before setTimeout callback?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "A teammate puts fetch directly in onChange for instant results. Review their PR — what do you say?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Code review communication and production awareness.",
+      "keyPoints": [
+        "Request storm on every keystroke",
+        "Race conditions and stale data",
+        "Debounced useEffect is standard pattern",
+        "Show Network tab evidence"
+      ],
+      "sampleAnswer": "I open Network tab and show six requests for six letters — unsustainable at scale and causes race conditions. I suggest controlled input for instant UI, useDebounce for API trigger, fetch in useEffect on debouncedSearch. I pair on the refactor and add a note about typical 400ms delay.",
+      "followUps": ["When is onChange fetch acceptable?", "useTransition for search?"],
+      "redFlags": ["Instant fetch is always better UX", "Cannot explain server load impact"]
+    }
+  ]
+}

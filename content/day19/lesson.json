@@ -1,0 +1,242 @@
+{
+  "id": "day19-lesson",
+  "metaId": "day19",
+  "title": "Day 19 — Admin Dashboard",
+  "summary": "Build an enterprise-style admin dashboard with analytics cards, searchable user tables, role badges, pagination, and role-based UI — gated by Day 18 authentication.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Authenticated users need a home base. Admin dashboards combine data visualization, tables, search, filters, and permission-aware UI — the layout every B2B SaaS ships. Today you build analytics cards, a user table with search/filter/pagination, and role badges that show or hide actions based on auth from Day 18."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Scope boundary",
+      "content": "Today focuses on dashboard UI and role-based rendering. Do NOT introduce React.memo performance labs (Day 20) or machine coding review (Day 21). Apply filters with plain JavaScript — optimize tomorrow."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Advanced Array Methods and Object Manipulation"
+    },
+    {
+      "type": "paragraph",
+      "content": "Dashboards transform raw API data into views. Chain filter → sort → slice for paginated tables. reduce aggregates metrics for analytics cards. Destructure and spread to update filter state immutably — same patterns from Day 12 cart."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const admins = users.filter(u => u.role === 'admin');\nconst totalRevenue = orders.reduce((sum, o) => sum + o.amount, 0);\n\nconst visible = users\n  .filter(u => u.name.toLowerCase().includes(search))\n  .filter(u => roleFilter === 'all' || u.role === roleFilter)\n  .sort((a, b) => a.name.localeCompare(b.name));\n\nconst page = visible.slice(pageIndex * size, (pageIndex + 1) * size);"
+    },
+    {
+      "type": "tip",
+      "title": "Production connection",
+      "content": "Client-side filter/pagination suits demos and small datasets. In production interviews, mention server-side pagination with query params — you built URL params on Day 13."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Dashboard Models"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/dashboard.ts",
+      "code": "export interface DashboardStats {\n  totalUsers: number;\n  activeUsers: number;\n  totalProducts: number;\n  revenue: number;\n}\n\nexport interface UserRow {\n  id: string;\n  name: string;\n  email: string;\n  role: 'user' | 'admin';\n  status: 'active' | 'inactive';\n}\n\nexport interface TableFilters {\n  search: string;\n  role: 'all' | 'user' | 'admin';\n  page: number;\n  pageSize: number;\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Conditional Rendering and Role-based UI"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-layout",
+          "label": "Dashboard layout",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Standard pattern: sidebar navigation + header + main content grid. Analytics cards in a responsive CSS grid; table below. Use auth user role from Day 18 to conditionally render admin nav items."
+            }
+          ]
+        },
+        {
+          "id": "tab-role",
+          "label": "Role-based UI",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "function RoleBadge({ role }: { role: UserRow['role'] }) {\n  return (\n    <span className={role === 'admin' ? 'badge-admin' : 'badge-user'}>\n      {role}\n    </span>\n  );\n}\n\n{user.role === 'admin' && (\n  <button onClick={handleDelete}>Delete User</button>\n)}"
+            }
+          ]
+        },
+        {
+          "id": "tab-table",
+          "label": "Search & pagination",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Debounce search input from Day 9. Reset page to 0 when filters change. Show \"Page X of Y\" with prev/next buttons. Empty state when no matches."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Authorization check",
+      "content": "Hide UI is not security — backend must enforce roles too. Frontend role checks improve UX; API must reject unauthorized mutations."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Admin Dashboard"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        {
+          "id": "req-cards",
+          "text": "Analytics cards: users, products, revenue metrics"
+        },
+        {
+          "id": "req-table",
+          "text": "User table with name, email, role, status columns"
+        },
+        {
+          "id": "req-search",
+          "text": "Search users by name or email"
+        },
+        {
+          "id": "req-filter",
+          "text": "Filter by role: all, user, admin"
+        },
+        {
+          "id": "req-badge",
+          "text": "Role badge component with distinct styles"
+        },
+        {
+          "id": "req-page",
+          "text": "Pagination with page size control"
+        }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Dashboard mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-conditional",
+          "title": "Wrong conditional rendering",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Admin button visible to all users. Cause: Checking wrong property or truthy string \"user\". Fix: Strict role === 'admin' check; use auth context user.role not hardcoded."
+            }
+          ]
+        },
+        {
+          "id": "dbg-permission",
+          "title": "Permission bugs",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Regular user accesses admin route via URL. Cause: Only hiding sidebar link, no route guard. Fix: Wrap admin routes with role check in ProtectedRoute or RequireAdmin component."
+            }
+          ]
+        },
+        {
+          "id": "dbg-pagination",
+          "title": "Pagination issues",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Empty page after filter or wrong total pages. Cause: Pagination applied before filter or page index not reset. Fix: Filter first, then paginate; reset page to 0 on search/filter change."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Focus — Dashboard Architecture"
+    },
+    {
+      "type": "paragraph",
+      "content": "Expect: How would you structure a dashboard app? Feature folders: features/dashboard/, features/users/, shared/components/Table. Co-locate filters with table or lift to URL search params for shareable views."
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        {
+          "id": "done-cards",
+          "text": "Analytics cards render metrics"
+        },
+        {
+          "id": "done-table",
+          "text": "User table search/filter/pagination work"
+        },
+        {
+          "id": "done-role",
+          "text": "Role badges and gated admin UI"
+        },
+        {
+          "id": "done-git",
+          "text": "Git push"
+        }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

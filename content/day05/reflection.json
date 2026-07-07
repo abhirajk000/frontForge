@@ -1,0 +1,32 @@
+{
+  "id": "day05-reflection",
+  "metaId": "day05",
+  "title": "Day 05 Reflection",
+  "description": "Routing changes how you think about app structure — note what clicked before the machine coding round.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Draw or describe your route tree: which routes are nested under DashboardLayout?",
+      "guidance": "Include paths and which component renders in Outlet.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-02",
+      "question": "What broke during navigation and how did you fix it?",
+      "guidance": "Wrong route, missing Outlet, or anchor vs Link.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-03",
+      "question": "Why is SPA routing better than toggling page state with useState in App?",
+      "guidance": "URL, back button, shareable links.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "What would you add before shipping this dashboard to production users?",
+      "guidance": "Auth guards, loading, error boundaries — honest gaps.",
+      "minWords": 30
+    }
+  ]
+}

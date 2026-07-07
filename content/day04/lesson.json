@@ -1,0 +1,249 @@
+{
+  "id": "day04-lesson",
+  "metaId": "day04",
+  "title": "Day 04 — GitHub User Search",
+  "summary": "Learn promises, async/await, and fetch; type API responses; use useEffect for side effects; and build a GitHub user search with loading, error, empty, and success states.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Static forms are not enough. Real apps talk to servers — user profiles, payments, notifications. Today you cross the boundary from UI-only React to API-driven React. You will fetch public GitHub user data, manage async UI states, and learn useEffect — the hook interviewers ask about in every mid-level loop."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Scope for Day 04",
+      "content": "Use useState from Day 02, reusable components from Day 03. React Router and custom hooks come on Days 05–06. Fetch on button submit is fine today; debounced search-as-you-type comes Day 06."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Promises, async/await, fetch"
+    },
+    {
+      "type": "paragraph",
+      "content": "Network calls are asynchronous. The browser sends a request and continues — your code must wait for the response without freezing the UI. Promises model that future value. async/await makes Promise chains readable."
+    },
+    {
+      "type": "heading",
+      "id": "promises",
+      "level": 3,
+      "text": "Promises — a value that arrives later"
+    },
+    {
+      "type": "paragraph",
+      "content": "A Promise is pending, then settles fulfilled or rejected. fetch returns a Promise<Response>. You chain .then() or use await inside async functions. In React you almost always use async/await in handlers or inner effect functions."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "fetch('https://api.github.com/users/gaearon')\n  .then((response) => {\n    if (!response.ok) throw new Error('Failed');\n    return response.json();\n  })\n  .then((user) => console.log(user.login))\n  .catch((error) => console.error(error));"
+    },
+    {
+      "type": "heading",
+      "id": "async-await",
+      "level": 3,
+      "text": "async/await — readable sequential code"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "fetchUser.ts",
+      "code": "export async function fetchGitHubUser(username: string) {\n  const response = await fetch(`https://api.github.com/users/${username}`);\n\n  if (!response.ok) {\n    if (response.status === 404) throw new Error('User not found');\n    throw new Error('Request failed');\n  }\n\n  return response.json();\n}"
+    },
+    {
+      "type": "warning",
+      "title": "fetch does not throw on 404",
+      "content": "A 404 response still resolves the Promise. You must check response.ok or response.status before treating the body as success."
+    },
+    {
+      "type": "heading",
+      "id": "fetch-api",
+      "level": 3,
+      "text": "Fetch API — browser HTTP"
+    },
+    {
+      "type": "paragraph",
+      "content": "fetch is built into modern browsers. No axios required for today's exercise. GitHub's public API needs no auth for basic user lookup — perfect for learning. Respect rate limits; do not hammer the API in a loop while debugging."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — API response types"
+    },
+    {
+      "type": "paragraph",
+      "content": "JSON from the wire is untyped. You describe the shape you expect and TypeScript helps when you access user.avatar_url or user.public_repos. Mark nullable API fields optional."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/github.ts",
+      "code": "export type GitHubUser = {\n  login: string;\n  avatar_url: string;\n  html_url: string;\n  name: string | null;\n  bio: string | null;\n  public_repos: number;\n  followers: number;\n  following: number;\n};"
+    },
+    {
+      "type": "tip",
+      "title": "Start small",
+      "content": "Type only fields you render today. Extend the interface as the UI grows — same approach as production teams reading OpenAPI specs incrementally."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "useEffect",
+      "level": 2,
+      "text": "React — useEffect and UI states"
+    },
+    {
+      "type": "paragraph",
+      "content": "Render computes JSX from props and state — it should be pure. Side effects (fetch, timers, subscriptions) run after paint in useEffect. Alternatively, fetch in a submit handler is also valid when the action is user-triggered."
+    },
+    {
+      "type": "table",
+      "headers": ["Pattern", "When", "Example"],
+      "rows": [
+        ["Event handler fetch", "User clicks Search", "onSubmit → fetchUser()"],
+        ["useEffect fetch", "Data syncs when query/id changes", "useEffect when username changes"],
+        ["Fetch in render", "Never", "Causes loops and bugs"]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "useEffect(() => {\n  if (!username.trim()) return;\n\n  let cancelled = false;\n\n  async function load() {\n    setLoading(true);\n    setError(null);\n    try {\n      const data = await fetchGitHubUser(username);\n      if (!cancelled) setUser(data);\n    } catch (e) {\n      if (!cancelled) setError(e instanceof Error ? e.message : 'Error');\n    } finally {\n      if (!cancelled) setLoading(false);\n    }\n  }\n\n  load();\n  return () => { cancelled = true; };\n}, [username]);"
+    },
+    {
+      "type": "note",
+      "title": "Never async useEffect callback",
+      "content": "useEffect(() => async () => { ... }) is wrong — async returns a Promise React ignores. Define async function load inside and call load()."
+    },
+    {
+      "type": "heading",
+      "id": "ui-states",
+      "level": 3,
+      "text": "Loading, error, empty, success"
+    },
+    {
+      "type": "paragraph",
+      "content": "API UI is a small state machine. At most one primary view should dominate: idle empty, loading spinner, error alert, or profile card. Senior engineers sketch this matrix before writing JSX."
+    },
+    {
+      "type": "checklist",
+      "title": "State matrix",
+      "items": [
+        { "id": "st-empty", "text": "Empty — no search yet, prompt user" },
+        { "id": "st-loading", "text": "Loading — request in flight" },
+        { "id": "st-error", "text": "Error — 404, network, or unknown failure" },
+        { "id": "st-success", "text": "Success — show GitHubUser data" }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build-mission",
+      "level": 2,
+      "text": "Build Mission — GitHub User Search"
+    },
+    {
+      "type": "paragraph",
+      "content": "Build a search page: username input, search button, and a result area that handles all four states. Use your Day 03 Button and TextInput. Type the API response. No React Router yet — single page is fine."
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-search", "text": "Controlled search input for GitHub username" },
+        { "id": "req-fetch", "text": "Fetch from api.github.com/users/{username}" },
+        { "id": "req-states", "text": "Loading, error, empty, and success UI" },
+        { "id": "req-types", "text": "GitHubUser TypeScript interface" },
+        { "id": "req-effect", "text": "Correct useEffect or submit handler — no render-time fetch" }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — async React pitfalls"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "debug-infinite",
+          "title": "Infinite render",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: tab freezes, endless network requests. Cause: useEffect without deps calls setState every render. Fix: add dependency array; fetch only when needed; guard empty username."
+            }
+          ]
+        },
+        {
+          "id": "debug-deps",
+          "title": "Wrong dependency array",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: stale username results or effect never updates. Cause: username missing from deps. Fix: [username] when effect reads username."
+            }
+          ]
+        },
+        {
+          "id": "debug-cleanup",
+          "title": "Missing cleanup",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: old user flashes after new search. Cause: race between overlapping requests. Fix: cancelled flag or AbortController in effect cleanup."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-search", "text": "GitHub search works end-to-end" },
+        { "id": "done-states", "text": "All UI states implemented" },
+        { "id": "done-no-loop", "text": "No infinite useEffect loop" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz and interview" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "day17-reflection",
+  "metaId": "day17",
+  "title": "Day 17 Reflection",
+  "description": "Solidify RTK Query patterns before authentication tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "How does RTK Query reduce boilerplate compared to Day 8 fetch + useEffect?",
+      "guidance": "Compare loading state, caching, and refetch logic.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "Did cache invalidation work on first try? What tag strategy did you use?",
+      "guidance": "Mention providesTags and invalidatesTags.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Where does product data live vs UI filter state in your architecture?",
+      "guidance": "Separate server cache from client slice.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-04",
+      "question": "Explain promise chaining and how async/await relates to RTK Query internals.",
+      "guidance": "Use your addProduct flow as example.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "What would change when you add authentication on Day 18?",
+      "guidance": "Preview auth headers without implementing today.",
+      "minWords": 30
+    }
+  ]
+}

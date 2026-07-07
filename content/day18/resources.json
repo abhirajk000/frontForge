@@ -1,0 +1,72 @@
+{
+  "id": "day18-resources",
+  "metaId": "day18",
+  "title": "Day 18 Resources",
+  "description": "Official documentation for storage APIs, routing, and auth patterns.",
+  "resources": [
+    {
+      "id": "res-jwt",
+      "title": "jwt.io — Introduction",
+      "url": "https://jwt.io/introduction",
+      "type": "documentation",
+      "description": "JWT structure and usage overview.",
+      "recommended": true
+    },
+    {
+      "id": "res-ls",
+      "title": "MDN — Window.localStorage",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+      "type": "documentation",
+      "description": "localStorage API reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-ss",
+      "title": "MDN — Window.sessionStorage",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage",
+      "type": "documentation",
+      "description": "sessionStorage API reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-router",
+      "title": "React Router — Protected Routes",
+      "url": "https://reactrouter.com/en/main/start/tutorial",
+      "type": "documentation",
+      "description": "Routing patterns including auth redirects.",
+      "recommended": true
+    },
+    {
+      "id": "res-rtk-auth",
+      "title": "Redux Toolkit — Customizing Queries",
+      "url": "https://redux-toolkit.js.org/rtk-query/usage/customizing-queries",
+      "type": "documentation",
+      "description": "prepareHeaders for auth tokens.",
+      "recommended": true
+    },
+    {
+      "id": "res-react-auth",
+      "title": "React — Passing Data Deeply with Context",
+      "url": "https://react.dev/learn/passing-data-deeply-with-context",
+      "type": "documentation",
+      "description": "Context pattern alternative for auth state.",
+      "recommended": false
+    },
+    {
+      "id": "res-owasp",
+      "title": "OWASP — JWT Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html",
+      "type": "reference",
+      "description": "Security considerations for JWT usage.",
+      "recommended": true
+    },
+    {
+      "id": "res-bearer",
+      "title": "MDN — Authorization Header",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization",
+      "type": "documentation",
+      "description": "Bearer token HTTP header format.",
+      "recommended": false
+    }
+  ]
+}

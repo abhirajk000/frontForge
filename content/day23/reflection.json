@@ -1,0 +1,38 @@
+{
+  "id": "day23-reflection",
+  "metaId": "day23",
+  "title": "Day 23 Reflection",
+  "description": "Post-reflection on your production refactor — what improved, what you can now explain, and what to sharpen before tomorrow's mock interview.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Which project did you refactor and why? List the top three structural changes you made.",
+      "guidance": "Be specific: folder names, extracted components, new hooks.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Which performance optimizations did you apply vs skip? What did Profiler show?",
+      "guidance": "Document measure → change → result for each, or honest skip reason.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-03",
+      "question": "Summarize your architecture doc: why this folder structure, why Context/Redux/RTK Query/Router?",
+      "guidance": "Write as if answering Round 4 on Day 24.",
+      "minWords": 60
+    },
+    {
+      "id": "refl-04",
+      "question": "Which of the 8 senior interview questions was hardest? What is your improved answer now?",
+      "guidance": "Name the question and rewrite your answer in 3–4 sentences.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-05",
+      "question": "What one gap remains before tomorrow's mock interview? How will you address it tonight?",
+      "guidance": "One focused action — not a vague study everything plan.",
+      "minWords": 30
+    }
+  ]
+}

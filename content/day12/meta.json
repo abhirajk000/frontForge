@@ -1,0 +1,45 @@
+{
+  "id": "day12",
+  "version": "1.0.0",
+  "day": 12,
+  "week": 2,
+  "track": "react-interview",
+  "title": "Shopping Cart",
+  "subtitle": "Immutability, Context API, and reducer pattern for application-wide cart state",
+  "mission": "Build a Shopping Cart.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": ["react", "context", "reducer", "immutability", "cart", "state-management"],
+  "topics": {
+    "javascript": ["immutability", "object updates", "array updates"],
+    "typescript": ["cart types"],
+    "react": ["Context API", "reducer pattern introduction"]
+  },
+  "prerequisites": [
+    "day10 — product models, list rendering, and immutable array patterns",
+    "day11 — append pagination with setItems(prev => [...prev, ...newItems])",
+    "week1 — useState, props, and component composition"
+  ],
+  "expectedOutcome": [
+    "Update cart state immutably with spread and map/filter",
+    "Type CartItem and CartState with TypeScript",
+    "Share cart state across components with Context API",
+    "Manage cart logic with useReducer and action types",
+    "Build add, remove, quantity, total, and empty cart UI"
+  ],
+  "definitionOfDone": [
+    "Add product to cart from product listing",
+    "Remove item from cart",
+    "Increase and decrease quantity with minimum of 1 or remove at 0",
+    "Cart total calculates correctly",
+    "Empty cart state with call-to-action",
+    "Cart persists across route navigation via Context",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 13,
+    "title": "User Profile & Dynamic Routing",
+    "summary": "Tomorrow you will build dynamic routes with URL params and user profile pages — connecting cart and catalog through navigation."
+  }
+}

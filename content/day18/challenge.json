@@ -1,0 +1,68 @@
+{
+  "id": "day18-challenge",
+  "metaId": "day18",
+  "title": "Build an Authentication Flow",
+  "mission": "Build Authentication Flow.",
+  "description": "Implement login, logout, protected routes, session persistence, and token injection into RTK Query — the standard frontend auth module.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Define User, AuthState, LoginCredentials TypeScript interfaces",
+    "Create auth slice or context with login, logout, and hydrate actions",
+    "Build LoginPage with form validation and error display",
+    "Persist token to localStorage on successful login",
+    "Restore auth state from localStorage on app init",
+    "Build ProtectedRoute wrapper using React Router",
+    "Redirect authenticated users away from /login to dashboard",
+    "Implement logout clearing storage and auth state",
+    "Extend RTK Query prepareHeaders to attach Bearer token"
+  ],
+  "acceptanceCriteria": [
+    "Unauthenticated users cannot access /dashboard or /products admin routes",
+    "Login with valid credentials stores token and redirects to intended page",
+    "Logout clears token and redirects to login",
+    "Page reload keeps user logged in if token valid",
+    "401 from API triggers logout or refresh prompt",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Use Navigate from react-router-dom with state={{ from: location }}.",
+    "Initialize auth status as loading until storage hydration completes.",
+    "Mock login endpoint returning { token, user } for local dev.",
+    "Reuse Day 17 productsApi — add prepareHeaders for auth.",
+    "Compare persistence with Day 15 theme localStorage pattern."
+  ],
+  "bonus": {
+    "title": "Senior polish",
+    "description": "Optional auth enhancements.",
+    "requirements": [
+      "Token expiry check with auto-logout on expired JWT",
+      "PublicOnlyRoute redirecting logged-in users from login/register",
+      "Auth error boundary for 401 global handler"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-unauth",
+      "title": "Unauthorized access",
+      "symptom": "Protected content visible briefly or always",
+      "cause": "Auth hydration race or missing guard",
+      "fix": "Loading state during init; wrap routes correctly"
+    },
+    {
+      "id": "dbg-redirect",
+      "title": "Route redirect bugs",
+      "symptom": "Infinite loop login ↔ home",
+      "cause": "Login inside ProtectedRoute or wrong isAuthenticated",
+      "fix": "Separate public and protected route trees"
+    },
+    {
+      "id": "dbg-token",
+      "title": "Token persistence",
+      "symptom": "Logged out on refresh",
+      "cause": "Token not saved or not restored",
+      "fix": "Persist on login; preload auth slice from localStorage"
+    }
+  ]
+}

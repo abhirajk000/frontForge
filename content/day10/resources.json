@@ -1,0 +1,72 @@
+{
+  "id": "day10-resources",
+  "metaId": "day10",
+  "title": "Day 10 Resources",
+  "description": "Official docs for list rendering, keys, memo, and array methods — read after building the product listing.",
+  "resources": [
+    {
+      "id": "res-lists-keys",
+      "title": "React — Rendering Lists and Keys",
+      "url": "https://react.dev/learn/rendering-lists",
+      "type": "documentation",
+      "description": "Official guidance on keys and list rendering.",
+      "recommended": true
+    },
+    {
+      "id": "res-memo",
+      "title": "React — memo",
+      "url": "https://react.dev/reference/react/memo",
+      "type": "documentation",
+      "description": "React.memo API — skip re-render when props are unchanged.",
+      "recommended": true
+    },
+    {
+      "id": "res-usememo",
+      "title": "React — useMemo",
+      "url": "https://react.dev/reference/react/useMemo",
+      "type": "documentation",
+      "description": "Memoize expensive filter/sort computations.",
+      "recommended": true
+    },
+    {
+      "id": "res-filter",
+      "title": "MDN — Array.prototype.filter",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter",
+      "type": "documentation",
+      "description": "Filter products by category, price, and search term.",
+      "recommended": true
+    },
+    {
+      "id": "res-sort",
+      "title": "MDN — Array.prototype.sort",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+      "type": "documentation",
+      "description": "Sort products — remember to copy array before sorting.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts-interfaces",
+      "title": "TypeScript — Object Types",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
+      "type": "documentation",
+      "description": "Product interface modeling for e-commerce data.",
+      "recommended": false
+    },
+    {
+      "id": "res-fakestore",
+      "title": "Fake Store API",
+      "url": "https://fakestoreapi.com/",
+      "type": "documentation",
+      "description": "Free product API for today's build — no key required.",
+      "recommended": true
+    },
+    {
+      "id": "res-css-grid",
+      "title": "MDN — CSS Grid Layout",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout",
+      "type": "documentation",
+      "description": "Responsive product grid layout patterns.",
+      "recommended": false
+    }
+  ]
+}

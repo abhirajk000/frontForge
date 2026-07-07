@@ -1,0 +1,141 @@
+{
+  "id": "day09-quiz",
+  "metaId": "day09",
+  "title": "Day 09 Quiz — Debouncing, Custom Hooks, and Search",
+  "description": "Verify debouncing, timers, generic API types, custom hooks, and controlled search patterns.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "Debouncing triggers an action on every keystroke immediately.",
+      "correctAnswer": false,
+      "explanation": "Debouncing waits until input stops changing for a specified delay before firing the action.",
+      "difficulty": "easy",
+      "tags": ["javascript", "debounce"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "Why extract useDebounce instead of inline setTimeout in the component?",
+      "options": [
+        { "id": "a", "text": "React requires all timers in custom hooks" },
+        { "id": "b", "text": "Reusable logic, testable in isolation, cleaner components" },
+        { "id": "c", "text": "setTimeout does not work inside components" },
+        { "id": "d", "text": "Custom hooks are faster than inline code" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Custom hooks extract reusable stateful logic — the same reason you use useState instead of manual DOM updates.",
+      "difficulty": "easy",
+      "tags": ["react", "custom-hooks"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does PaginatedResponse<T> represent?",
+      "options": [
+        { "id": "a", "text": "A React component that renders pagination" },
+        { "id": "b", "text": "A generic API wrapper where T is the item type in results" },
+        { "id": "c", "text": "A TypeScript enum for page numbers" },
+        { "id": "d", "text": "A Redux slice for paginated data" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Generics let one interface describe paginated movies, products, or any list API.",
+      "difficulty": "medium",
+      "tags": ["typescript", "generics"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which cause multiple API requests during search? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Fetching in onChange without debounce" },
+        { "id": "b", "text": "Fetching when debouncedSearch changes in useEffect" },
+        { "id": "c", "text": "Missing clearTimeout in debounce cleanup" },
+        { "id": "d", "text": "Using controlled input with value={search}" }
+      ],
+      "correctOptionIds": ["a", "c"],
+      "explanation": "onChange fetch fires per keystroke. Missing clearTimeout lets stale timers fire. Debounced useEffect and controlled inputs are correct patterns.",
+      "difficulty": "hard",
+      "tags": ["react", "debounce", "debugging"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Cancel pending debounce timers in useEffect {{blank1}} using {{blank2}}.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["cleanup", "return"] },
+        { "id": "blank2", "acceptedAnswers": ["clearTimeout"] }
+      ],
+      "explanation": "Every search change schedules a new timer; cleanup clears the previous one.",
+      "difficulty": "medium",
+      "tags": ["javascript", "timers"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "User types 'a' then 'ab' within 400ms debounce. How many debounced values update?",
+      "code": "const [search, setSearch] = useState('');\n// User: setSearch('a'), then setSearch('ab') within 400ms\n// useDebounce(search, 400) — first timer cleared by cleanup",
+      "language": "typescript",
+      "correctOutput": "1",
+      "explanation": "The first timer is cleared when search changes to 'ab'. Only one debounced update fires 400ms after the last keystroke.",
+      "difficulty": "medium",
+      "tags": ["javascript", "debounce"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "When debouncedSearch changes, what should happen to page state?",
+      "options": [
+        { "id": "a", "text": "Keep current page — user may want page 5 of new search" },
+        { "id": "b", "text": "Reset page to 1 — new search starts from first page" },
+        { "id": "c", "text": "Delete page state entirely" },
+        { "id": "d", "text": "Increment page automatically" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "New search terms should start at page 1. Keeping page 5 of a different query returns wrong or empty results.",
+      "difficulty": "medium",
+      "tags": ["react", "pagination"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "What is the difference between debounce and throttle?",
+      "acceptedKeywords": ["stop", "interval", "typing", "scroll", "wait"],
+      "sampleAnswer": "Debounce waits until activity stops — ideal for search input. Throttle fires at most once per time window — ideal for scroll or resize events. Search uses debounce.",
+      "explanation": "Interviewers often ask this after debounce implementations.",
+      "difficulty": "medium",
+      "tags": ["javascript", "debounce"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the generic paginated response type.",
+      "code": "interface PaginatedResponse<{{T}}> {\n  page: number;\n  total_pages: number;\n  results: {{T}}[];\n}",
+      "language": "typescript",
+      "blanks": [
+        { "id": "T", "acceptedAnswers": ["T"] }
+      ],
+      "explanation": "T is the type parameter representing each item in the results array.",
+      "difficulty": "easy",
+      "tags": ["typescript", "generics"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "setTimeout callbacks are scheduled as which kind of task in the event loop?",
+      "options": [
+        { "id": "a", "text": "Microtask — runs before next render" },
+        { "id": "b", "text": "Macrotask — runs after current stack and microtasks" },
+        { "id": "c", "text": "Synchronous — runs immediately" },
+        { "id": "d", "text": "Web Worker task" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "setTimeout is a macrotask. Promise .then handlers are microtasks. Day 11 goes deeper.",
+      "difficulty": "medium",
+      "tags": ["javascript", "event-loop"]
+    }
+  ]
+}

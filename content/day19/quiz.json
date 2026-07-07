@@ -1,0 +1,258 @@
+{
+  "id": "day19-quiz",
+  "metaId": "day19",
+  "title": "Day 19 Quiz — Admin Dashboard and Role-based UI",
+  "description": "Verify array methods, dashboard types, conditional rendering, and table patterns.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "Hiding admin buttons in UI is sufficient security without backend role checks.",
+      "correctAnswer": false,
+      "explanation": "Frontend role UI is UX only — APIs must enforce authorization server-side.",
+      "difficulty": "easy",
+      "tags": [
+        "auth",
+        "security"
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "Which array method aggregates values into a single result?",
+      "options": [
+        {
+          "id": "a",
+          "text": "map"
+        },
+        {
+          "id": "b",
+          "text": "filter"
+        },
+        {
+          "id": "c",
+          "text": "reduce"
+        },
+        {
+          "id": "d",
+          "text": "forEach"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "reduce folds array into one accumulated value — ideal for analytics totals.",
+      "difficulty": "easy",
+      "tags": [
+        "javascript",
+        "arrays"
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "When search filter changes, what should happen to page index?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Stay on current page always"
+        },
+        {
+          "id": "b",
+          "text": "Reset to first page"
+        },
+        {
+          "id": "c",
+          "text": "Jump to last page"
+        },
+        {
+          "id": "d",
+          "text": "Random page"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Filter shrinks result set — reset page to 0 to avoid empty pages.",
+      "difficulty": "medium",
+      "tags": [
+        "pagination"
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which array methods are non-mutating? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "filter"
+        },
+        {
+          "id": "b",
+          "text": "map"
+        },
+        {
+          "id": "c",
+          "text": "sort on copy"
+        },
+        {
+          "id": "d",
+          "text": "push"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "filter, map return new arrays. sort mutates in place — spread first [...arr].sort(). push mutates.",
+      "difficulty": "medium",
+      "tags": [
+        "javascript"
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Paginate array with slice: items.slice({{start}}, {{end}}) where start is pageIndex * pageSize.",
+      "blanks": [
+        {
+          "id": "start",
+          "acceptedAnswers": [
+            "pageIndex * pageSize",
+            "page * pageSize"
+          ]
+        },
+        {
+          "id": "end",
+          "acceptedAnswers": [
+            "(pageIndex + 1) * pageSize",
+            "start + pageSize"
+          ]
+        }
+      ],
+      "explanation": "slice extracts page window from filtered sorted array.",
+      "difficulty": "medium",
+      "tags": [
+        "javascript",
+        "pagination"
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What length after filter?",
+      "code": "const users = [{ role: 'admin' }, { role: 'user' }, { role: 'admin' }];\nconsole.log(users.filter(u => u.role === 'admin').length);",
+      "language": "javascript",
+      "correctOutput": "2",
+      "explanation": "filter returns two admin entries.",
+      "difficulty": "easy",
+      "tags": [
+        "javascript"
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Best place to check admin role for route access?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only in table cell styling"
+        },
+        {
+          "id": "b",
+          "text": "Route guard component checking user.role"
+        },
+        {
+          "id": "c",
+          "text": "CSS display:none only"
+        },
+        {
+          "id": "d",
+          "text": "Comment in README"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Route guards enforce access at navigation level — not just visual hiding.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "auth"
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "code-completion",
+      "prompt": "Complete role badge conditional.",
+      "code": "{user.role === {{role}} && <AdminPanel />}",
+      "language": "typescript",
+      "blanks": [
+        {
+          "id": "role",
+          "acceptedAnswers": [
+            "'admin'",
+            "\"admin\""
+          ]
+        }
+      ],
+      "explanation": "Strict equality check on role union type.",
+      "difficulty": "easy",
+      "tags": [
+        "typescript",
+        "react"
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Describe dashboard folder structure for a medium React app.",
+      "acceptedKeywords": [
+        "features",
+        "components",
+        "pages",
+        "shared",
+        "hooks"
+      ],
+      "sampleAnswer": "I use feature folders: features/dashboard for cards and layout, features/users for table and filters, shared/ui for Table and Badge components, hooks for useDebounce and useAuth. Pages compose features; types live in types/ or feature types.ts.",
+      "explanation": "Interviewers assess scalable organization.",
+      "difficulty": "medium",
+      "tags": [
+        "architecture"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "DashboardStats model might include? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "totalUsers"
+        },
+        {
+          "id": "b",
+          "text": "revenue"
+        },
+        {
+          "id": "c",
+          "text": "component JSX"
+        },
+        {
+          "id": "d",
+          "text": "activeUsers"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "Dashboard models are data shapes — not UI components.",
+      "difficulty": "easy",
+      "tags": [
+        "typescript"
+      ]
+    }
+  ]
+}

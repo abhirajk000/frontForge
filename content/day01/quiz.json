@@ -1,0 +1,141 @@
+{
+  "id": "day01-quiz",
+  "metaId": "day01",
+  "title": "Day 01 Quiz — React Foundations",
+  "description": "Verify you understand modern JavaScript basics, TypeScript purpose, JSX, components, and Vite before moving to Day 02.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "Why do production React teams prefer const over let for most bindings?",
+      "options": [
+        { "id": "a", "text": "const makes values deeply immutable in JavaScript" },
+        { "id": "b", "text": "const prevents accidental reassignment and signals intent" },
+        { "id": "c", "text": "const is required for JSX to compile" },
+        { "id": "d", "text": "const improves runtime performance measurably" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "const prevents rebinding the variable, which reduces accidental mutation bugs. It does not make objects immutable — that matters later when updating React state.",
+      "difficulty": "easy",
+      "tags": ["javascript", "immutability"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "JSX is identical to HTML and can be pasted directly from an HTML file into a React component without changes.",
+      "correctAnswer": false,
+      "explanation": "JSX resembles HTML but uses different attribute names (className, htmlFor), requires closing tags, and is compiled to JavaScript. Some HTML patterns are invalid in JSX.",
+      "difficulty": "easy",
+      "tags": ["react", "jsx"]
+    },
+    {
+      "id": "q03",
+      "type": "code-output",
+      "prompt": "What will be logged?",
+      "code": "const items = ['Vite', 'React', 'TypeScript'];\nconst label = `Stack: ${items.join(' + ')}`;\nconsole.log(label);",
+      "language": "typescript",
+      "correctOutput": "Stack: Vite + React + TypeScript",
+      "explanation": "Template literals embed expressions. join creates a single string with the separator between array items.",
+      "difficulty": "easy",
+      "tags": ["javascript", "template-literals"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "What problem does React primarily solve for large interactive applications?",
+      "options": [
+        { "id": "a", "text": "Replacing the need for a backend API" },
+        { "id": "b", "text": "Managing complex UI state with declarative components instead of manual DOM manipulation" },
+        { "id": "c", "text": "Eliminating the need for CSS" },
+        { "id": "d", "text": "Making JavaScript strongly typed by default" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "React's core value is declarative UI composition and predictable updates. TypeScript handles typing; CSS still exists; backends are separate concerns.",
+      "difficulty": "medium",
+      "tags": ["react", "architecture"]
+    },
+    {
+      "id": "q05",
+      "type": "multiple-choice",
+      "prompt": "Which are valid reasons teams adopt TypeScript in React codebases? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Catch prop type mismatches during development" },
+        { "id": "b", "text": "Document component contracts through types" },
+        { "id": "c", "text": "Guarantee zero runtime bugs" },
+        { "id": "d", "text": "Improve refactor safety in large codebases" }
+      ],
+      "correctOptionIds": ["a", "b", "d"],
+      "explanation": "TypeScript catches many errors early and improves maintainability, but it cannot guarantee zero runtime bugs — logic errors and external data still need validation.",
+      "difficulty": "medium",
+      "tags": ["typescript"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "In JSX, use {{blank1}} instead of class, and {{blank2}} instead of for on labels.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["className", "classname"] },
+        { "id": "blank2", "acceptedAnswers": ["htmlFor", "htmlfor"] }
+      ],
+      "explanation": "JSX compiles to JavaScript where class and for are reserved keywords, so React uses className and htmlFor.",
+      "difficulty": "easy",
+      "tags": ["react", "jsx"]
+    },
+    {
+      "id": "q07",
+      "type": "code-completion",
+      "prompt": "Complete the named export import for a Navbar component exported as `export function Navbar`.",
+      "code": "import { {{importName}} } from './components/Navbar';",
+      "language": "typescript",
+      "blanks": [
+        { "id": "importName", "acceptedAnswers": ["Navbar", "navbar"] }
+      ],
+      "explanation": "Named exports must be imported with the same name in curly braces. Default exports would use import Navbar from '...' without braces.",
+      "difficulty": "easy",
+      "tags": ["javascript", "modules"]
+    },
+    {
+      "id": "q08",
+      "type": "single-choice",
+      "prompt": "Why is Vite commonly chosen over older React tooling for new projects?",
+      "options": [
+        { "id": "a", "text": "Vite removes the need for npm" },
+        { "id": "b", "text": "Vite provides faster dev server startup and HMR using native ES modules" },
+        { "id": "c", "text": "Vite only works with class components" },
+        { "id": "d", "text": "Vite automatically writes components for you" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Vite's dev experience — near-instant server start and fast HMR — is the primary reason teams adopt it. It still uses npm and does not generate components.",
+      "difficulty": "medium",
+      "tags": ["vite", "tooling"]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "In one or two sentences, explain what the Virtual DOM helps React do.",
+      "acceptedKeywords": ["diff", "update", "efficient", "representation", "reconcile", "minimal"],
+      "sampleAnswer": "React keeps a lightweight in-memory representation of the UI. When state changes, it diffs the new tree against the previous one and applies minimal updates to the real DOM.",
+      "explanation": "Interviewers want the diffing/reconciliation idea, not a deep algorithm explanation on Day 1.",
+      "difficulty": "medium",
+      "tags": ["react", "virtual-dom"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "A component renders nothing. The function uses curly braces and contains JSX but no return. What is the most likely fix?",
+      "options": [
+        { "id": "a", "text": "Install React Router" },
+        { "id": "b", "text": "Add an explicit return statement or use parentheses for implicit return" },
+        { "id": "c", "text": "Change let to const" },
+        { "id": "d", "text": "Rename the file to .jsx" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Arrow functions with a block body need return. This is one of the most common Day 1 bugs.",
+      "difficulty": "easy",
+      "tags": ["react", "debugging"]
+    }
+  ]
+}

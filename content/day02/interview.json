@@ -1,0 +1,161 @@
+{
+  "id": "day02-interview",
+  "metaId": "day02",
+  "title": "Day 02 Interview Prep",
+  "description": "Practice explaining props, state, controlled components, and one-way data flow — core topics for React interviews at product companies.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What are props in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Basic vocabulary and understanding of parent-child communication.",
+      "keyPoints": [
+        "Inputs to a component from its parent",
+        "Read-only from the child's perspective",
+        "Can be any JavaScript value including functions (callbacks)",
+        "Enable reuse and composition"
+      ],
+      "sampleAnswer": "Props are arguments passed from a parent component to a child. They configure how the child renders or behaves. A child should not mutate props — when data needs to change inside the child, we use state or lift state to the parent.",
+      "followUps": ["How do you type props in TypeScript?", "Can props be optional?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is state in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Understanding of local mutable UI data.",
+      "keyPoints": [
+        "Data owned by the component",
+        "Changes trigger re-renders",
+        "useState for local state in functional components",
+        "Updates must be immutable for objects and arrays"
+      ],
+      "sampleAnswer": "State is data a component owns and that can change over time. When state updates via setState or useState setter, React re-renders the component. For a login form, email and password values live in state until submission.",
+      "followUps": ["What happens if you mutate state directly?", "When would you lift state up?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is a controlled component?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Form pattern knowledge — extremely common in interviews.",
+      "keyPoints": [
+        "Input value controlled by React state",
+        "value + onChange pair",
+        "React is single source of truth",
+        "Enables validation and conditional UI"
+      ],
+      "sampleAnswer": "A controlled component is an input whose value is driven by React state. On every change, onChange updates state and React re-renders the input. This lets me validate on each keystroke, disable submit, or format input — the DOM does not own the value.",
+      "followUps": ["What is an uncontrolled component?", "When might uncontrolled be acceptable?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain one-way data flow in React.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Architecture mental model beyond syntax.",
+      "keyPoints": [
+        "Props flow down the tree",
+        "Events/callbacks flow up",
+        "Predictable data direction",
+        "Contrasts with two-way binding in some frameworks"
+      ],
+      "sampleAnswer": "Data flows down from parent to child through props. When a child needs to communicate changes, it invokes a callback prop passed from the parent. The parent may update its own state and pass new props down. This unidirectional flow makes data changes easier to trace than arbitrary two-way binding.",
+      "followUps": ["How does Context change this picture?", "What is lifting state up?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "Props vs state — when do you use each on a login form?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Practical application, not definitions only.",
+      "keyPoints": [
+        "Field values typically state",
+        "isLoading might be state or prop depending on architecture",
+        "onSubmit callback is a prop",
+        "Error from server might be state after fetch"
+      ],
+      "sampleAnswer": "Email and password values are state — they change on every keystroke. If LoginForm is reusable, onSubmit and maybe isLoading come from parent as props. If the form owns the fake API call today, isLoading and error are local state. I choose based on who needs the data after submit.",
+      "followUps": ["Would you put credentials in Context?", "How does Redux change this?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "Why use the spread operator when updating React state objects?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Immutability connection between JS and React.",
+      "keyPoints": [
+        "Creates shallow copy with changed fields",
+        "New reference triggers re-render",
+        "Avoids mutation bugs",
+        "Works with functional setState"
+      ],
+      "sampleAnswer": "Spread creates a new object with updated fields while preserving others. React detects change by reference for objects. Mutating form.email in place keeps the same reference and React may skip rendering. Spread is the idiomatic shallow update for form slices.",
+      "followUps": ["What about nested objects?", "When do you need deep clone?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "How would you implement show-password without losing controlled input behavior?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Can they combine multiple state pieces correctly?",
+      "keyPoints": [
+        "password value stays in state",
+        "separate showPassword boolean toggles type attribute",
+        "type switches between password and text",
+        "same value prop throughout"
+      ],
+      "sampleAnswer": "I keep password in state as today. A separate showPassword boolean toggles the input type between password and text. Value stays bound to password state — only the type attribute changes. The toggle button uses type=button to avoid submitting the form.",
+      "followUps": ["Accessibility concerns with show password?", "How to store remember me safely?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Your login form re-renders on every keystroke and feels slow. What do you check before reaching for useMemo?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Performance judgment — not premature optimization.",
+      "keyPoints": [
+        "Re-renders on keystroke are normal for controlled forms",
+        "Check expensive work inside render",
+        "Split large components",
+        "Profile before optimizing",
+        "useMemo later in Week 3"
+      ],
+      "sampleAnswer": "Controlled forms re-render on each keystroke by design — that is usually fine. I would profile first. I check if validation runs expensive regex on unrelated fields, or if heavy child trees re-render unnecessarily. I might split presentational inputs, defer validation to blur/submit, or memoize children later — but not on day two without evidence.",
+      "followUps": ["When is useMemo appropriate?", "What does React.memo do?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "A junior stores the entire API response in password field state by mistake. How do you review this and what do you teach?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Mentorship and code review communication.",
+      "keyPoints": [
+        "Identify conflation of form state and API data",
+        "Separate concerns: form slice vs auth result",
+        "Teach typed state shapes",
+        "Suggest code review checklist"
+      ],
+      "sampleAnswer": "In review I point out mixed concerns: form fields should be a small LoginForm type, API responses get their own type and state slice after submit. I ask them to diagram data flow on paper. I recommend explicit TypeScript types so the mistake becomes a compile error. I praise what's working and request a focused fix PR, not a rewrite.",
+      "followUps": ["How prevent this in CI?", "Auth state architecture at scale?"],
+      "redFlags": ["Blame without teaching", "Suggest storing passwords in localStorage today"]
+    },
+    {
+      "id": "int-s02",
+      "question": "Interviewer asks: why not read form values with document.getElementById on submit instead of controlled inputs?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Can you defend React patterns vs vanilla DOM?",
+      "keyPoints": [
+        "Controlled enables live validation and conditional UI",
+        "Single React state tree vs DOM queries",
+        "Testing and predictability",
+        "Acknowledge uncontrolled has niche uses"
+      ],
+      "sampleAnswer": "Reading the DOM on submit works for trivial forms but fights React's model. Controlled inputs let me validate before submit, disable the button until valid, show inline errors, and test without a browser DOM. At scale, DOM queries break when fields move or IDs change. I'd use uncontrolled only for file inputs or integrating legacy widgets — not primary login fields.",
+      "followUps": ["React 19 form actions?", "How does React Hook Form differ?"],
+      "redFlags": ["Controlled is always required with no exceptions", "Cannot name any uncontrolled use case"]
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "id": "day17-quiz",
+  "metaId": "day17",
+  "title": "Day 17 Quiz — RTK Query and Async Patterns",
+  "description": "Verify promise chaining, API typing, query/mutation hooks, cache, and invalidations.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "RTK Query automatically deduplicates identical in-flight requests.",
+      "correctAnswer": true,
+      "explanation": "Multiple subscribers to the same query share one request and cache entry.",
+      "difficulty": "easy",
+      "tags": [
+        "rtk-query",
+        "cache"
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What hook reads cached server data in RTK Query?",
+      "options": [
+        {
+          "id": "a",
+          "text": "useSelector only"
+        },
+        {
+          "id": "b",
+          "text": "Auto-generated query hook like useGetProductsQuery"
+        },
+        {
+          "id": "c",
+          "text": "useReducer"
+        },
+        {
+          "id": "d",
+          "text": "useContext"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "createApi generates typed query hooks per endpoint.",
+      "difficulty": "easy",
+      "tags": [
+        "rtk-query"
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does invalidatesTags on a mutation do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deletes the Redux store"
+        },
+        {
+          "id": "b",
+          "text": "Marks cached queries stale so they refetch"
+        },
+        {
+          "id": "c",
+          "text": "Cancels all pending requests globally"
+        },
+        {
+          "id": "d",
+          "text": "Persists cache to localStorage"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Tag invalidation triggers refetch of queries that provided matching tags.",
+      "difficulty": "medium",
+      "tags": [
+        "rtk-query",
+        "cache"
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which belong in configureStore when using RTK Query? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "api.reducer in reducer object"
+        },
+        {
+          "id": "b",
+          "text": "api.middleware in middleware chain"
+        },
+        {
+          "id": "c",
+          "text": "ThemeProvider reducer"
+        },
+        {
+          "id": "d",
+          "text": "Client slices like todos from Day 16"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "RTK Query adds reducer and middleware; client slices coexist.",
+      "difficulty": "medium",
+      "tags": [
+        "redux",
+        "rtk-query"
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Type a generic API wrapper as {{blank1}} where T is the data shape.",
+      "blanks": [
+        {
+          "id": "blank1",
+          "acceptedAnswers": [
+            "ApiResponse<T>",
+            "interface ApiResponse<T>"
+          ]
+        }
+      ],
+      "explanation": "Generic responses reuse one wrapper for many endpoints.",
+      "difficulty": "medium",
+      "tags": [
+        "typescript"
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What does .catch() receive if fetch fails network?",
+      "code": "fetch('/api/x').then(r => r.json()).catch(e => e.message);",
+      "language": "javascript",
+      "correctOutput": "Failed to fetch",
+      "explanation": "Network errors reject the promise; catch receives the Error object.",
+      "difficulty": "hard",
+      "tags": [
+        "javascript",
+        "promises"
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "When is RTK Query preferred over hand-rolled fetch in useEffect?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One-off static JSON file read"
+        },
+        {
+          "id": "b",
+          "text": "Shared server data with caching, loading states, and mutations"
+        },
+        {
+          "id": "c",
+          "text": "Local theme preference"
+        },
+        {
+          "id": "d",
+          "text": "Form input state"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "RTK Query shines for cached server state with lifecycle management.",
+      "difficulty": "easy",
+      "tags": [
+        "architecture"
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "code-completion",
+      "prompt": "Complete the mutation invalidation.",
+      "code": "addProduct: builder.mutation({\n  query: (body) => ({ url: \"/products\", method: \"POST\", body }),\n  {{invalidates}}\n});",
+      "language": "typescript",
+      "blanks": [
+        {
+          "id": "invalidates",
+          "acceptedAnswers": [
+            "invalidatesTags: ['Product']",
+            "invalidatesTags: [\"Product\"]"
+          ]
+        }
+      ],
+      "explanation": "invalidatesTags refreshes queries that provide the Product tag.",
+      "difficulty": "medium",
+      "tags": [
+        "rtk-query"
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Explain providesTags vs invalidatesTags.",
+      "acceptedKeywords": [
+        "cache",
+        "stale",
+        "refetch",
+        "mark"
+      ],
+      "sampleAnswer": "providesTags labels cached query data so RTK Query knows what each entry represents. invalidatesTags on mutations marks those tagged entries stale, triggering refetch of affected queries.",
+      "explanation": "Tag system connects queries and mutations for automatic cache updates.",
+      "difficulty": "medium",
+      "tags": [
+        "rtk-query"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Which states does useGetProductsQuery expose? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "isLoading"
+        },
+        {
+          "id": "b",
+          "text": "isError"
+        },
+        {
+          "id": "c",
+          "text": "data"
+        },
+        {
+          "id": "d",
+          "text": "isFetching"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Query hooks expose data plus loading, error, and background fetch flags.",
+      "difficulty": "easy",
+      "tags": [
+        "rtk-query",
+        "react"
+      ]
+    }
+  ]
+}

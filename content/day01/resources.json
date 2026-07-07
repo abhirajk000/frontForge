@@ -1,0 +1,72 @@
+{
+  "id": "day01-resources",
+  "metaId": "day01",
+  "title": "Day 01 Resources",
+  "description": "Official documentation and references for today's topics. Prefer these over random blog posts.",
+  "resources": [
+    {
+      "id": "res-react-learn",
+      "title": "React — Quick Start",
+      "url": "https://react.dev/learn",
+      "type": "documentation",
+      "description": "Official React docs. Read 'Your First Component' and 'Writing Markup with JSX' after today's lesson.",
+      "recommended": true
+    },
+    {
+      "id": "res-react-describing",
+      "title": "React — Describing the UI",
+      "url": "https://react.dev/learn/describing-the-ui",
+      "type": "documentation",
+      "description": "Deep dive on components, JSX, and passing props — aligns with today's component work.",
+      "recommended": true
+    },
+    {
+      "id": "res-vite-guide",
+      "title": "Vite — Getting Started",
+      "url": "https://vite.dev/guide/",
+      "type": "documentation",
+      "description": "How Vite dev server, HMR, and production build work. Skim the 'Why Vite' section.",
+      "recommended": true
+    },
+    {
+      "id": "res-vite-features",
+      "title": "Vite — Features",
+      "url": "https://vite.dev/guide/features.html",
+      "type": "documentation",
+      "description": "HMR, TypeScript support, and build optimizations — useful when interviewers ask why Vite.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts-everyday",
+      "title": "TypeScript — Everyday Types",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+      "type": "documentation",
+      "description": "Covers string, number, boolean, arrays, and type inference — matches today's TypeScript section.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts-react",
+      "title": "TypeScript — React Cheatsheet (React TypeScript Cheatsheet)",
+      "url": "https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example",
+      "type": "reference",
+      "description": "Practical examples for typing React components and props. Bookmark for the whole track.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-modules",
+      "title": "MDN — JavaScript Modules",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules",
+      "type": "documentation",
+      "description": "import/export fundamentals that underpin every React file.",
+      "recommended": false
+    },
+    {
+      "id": "res-react-devtools",
+      "title": "React Developer Tools",
+      "url": "https://react.dev/learn/react-developer-tools",
+      "type": "tool",
+      "description": "Install the browser extension today. You will use it for the rest of the track.",
+      "recommended": true
+    }
+  ]
+}

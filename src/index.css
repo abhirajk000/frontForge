@@ -1,0 +1,248 @@
+@import 'tailwindcss';
+@import './theme/tokens.css';
+
+/**
+ * Tailwind v4 CSS-first theme configuration.
+ * Maps design tokens → Tailwind utilities.
+ */
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --color-bg: rgb(var(--color-bg));
+  --color-bg-subtle: rgb(var(--color-bg-subtle));
+  --color-surface: rgb(var(--color-surface));
+  --color-surface-raised: rgb(var(--color-surface-raised));
+  --color-surface-hover: rgb(var(--color-surface-hover));
+  --color-border: rgb(var(--color-border));
+  --color-border-strong: rgb(var(--color-border-strong));
+
+  --color-text: rgb(var(--color-text));
+  --color-text-secondary: rgb(var(--color-text-secondary));
+  --color-text-tertiary: rgb(var(--color-text-tertiary));
+  --color-text-inverse: rgb(var(--color-text-inverse));
+
+  --color-accent: rgb(var(--color-accent));
+  --color-accent-hover: rgb(var(--color-accent-hover));
+  --color-accent-subtle: rgb(var(--color-accent-subtle));
+  --color-accent-text: rgb(var(--color-accent-text));
+
+  --color-purple: rgb(var(--color-purple));
+  --color-purple-hover: rgb(var(--color-purple-hover));
+  --color-purple-subtle: rgb(var(--color-purple-subtle));
+  --color-purple-text: rgb(var(--color-purple-text));
+
+  --color-success: rgb(var(--color-success));
+  --color-success-subtle: rgb(var(--color-success-subtle));
+  --color-success-text: rgb(var(--color-success-text));
+  --color-warning: rgb(var(--color-warning));
+  --color-warning-subtle: rgb(var(--color-warning-subtle));
+  --color-warning-text: rgb(var(--color-warning-text));
+  --color-danger: rgb(var(--color-danger));
+  --color-danger-subtle: rgb(var(--color-danger-subtle));
+  --color-danger-text: rgb(var(--color-danger-text));
+  --color-info: rgb(var(--color-info));
+  --color-info-subtle: rgb(var(--color-info-subtle));
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+
+  --shadow-low: var(--shadow-low);
+  --shadow-medium: var(--shadow-medium);
+  --shadow-high: var(--shadow-high);
+  --shadow-glow: var(--shadow-glow);
+
+  --container-app: var(--container-width);
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--color-border));
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  code, pre, kbd, samp {
+    font-family: var(--font-mono);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-focus-ring));
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: rgb(var(--color-accent) / 0.2);
+    color: rgb(var(--color-text));
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-border-strong));
+    border-radius: var(--radius-full);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-text-tertiary));
+  }
+}
+
+@layer utilities {
+  /* Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-border-strong)) transparent;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: rgb(var(--color-surface) / 0.7);
+    backdrop-filter: blur(12px) saturate(1.5);
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  }
+
+  .glass-strong {
+    background: rgb(var(--color-surface) / 0.92);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  }
+
+  .glass-dark {
+    background: rgb(var(--color-bg) / 0.88);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  }
+
+  /* Glow effects */
+  .glow-blue {
+    box-shadow: 0 0 0 1px rgb(59 130 246 / 0.15), 0 0 20px 0 rgb(59 130 246 / 0.08);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 0 1px rgb(139 92 246 / 0.15), 0 0 20px 0 rgb(139 92 246 / 0.08);
+  }
+
+  /* Active sidebar indicator */
+  .nav-active-indicator {
+    position: relative;
+  }
+  .nav-active-indicator::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 60%;
+    background: rgb(var(--color-accent));
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* Sidebar item states — fully theme-aware */
+  .sidebar-active {
+    background-color: rgb(var(--color-accent) / 0.08);
+    color: rgb(var(--color-text));
+  }
+  .sidebar-inactive {
+    color: rgb(var(--color-text-tertiary));
+  }
+  .sidebar-inactive:hover {
+    background-color: rgb(var(--color-surface) / 0.55);
+    color: rgb(var(--color-text-secondary));
+  }
+
+  /* Accessible skip links */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Gradient text */
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Mission label style */
+  .label-section {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--color-text-tertiary));
+  }
+
+  /* Lesson code — readable in light mode; terminal feel in dark */
+  [data-theme='dark'] .lesson-code-block pre,
+  :root:not([data-theme='light']) .lesson-code-block pre {
+    background: rgb(9 9 11);
+  }
+
+  [data-theme='dark'] .lesson-code-block pre code,
+  :root:not([data-theme='light']) .lesson-code-block pre code {
+    color: rgb(226 232 240);
+  }
+
+  [data-theme='dark'] .lesson-code-block,
+  :root:not([data-theme='light']) .lesson-code-block {
+    background: rgb(9 9 11);
+    border-color: rgb(31 41 55);
+  }
+
+  [data-theme='dark'] .lesson-code-block > div:first-child,
+  :root:not([data-theme='light']) .lesson-code-block > div:first-child {
+    background: rgb(13 13 17);
+    border-color: rgb(22 31 48);
+  }
+
+  /* Dashboard hero — theme-aware dot grid */
+  .dashboard-hero-grid {
+    background-image: radial-gradient(
+      circle,
+      rgb(var(--color-text-tertiary) / 0.35) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+    opacity: 0.12;
+  }
+
+  [data-theme='dark'] .dashboard-hero-grid,
+  :root:not([data-theme='light']) .dashboard-hero-grid {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    opacity: 0.04;
+  }
+}

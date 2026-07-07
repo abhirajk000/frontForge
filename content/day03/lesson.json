@@ -1,0 +1,300 @@
+{
+  "id": "day03-lesson",
+  "metaId": "day03",
+  "title": "Day 03 — Reusable Form Components",
+  "summary": "Master map, filter, and reduce for UI data, compose components with children, render lists with stable keys, and extract Day 02's login inputs into a reusable library.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Yesterday you built a login page with controlled inputs. Today you stop copying markup. Product companies — Stripe dashboards, Notion settings, Razorpay merchant panels — share input primitives across dozens of forms. You will learn the array methods that power dynamic UI, the children prop for flexible composition, and keys — the interview topic juniors miss until production bugs appear."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Scope for Day 03",
+      "content": "Use only what you know from Days 01–02: components, props, useState, controlled inputs. Do not add useEffect, fetch, React Router, or custom hooks yet. Those are scheduled for Days 04–06."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — map, filter, reduce"
+    },
+    {
+      "type": "paragraph",
+      "content": "Static JSX does not scale. Forms have dynamic error lists. Settings pages render ten toggles from config. Admin tables map rows to cells. Three array methods cover 90% of list UI prep in React apps."
+    },
+    {
+      "type": "heading",
+      "id": "map",
+      "level": 3,
+      "text": "map() — transform data into UI"
+    },
+    {
+      "type": "paragraph",
+      "content": "map creates a new array by transforming every element. In React, the transformation is often JSX. You already saw map on Day 01 for feature cards — today you apply it to form field configs and error messages."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "field-config.ts",
+      "code": "type FieldConfig = {\n  id: string;\n  label: string;\n  type: 'text' | 'password';\n};\n\nconst loginFields: FieldConfig[] = [\n  { id: 'email', label: 'Email', type: 'text' },\n  { id: 'password', label: 'Password', type: 'password' },\n];\n\n// In JSX — map config to components (keys covered below)\n// loginFields.map((field) => <FieldRow key={field.id} field={field} />)"
+    },
+    {
+      "type": "tip",
+      "title": "map vs forEach",
+      "content": "forEach returns undefined — use it for side effects only. map returns a new array — use it when the result becomes JSX or derived data."
+    },
+    {
+      "type": "heading",
+      "id": "filter",
+      "level": 3,
+      "text": "filter() — show only what matters"
+    },
+    {
+      "type": "paragraph",
+      "content": "filter keeps elements that pass a test. After validation you might have optional error strings — filter removes empty ones before rendering a summary list."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "const errors = {\n  email: 'Invalid email',\n  password: '',\n};\n\nconst visibleMessages = Object.entries(errors)\n  .filter(([, message]) => message.length > 0)\n  .map(([field, message]) => ({ field, message }));"
+    },
+    {
+      "type": "heading",
+      "id": "reduce",
+      "level": 3,
+      "text": "reduce() — aggregate for summaries"
+    },
+    {
+      "type": "paragraph",
+      "content": "reduce folds an array into a single value. Use it for counts — how many fields failed validation — or building a lookup map. You will use reduce more in Week 2 with carts and stats."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "const errorCount = Object.values(errors).reduce(\n  (count, message) => count + (message ? 1 : 0),\n  0,\n);"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Reusable interfaces and generic props"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reusable components need shared prop shapes. Define a base interface once; extend it per component. Generics let one wrapper work with different value types later — optional today but interviewers love the vocabulary."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "components/ui/types.ts",
+      "code": "export type BaseFieldProps = {\n  id: string;\n  label: string;\n  error?: string;\n};\n\nexport type TextInputProps = BaseFieldProps & {\n  value: string;\n  onChange: (value: string) => void;\n  type?: 'text' | 'email';\n};\n\n// Generic helper — optional stretch\nexport type SelectOption<T extends string> = {\n  value: T;\n  label: string;\n};"
+    },
+    {
+      "type": "note",
+      "title": "Extend, do not duplicate",
+      "content": "If TextInput and PasswordInput share label + error + id, put those on BaseFieldProps. Divergent props stay on the specific type. This mirrors how design systems document APIs."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react-lists",
+      "level": 2,
+      "text": "React — Lists and keys"
+    },
+    {
+      "type": "paragraph",
+      "content": "When you map an array to components, React needs a key on each sibling to track identity across re-renders. Missing keys cause console warnings. Wrong keys cause subtle bugs — cursor jumping, wrong error under wrong field, state leaking between rows."
+    },
+    {
+      "type": "table",
+      "headers": ["Key source", "When to use", "Risk"],
+      "rows": [
+        ["Stable id from data (user.id, field.id)", "Dynamic lists, reorder, delete", "Low — preferred"],
+        ["Index", "Static lists that never reorder", "Medium — breaks on insert/delete"],
+        ["Math.random() or Date.now()", "Never in render", "High — new key every render remounts everything"]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "{visibleMessages.map(({ field, message }) => (\n  <li key={field}>\n    <FormError message={message} />\n  </li>\n))}"
+    },
+    {
+      "type": "warning",
+      "title": "Key placement",
+      "content": "key goes on the outermost element returned from map — not on a nested span inside. React only reads keys on direct children of the array."
+    },
+    {
+      "type": "heading",
+      "id": "children",
+      "level": 3,
+      "text": "children — composition without prop explosion"
+    },
+    {
+      "type": "paragraph",
+      "content": "children is the content between a component's opening and closing tags. Button uses children for label text. Card uses children for arbitrary body content. You avoid creating titleProp, bodyProp, footerProp for every layout variant."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "components/ui/Button.tsx",
+      "code": "type ButtonProps = {\n  isLoading?: boolean;\n  disabled?: boolean;\n  children: React.ReactNode;\n  onClick?: () => void;\n};\n\nexport function Button({ isLoading, disabled, children, onClick }: ButtonProps) {\n  return (\n    <button type=\"button\" disabled={disabled || isLoading} onClick={onClick}>\n      {isLoading ? 'Loading…' : children}\n    </button>\n  );\n}\n\n// Usage: <Button isLoading={loading}>Sign in</Button>"
+    },
+    {
+      "type": "heading",
+      "id": "reusability",
+      "level": 3,
+      "text": "Component reusability — presentational inputs"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your TextInput should not hardcode email state. It receives value and onChange from the parent — the same controlled pattern from Day 02. The library stays dumb; LoginForm stays smart. This separation is how teams share UI across products."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "before",
+          "label": "Day 02 (inline)",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "tsx",
+              "code": "<label htmlFor=\"email\">Email</label>\n<input id=\"email\" value={email} onChange={(e) => setEmail(e.target.value)} />\n{errors.email && <p>{errors.email}</p>}"
+            }
+          ]
+        },
+        {
+          "id": "after",
+          "label": "Day 03 (composed)",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "tsx",
+              "code": "<TextInput\n  id=\"email\"\n  label=\"Email\"\n  value={form.email}\n  onChange={(email) => setForm((p) => ({ ...p, email }))}\n  error={errors.email}\n/>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build-mission",
+      "level": 2,
+      "text": "Build Mission — Reusable Input Library"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create TextInput, PasswordInput, Checkbox, Button, and Error components. Refactor your Day 02 login page to use them. Behavior must not regress — this is a refactor, not a rewrite."
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-text", "text": "TextInput with label, value, onChange, error" },
+        { "id": "req-password", "text": "PasswordInput with show/hide toggle" },
+        { "id": "req-checkbox", "text": "Checkbox with label and controlled checked state" },
+        { "id": "req-button", "text": "Button with children, loading, and disabled states" },
+        { "id": "req-error", "text": "Error component for field and summary messages" },
+        { "id": "req-refactor", "text": "Login page uses library — no duplicated input markup" },
+        { "id": "req-map", "text": "At least one list rendered with map() and stable keys" }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Hints, not solutions",
+      "content": "Extract TextInput first and swap one field on the login form. Then PasswordInput, reusing label/error layout. Button children hold the sign-in label. Keep validation logic in LoginForm — only move presentation."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — mistakes you will make today"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "debug-key",
+          "title": "Missing key",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: console warns about unique keys. Cause: map without key or key on inner element. Fix: key={item.id} on the top-level element in the map return."
+            }
+          ]
+        },
+        {
+          "id": "debug-list",
+          "title": "Wrong list rendering",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: wrong error under wrong field. Cause: misaligned arrays or unstable index keys after reorder. Fix: key by field id; derive visible errors with filter before map."
+            }
+          ]
+        },
+        {
+          "id": "debug-duplicate",
+          "title": "Duplicate components",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: styling fix requires many edits. Cause: copy-paste instead of shared TextInput. Fix: one source of truth in ui/ folder; forms pass props only."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-library", "text": "Input library extracted and login refactored" },
+        { "id": "done-keys", "text": "Lists use stable keys" },
+        { "id": "done-responsive", "text": "Responsive layout preserved" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

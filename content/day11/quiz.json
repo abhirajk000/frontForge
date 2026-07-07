@@ -1,0 +1,141 @@
+{
+  "id": "day11-quiz",
+  "metaId": "day11",
+  "title": "Day 11 Quiz — Event Loop and Infinite Scroll",
+  "description": "Verify event loop ordering, Intersection Observer, pagination append, and observer cleanup.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "Microtasks run before macrotasks after synchronous code completes.",
+      "correctAnswer": true,
+      "explanation": "The event loop drains the microtask queue completely before running the next macrotask.",
+      "difficulty": "easy",
+      "tags": ["javascript", "event-loop"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What does Intersection Observer detect?",
+      "options": [
+        { "id": "a", "text": "When an element intersects with a root viewport or element" },
+        { "id": "b", "text": "When fetch completes" },
+        { "id": "c", "text": "When React re-renders" },
+        { "id": "d", "text": "When user clicks scroll bar" }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Intersection Observer asynchronously reports when target elements cross visibility thresholds.",
+      "difficulty": "easy",
+      "tags": ["javascript", "intersection-observer"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "Infinite scroll should update items with:",
+      "options": [
+        { "id": "a", "text": "setItems(newItems) — replace entire list" },
+        { "id": "b", "text": "setItems(prev => [...prev, ...newItems]) — append" },
+        { "id": "c", "text": "items.push(...newItems)" },
+        { "id": "d", "text": "setPage only — items derive from page" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Append preserves previously loaded items. Direct push mutates state.",
+      "difficulty": "medium",
+      "tags": ["react", "pagination"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which are microtasks? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Promise.then callbacks" },
+        { "id": "b", "text": "setTimeout callbacks" },
+        { "id": "c", "text": "queueMicrotask callbacks" },
+        { "id": "d", "text": "setInterval callbacks" }
+      ],
+      "correctOptionIds": ["a", "c"],
+      "explanation": "Promise reactions and queueMicrotask are microtasks. setTimeout and setInterval are macrotasks.",
+      "difficulty": "hard",
+      "tags": ["javascript", "event-loop"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Disconnect IntersectionObserver in useEffect {{blank1}} by calling observer.{{blank2}}().",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["cleanup", "return"] },
+        { "id": "blank2", "acceptedAnswers": ["disconnect"] }
+      ],
+      "explanation": "Cleanup prevents memory leaks and stale callbacks after unmount.",
+      "difficulty": "medium",
+      "tags": ["react", "intersection-observer"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What is the output order?",
+      "code": "console.log('A');\nsetTimeout(() => console.log('D'), 0);\nPromise.resolve().then(() => console.log('C'));\nconsole.log('B');",
+      "language": "typescript",
+      "correctOutput": "A B C D",
+      "explanation": "Sync A, B first. Microtask C before macrotask D.",
+      "difficulty": "medium",
+      "tags": ["javascript", "event-loop"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Why guard loadNextPage with isLoading && hasMore?",
+      "options": [
+        { "id": "a", "text": "TypeScript requires it" },
+        { "id": "b", "text": "Prevent duplicate fetches when observer fires multiple times" },
+        { "id": "c", "text": "Required by Intersection Observer API" },
+        { "id": "d", "text": "To disable lazy loading" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Without guards, sentinel visibility can trigger overlapping page fetches.",
+      "difficulty": "medium",
+      "tags": ["react", "infinite-scroll"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "Why is Intersection Observer preferred over scroll event listeners for infinite scroll?",
+      "acceptedKeywords": ["performance", "efficient", "browser", "async", "viewport"],
+      "sampleAnswer": "Scroll listeners fire on every pixel scrolled — expensive for long lists. Intersection Observer is browser-optimized, runs asynchronously, and only fires when visibility crosses a threshold.",
+      "explanation": "Production feeds use observer or virtualization — not raw scroll handlers.",
+      "difficulty": "medium",
+      "tags": ["javascript", "intersection-observer"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the typed observer callback parameter.",
+      "code": "const observer = new IntersectionObserver(\n  (entries: {{IntersectionObserverEntry}}[]) => {\n    if (entries[0]?.isIntersecting) loadMore();\n  }\n);",
+      "language": "typescript",
+      "blanks": [
+        { "id": "IntersectionObserverEntry", "acceptedAnswers": ["IntersectionObserverEntry"] }
+      ],
+      "explanation": "DOM lib provides IntersectionObserverEntry for typed callback entries.",
+      "difficulty": "easy",
+      "tags": ["typescript", "observer"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "End-of-list state should show when:",
+      "options": [
+        { "id": "a", "text": "First fetch fails" },
+        { "id": "b", "text": "hasMore is false or API returns empty next page" },
+        { "id": "c", "text": "User scrolls to top" },
+        { "id": "d", "text": "isLoading is true" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Track hasMore from API metadata. Show end message when no additional pages exist.",
+      "difficulty": "easy",
+      "tags": ["react", "pagination"]
+    }
+  ]
+}

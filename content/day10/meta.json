@@ -1,0 +1,44 @@
+{
+  "id": "day10",
+  "version": "1.0.0",
+  "day": 10,
+  "week": 2,
+  "track": "react-interview",
+  "title": "E-Commerce Product Listing",
+  "subtitle": "Sorting, filtering, array chaining, keys, and React.memo for list performance",
+  "mission": "Build an E-Commerce Product Listing.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": ["react", "filtering", "sorting", "lists", "keys", "react-memo", "array-methods"],
+  "topics": {
+    "javascript": ["sorting", "filtering", "array chaining"],
+    "typescript": ["product models"],
+    "react": ["list rendering", "keys", "React.memo introduction"]
+  },
+  "prerequisites": [
+    "week1 — list rendering, map, and keys from Day 3",
+    "day08 — fetch patterns and UI states",
+    "day09 — debounced search and custom hooks"
+  ],
+  "expectedOutcome": [
+    "Filter and sort product lists with array chaining methods",
+    "Model products with TypeScript interfaces",
+    "Render responsive product grids with stable React keys",
+    "Apply React.memo to prevent unnecessary list item re-renders",
+    "Explain keys and rendering performance in interview terms"
+  ],
+  "definitionOfDone": [
+    "Category filter narrows products correctly",
+    "Price range filter works with min/max inputs",
+    "Search filters by product name",
+    "Sort by price and name works ascending and descending",
+    "Responsive product grid with stable keys",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 11,
+    "title": "Infinite Scrolling",
+    "summary": "Tomorrow you will load products in pages automatically with Intersection Observer, diving deep into the event loop, microtasks, and macrotasks."
+  }
+}

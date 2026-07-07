@@ -1,0 +1,69 @@
+{
+  "id": "day09-challenge",
+  "metaId": "day09",
+  "title": "Build a Movie Search Application",
+  "mission": "Build a Movie Search Application.",
+  "description": "Create a movie search app with debounced queries, paginated results, and production-grade UI states — optimized like Netflix or IMDb search.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Controlled search input with debounced API trigger (300–500ms delay)",
+    "Custom useDebounce hook extracted to src/hooks/useDebounce.ts",
+    "Fetch movies from TMDB API (or equivalent) with generic paginated response types",
+    "Store API key in VITE_TMDB_API_KEY environment variable",
+    "Loading indicator while fetching results",
+    "Empty state when search returns no movies",
+    "Error UI with retry for failed requests",
+    "Pagination controls for next/previous pages of results",
+    "Movie cards showing title, poster, and release year",
+    "Responsive layout on mobile and desktop"
+  ],
+  "acceptanceCriteria": [
+    "Typing 'batman' triggers at most one API call per debounce window — not one per keystroke",
+    "Page 2 loads different results than page 1",
+    "Empty search shows prompt state; zero results shows 'No movies found'",
+    "Retry button re-attempts the last failed query",
+    "No infinite network requests in DevTools Network tab",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git with .env excluded via .gitignore"
+  ],
+  "hints": [
+    "Create src/types/movie.ts with Movie and PaginatedResponse<T> generic interfaces.",
+    "Separate fetchMovies(query, page) in src/api/movies.ts — keep components thin.",
+    "useDebounce returns a delayed copy of the search term — fetch when debouncedSearch changes.",
+    "Reset page to 1 when the debounced search term changes.",
+    "Use cleanup flag or AbortController from Day 08 to handle stale responses."
+  ],
+  "bonus": {
+    "title": "Search polish",
+    "description": "Optional enhancements for portfolio impact.",
+    "requirements": [
+      "Extract useMovieSearch hook combining debounce, fetch, and pagination state",
+      "Show skeleton cards during loading instead of a bare spinner",
+      "Display total result count from API pagination metadata"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-multiple-requests",
+      "title": "Multiple API requests on every keystroke",
+      "symptom": "Network tab shows a request for b, ba, bat, batm, batman",
+      "cause": "Fetching directly on input onChange without debouncing",
+      "fix": "Extract useDebounce; fetch only when debouncedSearch changes in useEffect"
+    },
+    {
+      "id": "dbg-stale-state",
+      "title": "Stale state — old results flash after new search",
+      "symptom": "Previous movie list briefly appears before new results load",
+      "cause": "Not clearing results or not tracking request order when query changes",
+      "fix": "Clear movies when query changes; use cleanup flag or AbortController to ignore stale responses"
+    },
+    {
+      "id": "dbg-wrong-deps",
+      "title": "Wrong dependency array",
+      "symptom": "Fetch runs on every render or page state causes duplicate fetches",
+      "cause": "Missing deps, unstable object deps, or page and search in wrong effect",
+      "fix": "Separate effects or single effect with [debouncedSearch, page]; run exhaustive-deps lint"
+    }
+  ]
+}

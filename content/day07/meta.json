@@ -1,0 +1,47 @@
+{
+  "id": "day07",
+  "version": "1.0.0",
+  "day": 7,
+  "week": 1,
+  "track": "react-interview",
+  "title": "Machine Coding Round 1",
+  "subtitle": "90-minute Week 1 review build — login, dashboard, sidebar, navbar",
+  "mission": "Machine Coding Round 1",
+  "readingTimeMinutes": 20,
+  "estimatedBuildHours": 1.5,
+  "difficulty": "intermediate",
+  "tags": ["react", "machine-coding", "review", "interview", "week1"],
+  "topics": {
+    "javascript": ["week 1 review"],
+    "typescript": ["week 1 review"],
+    "react": ["JSX", "components", "props", "state", "useEffect", "router", "custom hooks"]
+  },
+  "prerequisites": [
+    "day01 — React fundamentals and components",
+    "day02 — useState and controlled forms",
+    "day03 — reusable components and lists",
+    "day04 — useEffect and fetch",
+    "day05 — React Router nested layouts",
+    "day06 — custom hooks and responsive layout"
+  ],
+  "expectedOutcome": [
+    "Build login, dashboard, sidebar, and navbar in 90 minutes without copying old code",
+    "Demonstrate Week 1 concepts under time pressure",
+    "Identify personal weak areas for Week 2",
+    "Answer cumulative interview questions across Days 01–07"
+  ],
+  "definitionOfDone": [
+    "Timed 90-minute build completed",
+    "Login page with controlled inputs and basic validation",
+    "Dashboard layout with sidebar and navbar",
+    "At least two routes navigable via sidebar",
+    "Self-review notes listing weak topics",
+    "Quiz and interview completed",
+    "Git push of machine coding attempt"
+  ],
+  "tomorrowPreview": {
+    "day": 8,
+    "title": "Weather Dashboard",
+    "summary": "Week 2 begins with API-driven applications — tomorrow you will build a Weather Dashboard combining fetch, hooks, and richer UI patterns."
+  }
+}

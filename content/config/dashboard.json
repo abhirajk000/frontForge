@@ -1,0 +1,39 @@
+{
+  "id": "frontforge-dashboard",
+  "title": "Dashboard",
+  "description": "Your learning at a glance — streak, XP, and where you left off.",
+  "widgets": [
+    {
+      "id": "xp",
+      "type": "stat",
+      "label": "Total XP",
+      "description": "Earned from lessons, quizzes, and challenges",
+      "icon": "Zap"
+    },
+    {
+      "id": "streak",
+      "type": "streak",
+      "label": "Day Streak",
+      "description": "Consecutive days of learning",
+      "icon": "Flame"
+    },
+    {
+      "id": "completion",
+      "type": "progress",
+      "label": "Course Progress",
+      "description": "Days completed out of total curriculum"
+    },
+    {
+      "id": "quizzes",
+      "type": "stat",
+      "label": "Quizzes Passed",
+      "description": "Passing score achieved",
+      "icon": "ListChecks"
+    }
+  ],
+  "quickActions": [
+    { "id": "continue", "label": "Continue Learning", "href": "/learn", "icon": "BookOpen" },
+    { "id": "roadmap", "label": "View Roadmap", "href": "/roadmap", "icon": "Map" },
+    { "id": "progress", "label": "My Progress", "href": "/progress", "icon": "LineChart" }
+  ]
+}

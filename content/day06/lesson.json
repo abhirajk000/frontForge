@@ -1,0 +1,177 @@
+{
+  "id": "day06-lesson",
+  "metaId": "day06",
+  "title": "Day 06 — Custom Hooks and Responsive Layout",
+  "summary": "Extract debounce and theme logic into typed custom hooks, add debounced search, theme toggle, and responsive sidebar/navbar composition.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your dashboard routes work. Now make it feel like a product: search that does not spam APIs, dark mode, sidebar that survives mobile. Custom hooks are how teams share logic without copy-paste — useDebounce in search, useTheme in navbar, useMediaQuery later. Tomorrow you rebuild all of Week 1 in 90 minutes. Today you sharpen the architecture."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Scope for Day 06",
+      "content": "Custom hooks, debounce, responsive layout, theme toggle. You may combine with Day 04 fetch and Day 05 routes. Context API and Redux come in Week 2–3."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Debounce"
+    },
+    {
+      "type": "paragraph",
+      "content": "Without debounce, every keystroke in search triggers a filter or fetch. Debounce waits until typing pauses — typically 300ms — then runs once. Implementation uses setTimeout and clearTimeout."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "let timeoutId: ReturnType<typeof setTimeout>;\n\nfunction debounce(fn: () => void, delay: number) {\n  clearTimeout(timeoutId);\n  timeoutId = setTimeout(fn, delay);\n}\n\n// In React we wrap this pattern in useDebounce with effect cleanup"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Custom hook types"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "hooks/useDebounce.ts",
+      "code": "import { useEffect, useState } from 'react';\n\nexport function useDebounce<T>(value: T, delay: number): T {\n  const [debouncedValue, setDebouncedValue] = useState(value);\n\n  useEffect(() => {\n    const timer = setTimeout(() => setDebouncedValue(value), delay);\n    return () => clearTimeout(timer);\n  }, [value, delay]);\n\n  return debouncedValue;\n}"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "hooks/useTheme.ts",
+      "code": "type Theme = 'light' | 'dark';\n\ntype UseThemeResult = {\n  theme: Theme;\n  toggleTheme: () => void;\n};\n\nexport function useTheme(): UseThemeResult {\n  // useState + useEffect + localStorage + document.documentElement\n  // return { theme, toggleTheme }\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "custom-hooks",
+      "level": 2,
+      "text": "React — Custom hooks and layout composition"
+    },
+    {
+      "type": "paragraph",
+      "content": "When two components need the same stateful logic, extract a custom hook. Navbar uses useTheme. SearchBar uses useDebounce. Layout components compose Sidebar and Navbar without duplicating mobile toggle code."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "components/SearchBar.tsx",
+      "code": "export function SearchBar({ onSearch }: { onSearch: (q: string) => void }) {\n  const [query, setQuery] = useState('');\n  const debouncedQuery = useDebounce(query, 300);\n\n  useEffect(() => {\n    if (debouncedQuery.trim()) onSearch(debouncedQuery);\n  }, [debouncedQuery, onSearch]);\n\n  return (\n    <input\n      value={query}\n      onChange={(e) => setQuery(e.target.value)}\n      placeholder=\"Search…\"\n    />\n  );\n}"
+    },
+    {
+      "type": "heading",
+      "id": "responsive",
+      "level": 3,
+      "text": "Responsive sidebar and navbar"
+    },
+    {
+      "type": "paragraph",
+      "content": "Desktop: sidebar fixed left. Mobile: sidebar hidden until hamburger opens drawer overlay. Use CSS media queries and isSidebarOpen state. Navbar holds hamburger, search, theme toggle."
+    },
+    {
+      "type": "checklist",
+      "title": "Responsive checklist",
+      "items": [
+        { "id": "resp-hamburger", "text": "Hamburger visible only below breakpoint" },
+        { "id": "resp-drawer", "text": "Sidebar slides or overlays on mobile" },
+        { "id": "resp-close", "text": "Backdrop or close button dismisses drawer" },
+        { "id": "resp-theme", "text": "Theme toggle reachable on mobile navbar" }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build-mission",
+      "level": 2,
+      "text": "Build Mission — Hooks and responsive dashboard"
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "debug-deps",
+          "title": "Hook dependency issues",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Debounce stuck? Check [value, delay] deps. Theme flash? Read localStorage in effect after mount."
+            }
+          ]
+        },
+        {
+          "id": "debug-dup",
+          "title": "Duplicate logic",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Same setTimeout in two files? Extract useDebounce once in src/hooks/."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up — prepare for Day 07"
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Tomorrow: Machine Coding Round 1",
+      "content": "90 minutes. No AI. No Google. No copy-paste from old code. Build login + dashboard + sidebar + navbar from memory. Review today's hooks and layout patterns tonight."
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-debounce", "text": "useDebounce works with search" },
+        { "id": "done-theme", "text": "Theme toggle persists" },
+        { "id": "done-responsive", "text": "Mobile layout works" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Quiz and interview complete" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

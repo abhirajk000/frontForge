@@ -1,0 +1,372 @@
+{
+  "id": "day24-lesson",
+  "metaId": "day24",
+  "title": "Day 24 — Mock Frontend Interview",
+  "summary": "Final day: 10-minute reading, five timed mock interview rounds, self-evaluation rubric, graduation checklist, and congratulations — you complete the FrontForge React Interview Track today.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission — Mock Frontend Interview"
+    },
+    {
+      "type": "paragraph",
+      "content": "This is the final day of the FrontForge React Interview Track. No new learning. No new concepts. You will run five timed interview rounds back-to-back — exactly how a real frontend loop feels. JavaScript, React, machine coding, project discussion, debugging. Then you self-evaluate, check off your graduation list, and graduate."
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Graduation day",
+      "content": "You started with components and props. You built APIs, Context, Redux, RTK Query, auth, dashboards, and machine coding projects. Today you prove you can explain, build, debug, and optimize under interview pressure. After today, start applying."
+    },
+    {
+      "type": "heading",
+      "id": "reading",
+      "level": 2,
+      "text": "Reading — 10 Minutes, No New Learning"
+    },
+    {
+      "type": "paragraph",
+      "content": "Skim this lesson once. Set up your environment: quiet space, timer, water, official docs tabs ready. Close AI assistants and Google. Official documentation only — same rules as real interviews."
+    },
+    {
+      "type": "checklist",
+      "title": "Pre-interview setup",
+      "items": [
+        { "id": "setup-timer", "text": "Timer app ready — you will run 30 + 30 + 60 + 45 + 30 minutes across five rounds" },
+        { "id": "setup-docs", "text": "Tabs open: react.dev, MDN, React Router docs, Redux Toolkit docs — official only" },
+        { "id": "setup-project", "text": "FrontForge repo and your refactored Day 23 project ready for Round 4 discussion" },
+        { "id": "setup-record", "text": "Optional: record yourself — communication score matters" },
+        { "id": "setup-rules", "text": "No AI. No Google. No Stack Overflow. Official docs only for Round 3." }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "round-1",
+      "level": 2,
+      "text": "Round 1 — JavaScript (30 Minutes)"
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Interviewer script",
+      "content": "We will cover JavaScript fundamentals for 30 minutes. I will ask conceptual questions and may ask you to trace code or explain behavior. Talk through your thinking."
+    },
+    {
+      "type": "table",
+      "headers": ["Topic", "What to demonstrate", "Common trap"],
+      "rows": [
+        ["Closures", "Function remembers outer scope; hooks and debounce examples", "Cannot give a concrete React example"],
+        ["Event Loop", "Call stack, microtasks before macrotasks", "Confuse setTimeout(0) with immediate"],
+        ["Async / Await", "Sugar over Promises; try/catch for errors", "Forget fetch does not throw on 404"],
+        ["Promises", "then/catch/finally chain; Promise.all for parallel", "Unhandled rejection crashes silently"],
+        ["Objects / Arrays", "Immutability, spread, map/filter/reduce", "Mutate state in place"],
+        ["Debounce", "Delay until pause; search input pattern", "Confuse with throttle"],
+        ["this / call / bind / apply", "Explicit binding; arrow functions inherit lexical this", "Lose this in class method callback"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "JavaScript round strategy",
+      "content": "Start with the definition, give one React example, stop. Interviewers interrupt long answers. If stuck, trace the code line by line out loud."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "round-2",
+      "level": 2,
+      "text": "Round 2 — React (30 Minutes)"
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Interviewer script",
+      "content": "React round — 30 minutes. Components through performance. I want concise answers with trade-offs, not textbook dumps."
+    },
+    {
+      "type": "checklist",
+      "title": "React topics — confirm you can explain each",
+      "items": [
+        { "id": "r-jsx", "text": "JSX — expressions in braces, one root, fragments" },
+        { "id": "r-components", "text": "Components — functional, composition, single responsibility" },
+        { "id": "r-props", "text": "Props — data down, callbacks up, read-only" },
+        { "id": "r-state", "text": "State — useState local, lift when siblings share" },
+        { "id": "r-effect", "text": "useEffect — external sync, deps, cleanup" },
+        { "id": "r-memo", "text": "useMemo / useCallback — stable refs and expensive compute" },
+        { "id": "r-ref", "text": "useRef — DOM access, mutable value without re-render" },
+        { "id": "r-context", "text": "Context — global low-frequency, memoize value" },
+        { "id": "r-redux", "text": "Redux — slices, actions, selectors, immutable updates" },
+        { "id": "r-rtk", "text": "RTK Query — cache, invalidation, loading/error state" },
+        { "id": "r-router", "text": "Routing — Route, Link, useParams, protected routes" },
+        { "id": "r-perf", "text": "Performance — profile first, memo where measured, lazy routes" }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "round-3",
+      "level": 2,
+      "text": "Round 3 — Machine Coding (60 Minutes)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your assigned project today (randomly selected from the interview pool): see the challenge section. Time limit: 60 minutes. Requirements: responsive, TypeScript, API integration, clean architecture, loading, error, and empty states. No AI. No Google. Official documentation only."
+    },
+    {
+      "type": "table",
+      "headers": ["Possible project", "Core MVP", "Stretch if time"],
+      "rows": [
+        ["Todo App", "Add, toggle, delete, filter, persist", "Categories, drag reorder"],
+        ["Product Dashboard", "List, search, CRUD via API", "Sort, pagination"],
+        ["Kanban Board", "Three columns, move, delete", "Drag-and-drop"],
+        ["Movie Search", "Debounced search, results grid", "Detail page with useParams"],
+        ["Weather Dashboard", "City search, current weather API", "5-day forecast, unit toggle"]
+      ]
+    },
+    {
+      "type": "checklist",
+      "title": "60-minute timeline (suggested)",
+      "items": [
+        { "id": "mc-0-5", "text": "0–5 min: Clarify scope, pick MVP, define types" },
+        { "id": "mc-5-25", "text": "5–25 min: Static UI + local state working" },
+        { "id": "mc-25-45", "text": "25–45 min: API integration, loading, error, empty states" },
+        { "id": "mc-45-55", "text": "45–55 min: Responsive polish, shared components" },
+        { "id": "mc-55-60", "text": "55–60 min: Self-test, prepare 60-second architecture pitch" }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "round-4",
+      "level": 2,
+      "text": "Round 4 — Project Discussion (45 Minutes)"
+    },
+    {
+      "type": "paragraph",
+      "content": "The interviewer opens your FrontForge repo and your Day 23 refactored project. You explain architecture, design decisions, challenges, and improvements — like a real system design discussion scoped to frontend."
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "pd-frontforge",
+          "title": "Explain FrontForge",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "FrontForge is a JSON-driven React learning platform. Curriculum lives in content/dayNN/*.json files validated by Zod schemas. A content engine loads and renders lessons dynamically — no hardcoded lesson pages per day."
+            }
+          ]
+        },
+        {
+          "id": "pd-architecture",
+          "title": "Architecture & folder structure",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Describe src/features, components (atoms/molecules), content-engine (schemas, repository, renderer), routes, and hooks. Explain separation: content data vs rendering logic vs app shell."
+            }
+          ]
+        },
+        {
+          "id": "pd-renderer",
+          "title": "JSON renderer",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Lesson blocks are discriminated unions by type — heading, paragraph, code, checklist, table, accordion, challenge reference, etc. A block renderer maps type to React component. Adding a new block type means schema + component + registry entry."
+            }
+          ]
+        },
+        {
+          "id": "pd-decisions",
+          "title": "Design decisions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Why JSON curriculum? Scalable content without redeploying UI. Why Zod? Runtime + compile-time safety on authored content. Why feature folders? Colocation as the track grew from 7 to 24 days."
+            }
+          ]
+        },
+        {
+          "id": "pd-challenges",
+          "title": "Challenges you faced",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Be honest: schema evolution, block type extensibility, validation in CI, keeping interview week content consistent with renderer capabilities. Interviewers respect struggle + resolution."
+            }
+          ]
+        },
+        {
+          "id": "pd-improvements",
+          "title": "Improvements you would make",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Progress persistence, spaced repetition on quiz wrong answers, E2E tests on renderer, CMS for non-developer authors, analytics on weak topics. Show product thinking."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "round-5",
+      "level": 2,
+      "text": "Round 5 — Debugging (30 Minutes)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Fix bugs in provided starter code or audit your Round 3 submission. Categories: React bugs, performance issues, TypeScript errors, routing problems. Document root cause in one sentence per bug."
+    },
+    {
+      "type": "table",
+      "headers": ["Category", "Symptom", "First tool to open"],
+      "rows": [
+        ["React bug", "Infinite render, stale UI, wrong list item", "React DevTools Profiler + Components"],
+        ["Performance", "Slow typing, janky scroll, hot parent re-renders", "Profiler highlight updates"],
+        ["TypeScript", "Red squiggles, unsafe any propagation", "tsc --noEmit + hover types"],
+        ["Routing", "Blank page, 404 on refresh, wrong param", "Network tab + Route/Link path audit"]
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Debugging communication",
+      "content": "Narrate your process: reproduce → isolate → hypothesize → fix → verify. Interviewers score the process, not just the fix."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "self-eval",
+      "level": 2,
+      "text": "Self Evaluation Rubric"
+    },
+    {
+      "type": "paragraph",
+      "content": "Rate yourself honestly on each category from 1 to 5 stars. A 3 means interview-ready with gaps. A 5 means you would hire yourself today. Be honest — this drives your post-graduation study plan."
+    },
+    {
+      "type": "table",
+      "headers": ["Category", "1 — Needs work", "3 — Interview ready", "5 — Strong hire"],
+      "rows": [
+        ["JavaScript", "Cannot explain closures or event loop", "Solid fundamentals, occasional gaps", "Traces async code confidently under pressure"],
+        ["React", "Confuses state and props", "Explains hooks and lifecycle clearly", "Architecture trade-offs without prompting"],
+        ["TypeScript", "Uses any everywhere", "Typed props and API models", "Narrowing, generics, strict configs"],
+        ["Redux", "Cannot explain slice vs store", "RTK patterns from Week 3", "Middleware, selectors, normalization"],
+        ["Performance", "Adds memo everywhere blindly", "Profiles before optimizing", "Identifies bottlenecks in live debug"],
+        ["Machine Coding", "Does not finish MVP in time", "Ships core features in time box", "Clean architecture + communicates throughout"],
+        ["Project Discussion", "Cannot explain own code", "Clear architecture narrative", "Trade-offs, metrics, future roadmap"],
+        ["Communication", "Silent coding, rambling answers", "Structured think-aloud", "Concise, asks clarifying questions"]
+      ]
+    },
+    {
+      "type": "note",
+      "title": "Record your scores",
+      "content": "Copy this rubric into your reflection. Categories below 3 get one week of focused reps after graduation."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "final-checklist",
+      "level": 2,
+      "text": "Final Graduation Checklist"
+    },
+    {
+      "type": "checklist",
+      "title": "FrontForge React Interview Track — Complete",
+      "items": [
+        { "id": "grad-react", "text": "React Fundamentals — components, props, state, effects, hooks" },
+        { "id": "grad-js", "text": "JavaScript Fundamentals — closures, async, arrays, event loop" },
+        { "id": "grad-ts", "text": "TypeScript Basics — interfaces, types, API models, strict mode" },
+        { "id": "grad-redux", "text": "Redux Toolkit — slices, selectors, immutable updates" },
+        { "id": "grad-rtk", "text": "RTK Query — caching, mutations, invalidation" },
+        { "id": "grad-routing", "text": "Routing — React Router, params, protected routes" },
+        { "id": "grad-apis", "text": "APIs — fetch, error handling, loading states" },
+        { "id": "grad-perf", "text": "Performance — memo, lazy, code splitting, profiling" },
+        { "id": "grad-debug", "text": "Debugging — infinite render, mutation, deps, keys, routing" },
+        { "id": "grad-mc", "text": "Machine Coding — timed builds with clean architecture" },
+        { "id": "grad-discuss", "text": "Project Discussion — explain architecture and trade-offs" },
+        { "id": "grad-github", "text": "GitHub Portfolio Updated — best projects pinned with READMEs" },
+        { "id": "grad-resume", "text": "Resume Updated — frontend projects and skills listed" },
+        { "id": "grad-linkedin", "text": "LinkedIn Updated — headline reflects frontend engineer readiness" }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "graduation",
+      "level": 2,
+      "text": "Graduation"
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Congratulations",
+      "content": "You have completed the FrontForge React Interview Track. You should now be ready to start applying for Frontend Engineer positions and continue improving through real interviews."
+    },
+    {
+      "type": "quote",
+      "content": "Interviews are another form of practice. Don't wait until you feel 100% ready. Start applying, learn from each interview, and improve continuously.",
+      "attribution": "FrontForge — Final Day"
+    },
+    {
+      "type": "paragraph",
+      "content": "You built real projects. You refactored for production. You survived five mock rounds. The gap between you and the offer is reps — real interviews, real feedback, real improvement. Go apply."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-r1", "text": "Round 1 JavaScript — 30 minutes complete" },
+        { "id": "done-r2", "text": "Round 2 React — 30 minutes complete" },
+        { "id": "done-r3", "text": "Round 3 Machine Coding — 60 minutes complete" },
+        { "id": "done-r4", "text": "Round 4 Project Discussion — FrontForge + portfolio" },
+        { "id": "done-r5", "text": "Round 5 Debugging — all scenarios fixed" },
+        { "id": "done-eval", "text": "Self-evaluation rubric completed" },
+        { "id": "done-quiz", "text": "Quiz passed" },
+        { "id": "done-reflect", "text": "Final reflection submitted" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

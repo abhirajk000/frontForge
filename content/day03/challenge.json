@@ -1,0 +1,69 @@
+{
+  "id": "day03-challenge",
+  "metaId": "day03",
+  "title": "Build a Reusable Input Library",
+  "mission": "Build reusable form components.",
+  "description": "Extract your Day 02 login inputs into a small design-system-style library. Refactor the login page to compose these primitives — same behavior, less duplication. Practice map for field configs and keys for error lists.",
+  "estimatedMinutes": 180,
+  "difficulty": "beginner",
+  "requirements": [
+    "Create TextInput with label, value, onChange, error message, and optional id/name props",
+    "Create PasswordInput with show/hide toggle reusing TextInput patterns or shared wrapper",
+    "Create Checkbox with label, checked, and onChange",
+    "Create Button with variant (primary/secondary), isLoading, disabled, and children for label text",
+    "Create ErrorMessage or FormError component for inline and summary errors",
+    "Define a shared BaseFieldProps or similar TypeScript interface extended by field components",
+    "Refactor Day 02 LoginForm to use the library — validation and loading behavior unchanged",
+    "Render validation error list or field config array using map() with stable keys",
+    "Organize components under src/components/ui/ with one component per file"
+  ],
+  "acceptanceCriteria": [
+    "Login page works identically to Day 02 after refactor",
+    "No copy-pasted <input> markup in LoginForm — only library components",
+    "Each list render uses key from stable id, not index (unless static order)",
+    "TypeScript props are typed on every exported component",
+    "Button shows loading state and disables during simulated login",
+    "Password show/hide still works through PasswordInput",
+    "npm run build passes without errors",
+    "Changes pushed to Git"
+  ],
+  "hints": [
+    "Start by copying one input from Day 02 into TextInput — get one field working before extracting others.",
+    "Use children on Button: <Button isLoading={loading}>{loading ? 'Signing in…' : 'Sign in'}</Button>.",
+    "Define a fields config array: { id, label, type }[] and map to components only if it simplifies LoginForm — do not over-abstract.",
+    "FieldError can accept message?: string and render nothing when undefined.",
+    "Share className logic in one wrapper; pass ...rest to native input for aria attributes."
+  ],
+  "bonus": {
+    "title": "Fieldset composition",
+    "description": "Practice children for layout without new React APIs.",
+    "requirements": [
+      "Create FormField wrapper that renders label, children slot for input, and error below",
+      "Use FormField in TextInput and PasswordInput",
+      "Add Storybook-style demo page listing all components (static, no router needed)"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-key",
+      "title": "Missing key",
+      "symptom": "Console warning: Each child in a list should have a unique key prop",
+      "cause": "map() returns elements without key, or key is on wrong element",
+      "fix": "Add key={item.id} on the outermost element in the map callback return"
+    },
+    {
+      "id": "dbg-list",
+      "title": "Wrong list rendering",
+      "symptom": "Errors show under wrong fields or list is empty when errors exist",
+      "cause": "Mapping wrong array, using filter incorrectly, or key/index mismatch after reorder",
+      "fix": "Verify you map errors aligned with field ids; use filter(Boolean) on message strings before render"
+    },
+    {
+      "id": "dbg-duplicate",
+      "title": "Duplicate components",
+      "symptom": "Fixing label styling requires editing five files",
+      "cause": "Copied input JSX into each form instead of using shared TextInput",
+      "fix": "Extract shared markup to ui/TextInput; forms only pass props"
+    }
+  ]
+}

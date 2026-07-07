@@ -1,0 +1,179 @@
+{
+  "id": "day14-lesson",
+  "metaId": "day14",
+  "title": "Day 14 — Machine Coding Round 2",
+  "summary": "120-minute Week 2 review build under interview conditions — product listing, search, filter, pagination, and shopping cart without referring to previous code.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 07 tested Week 1 under pressure. Day 14 tests Week 2. You have 120 minutes to build a mini e-commerce app from scratch — product listing, search, filter, pagination, and cart. No AI. No Google. Only official docs. This mirrors real machine coding rounds at product companies."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Exam conditions",
+      "content": "Start a timer. Close AI tools and search engines. Allowed: react.dev, reactrouter.com, typescriptlang.org, developer.mozilla.org. Do NOT open previous day project folders — rebuild muscle memory."
+    },
+    {
+      "type": "heading",
+      "id": "review",
+      "level": 2,
+      "text": "Week 2 Concept Review"
+    },
+    {
+      "type": "table",
+      "headers": ["Day", "Concept", "Today's build use"],
+      "rows": [
+        ["08", "Fetch, loading/error/empty", "Product API fetch and UI states"],
+        ["09", "Debounce, custom hooks", "Search optimization"],
+        ["10", "Filter, sort, keys, memo", "Product listing pipeline"],
+        ["11", "Infinite scroll, event loop", "Pagination option"],
+        ["12", "Context, useReducer, immutability", "Shopping cart"],
+        ["13", "Dynamic routes, params", "Optional product detail route"]
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "strategy",
+      "level": 2,
+      "text": "120-Minute Strategy"
+    },
+    {
+      "type": "checklist",
+      "title": "Time boxes",
+      "items": [
+        { "id": "tb-0-10", "text": "0–10 min: Scaffold — routes, types, folder structure, CartProvider" },
+        { "id": "tb-10-40", "text": "10–40 min: Product fetch, grid, filters, search" },
+        { "id": "tb-40-70", "text": "40–70 min: Pagination + cart reducer with add/remove/quantity" },
+        { "id": "tb-70-100", "text": "70–100 min: Wire navbar badge, cart page, empty states" },
+        { "id": "tb-100-120", "text": "100–120 min: Fix build errors, smoke test, README self-review, git push" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Prioritization rule",
+      "content": "Working cart with add-only beats perfect filters with no cart. Interviewers score end-to-end flow. Ship core paths first, polish last."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-architecture",
+          "label": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "src/features/products/ — listing, filters, search. src/features/cart/ — context, reducer, cart page. src/types/ — Product, CartItem. src/hooks/ — useDebounce. App wrapped with CartProvider and BrowserRouter."
+            }
+          ]
+        },
+        {
+          "id": "tab-pipeline",
+          "label": "Filter pipeline",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "const visibleProducts = useMemo(() => {\n  return products\n    .filter(matchesSearch)\n    .filter(matchesCategory)\n    .filter(matchesPrice)\n    .sort(sortFn);\n}, [products, search, category, minPrice, maxPrice, sortBy]);"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-focus",
+      "level": 2,
+      "text": "Interview Focus — Be Ready to Explain"
+    },
+    {
+      "type": "paragraph",
+      "content": "After the build, review these topics verbally. Interviewers ask WHY not just WHAT."
+    },
+    {
+      "type": "checklist",
+      "title": "Explain out loud",
+      "items": [
+        { "id": "exp-api", "text": "How fetch handles loading, error, and retry" },
+        { "id": "exp-debounce", "text": "Why debounce search — event loop connection" },
+        { "id": "exp-hooks", "text": "What your custom hook extracts and why" },
+        { "id": "exp-context", "text": "Why Context + reducer for cart vs prop drilling" },
+        { "id": "exp-immutable", "text": "How ADD_ITEM avoids mutation" },
+        { "id": "exp-perf", "text": "Keys and React.memo decisions" },
+        { "id": "exp-router", "text": "Route structure if you added detail pages" }
+      ]
+    },
+    {
+      "type": "note",
+      "title": "Event loop question",
+      "content": "Expect: 'What runs first — Promise.then or setTimeout?' Answer: microtasks before macrotasks. Connect to debounce timer and fetch .then ordering."
+    },
+    {
+      "type": "warning",
+      "title": "Common failure modes",
+      "content": "CartProvider inside one route. Fetch without debounce causing request storm. Mutating cart array in reducer. Missing keys on product list. No loading state — app looks broken during fetch."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Machine Coding Round 2"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create from scratch: product listing + search + filter + pagination + shopping cart. Log your start and end time. Write self-review in README when done."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "after-build",
+      "level": 2,
+      "text": "After the Build"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-timed", "text": "120-minute timed build completed" },
+        { "id": "done-features", "text": "List, search, filter, pagination, cart" },
+        { "id": "done-rules", "text": "No AI / no Google during build" },
+        { "id": "done-review", "text": "README self-review written" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete cumulative quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Week 2 complete",
+      "content": "Tomorrow Week 3 begins with Theme Management — advanced patterns, Redux Toolkit, RTK Query, authentication, and performance optimization. Rest tonight. You earned it."
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

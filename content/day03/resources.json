@@ -1,0 +1,72 @@
+{
+  "id": "day03-resources",
+  "metaId": "day03",
+  "title": "Day 03 Resources",
+  "description": "Official docs for lists, keys, children, and array methods used in reusable form libraries.",
+  "resources": [
+    {
+      "id": "res-lists",
+      "title": "React — Rendering Lists",
+      "url": "https://react.dev/learn/rendering-lists",
+      "type": "documentation",
+      "description": "map(), keys, and keeping list items in order — core reading for today.",
+      "recommended": true
+    },
+    {
+      "id": "res-keys",
+      "title": "React — Why Keys Matter",
+      "url": "https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key",
+      "type": "documentation",
+      "description": "Deep dive on key choice and pitfalls with index keys.",
+      "recommended": true
+    },
+    {
+      "id": "res-children",
+      "title": "React — Passing JSX as Children",
+      "url": "https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children",
+      "type": "documentation",
+      "description": "Composition with children — used in Button and layout wrappers.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-map",
+      "title": "MDN — Array.prototype.map()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map",
+      "type": "documentation",
+      "description": "map fundamentals for transforming data to JSX.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-filter",
+      "title": "MDN — Array.prototype.filter()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter",
+      "type": "documentation",
+      "description": "filter for error lists and visible fields.",
+      "recommended": false
+    },
+    {
+      "id": "res-mdn-reduce",
+      "title": "MDN — Array.prototype.reduce()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce",
+      "type": "documentation",
+      "description": "reduce for aggregating validation counts.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts-generics",
+      "title": "TypeScript — Generics",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "type": "documentation",
+      "description": "Optional stretch for generic component props — skim the basics.",
+      "recommended": false
+    },
+    {
+      "id": "res-react-ts-children",
+      "title": "React TypeScript Cheatsheet — React.ReactNode",
+      "url": "https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#typing-children",
+      "type": "reference",
+      "description": "How to type children and component props safely.",
+      "recommended": true
+    }
+  ]
+}

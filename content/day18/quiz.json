@@ -1,0 +1,250 @@
+{
+  "id": "day18-quiz",
+  "metaId": "day18",
+  "title": "Day 18 Quiz — Authentication and Protected Routes",
+  "description": "Verify JWT basics, storage APIs, auth types, route guards, and session flow.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "JWT payload is encrypted and cannot be read by the client.",
+      "correctAnswer": false,
+      "explanation": "JWT payload is base64-encoded, not encrypted — anyone can decode and read claims. Signature prevents tampering.",
+      "difficulty": "easy",
+      "tags": [
+        "jwt",
+        "auth"
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What happens to sessionStorage when the browser tab closes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Data persists forever"
+        },
+        {
+          "id": "b",
+          "text": "Data is cleared for that tab"
+        },
+        {
+          "id": "c",
+          "text": "Data syncs to server"
+        },
+        {
+          "id": "d",
+          "text": "Data moves to localStorage"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "sessionStorage is scoped to the tab session.",
+      "difficulty": "easy",
+      "tags": [
+        "javascript",
+        "storage"
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does ProtectedRoute typically render for unauthenticated users?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The protected page with hidden content"
+        },
+        {
+          "id": "b",
+          "text": "Navigate/redirect to login"
+        },
+        {
+          "id": "c",
+          "text": "null always with no redirect"
+        },
+        {
+          "id": "d",
+          "text": "An error boundary crash"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Route guards redirect unauthenticated users to login, often preserving return URL in location state.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "routing"
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which are parts of a JWT? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Header"
+        },
+        {
+          "id": "b",
+          "text": "Payload"
+        },
+        {
+          "id": "c",
+          "text": "Signature"
+        },
+        {
+          "id": "d",
+          "text": "Database ID"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "JWT structure is header.payload.signature — three dot-separated segments.",
+      "difficulty": "medium",
+      "tags": [
+        "jwt"
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Attach bearer token in RTK Query via {{blank1}} in fetchBaseQuery.",
+      "blanks": [
+        {
+          "id": "blank1",
+          "acceptedAnswers": [
+            "prepareHeaders"
+          ]
+        }
+      ],
+      "explanation": "prepareHeaders mutates request headers before each API call.",
+      "difficulty": "medium",
+      "tags": [
+        "rtk-query",
+        "auth"
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What does localStorage.getItem return for missing key?",
+      "code": "const x = localStorage.getItem('missing');\nconsole.log(x);",
+      "language": "javascript",
+      "correctOutput": "null",
+      "explanation": "getItem returns null when the key does not exist.",
+      "difficulty": "easy",
+      "tags": [
+        "javascript",
+        "storage"
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Authentication vs authorization — which verifies permissions?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Authentication"
+        },
+        {
+          "id": "b",
+          "text": "Authorization"
+        },
+        {
+          "id": "c",
+          "text": "Both equally"
+        },
+        {
+          "id": "d",
+          "text": "Neither"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Authentication proves identity; authorization checks what that identity can access.",
+      "difficulty": "easy",
+      "tags": [
+        "auth"
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "code-completion",
+      "prompt": "Complete the redirect with return location.",
+      "code": "if (!isAuthenticated) {\n  return <Navigate to=\"/login\" state={{ {{from}}: location }} replace />;\n}",
+      "language": "typescript",
+      "blanks": [
+        {
+          "id": "from",
+          "acceptedAnswers": [
+            "from"
+          ]
+        }
+      ],
+      "explanation": "location state preserves intended destination for post-login redirect.",
+      "difficulty": "medium",
+      "tags": [
+        "react-router"
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "localStorage vs httpOnly cookie for JWT — one tradeoff each.",
+      "acceptedKeywords": [
+        "XSS",
+        "CSRF",
+        "javascript",
+        "httpOnly"
+      ],
+      "sampleAnswer": "localStorage is accessible to JavaScript — vulnerable to XSS stealing tokens but immune to CSRF. httpOnly cookies cannot be read by JS — safer from XSS but need CSRF protection. Production often prefers httpOnly cookies.",
+      "explanation": "Interviewers expect awareness of both attack vectors.",
+      "difficulty": "hard",
+      "tags": [
+        "auth",
+        "security"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Which belong in a typed AuthState? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "user: User | null"
+        },
+        {
+          "id": "b",
+          "text": "token: string | null"
+        },
+        {
+          "id": "c",
+          "text": "status loading/authenticated"
+        },
+        {
+          "id": "d",
+          "text": "productList: Product[]"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "AuthState tracks user, token, and auth lifecycle — not unrelated domain data.",
+      "difficulty": "medium",
+      "tags": [
+        "typescript",
+        "auth"
+      ]
+    }
+  ]
+}

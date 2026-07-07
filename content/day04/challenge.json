@@ -1,0 +1,70 @@
+{
+  "id": "day04-challenge",
+  "metaId": "day04",
+  "title": "Build GitHub User Search",
+  "mission": "Understand side effects by building API-based UI.",
+  "description": "Build a GitHub user search page that fetches public profile data from the GitHub REST API. Practice useEffect, async fetch, TypeScript API types, and loading/error/empty/success states.",
+  "estimatedMinutes": 180,
+  "difficulty": "beginner",
+  "requirements": [
+    "Search input for GitHub username with controlled state",
+    "Submit search via button or Enter key — fetch on user action (not every keystroke yet)",
+    "Fetch https://api.github.com/users/{username} with fetch and async/await",
+    "Type the response with a GitHubUser TypeScript interface (login, avatar_url, html_url, name, bio, public_repos, etc.)",
+    "useEffect or async handler pattern — no fetch in unconditional render body",
+    "Loading state while request is in progress",
+    "Error state for 404, network failure, or non-ok response",
+    "Empty state before first search or when input is cleared",
+    "Success state showing avatar, name, login, bio, repo count, and link to profile",
+    "Reuse Day 03 input/button components where possible"
+  ],
+  "acceptanceCriteria": [
+    "Searching valid username (e.g. gaearon) shows profile card",
+    "Invalid username shows friendly error — not a blank screen",
+    "Loading indicator visible during fetch",
+    "Empty state copy guides user to search",
+    "No infinite render loop from useEffect",
+    "response.ok checked before parsing JSON",
+    "npm run build passes with typed API data",
+    "Changes pushed to Git"
+  ],
+  "hints": [
+    "Define type GitHubUser matching fields you display — start with login, avatar_url, name, bio, public_repos, html_url.",
+    "async function searchUser() { setLoading(true); setError(null); try { ... } catch { ... } finally { setLoading(false); } }",
+    "404: if (response.status === 404) setError('User not found').",
+    "Keep fetch in submit handler today; useEffect with username dep is valid if you prefer search-on-change — pick one pattern.",
+    "Show EmptyState component when !user && !loading && !error && !hasSearched."
+  ],
+  "bonus": {
+    "title": "Request cleanup",
+    "description": "Handle stale responses without debounce hook yet.",
+    "requirements": [
+      "Use AbortController in useEffect cleanup when fetching on username change",
+      "Display last updated timestamp on success card",
+      "Add retry button on error state"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-infinite",
+      "title": "Infinite render",
+      "symptom": "Browser freezes; Network tab shows hundreds of requests",
+      "cause": "useEffect sets state on every run without correct dependencies or guard conditions",
+      "fix": "Add dependency array; only fetch when username non-empty; avoid setState that recreates deps every render"
+    },
+    {
+      "id": "dbg-deps",
+      "title": "Wrong dependency array",
+      "symptom": "Stale data shown after username changes, or effect never re-runs",
+      "cause": "Missing username in deps, or unstable object/function deps recreated each render",
+      "fix": "Include username in [username]; hoist fetch function or wrap in useCallback only if needed later"
+    },
+    {
+      "id": "dbg-cleanup",
+      "title": "Missing cleanup",
+      "symptom": "Out-of-order responses overwrite newer results",
+      "cause": "No abort or cancelled flag when component unmounts or query changes",
+      "fix": "Return cleanup from useEffect that aborts fetch or sets ignore = true before setState"
+    }
+  ]
+}

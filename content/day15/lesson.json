@@ -1,0 +1,314 @@
+{
+  "id": "day15-lesson",
+  "metaId": "day15",
+  "title": "Day 15 — Theme Management System",
+  "summary": "Master this/call/apply/bind, type React Context with function types, and build a production theme provider with light, dark, system modes and localStorage persistence.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Week 2 taught you to fetch data, share cart state with Context, and route between pages. Week 3 teaches you to architect global state like a senior engineer. Today starts with the most common global feature in every production app: theme management. Flipkart, Notion, and GitHub all ship light/dark/system modes. You will build the same pattern — Context at the root, a custom hook, persistence, and interview-ready explanations of when Context beats props."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 3 starts here",
+      "content": "Today deepens Context API from Day 12's cart introduction. Do not introduce Redux Toolkit (Day 16), RTK Query (Day 17), authentication (Day 18), or performance memoization labs (Day 20)."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — this, call(), apply(), bind()"
+    },
+    {
+      "type": "paragraph",
+      "content": "Before React hooks dominated, every frontend interview tested this. It still appears in JavaScript rounds and explains why arrow functions and bind matter in event handlers. Understanding this makes you dangerous in debugging and in system design discussions about callbacks."
+    },
+    {
+      "type": "heading",
+      "id": "this-keyword",
+      "level": 3,
+      "text": "The this keyword — determined by call site"
+    },
+    {
+      "type": "paragraph",
+      "content": "In a regular function, this is whoever calls the function — not where it is defined. Object methods get this as the object. Extract a method into a variable and this is lost. Arrow functions do not have their own this — they close over the surrounding this. That is why React event handlers in class components needed bind, and why arrow handlers in functional components work naturally."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const theme = {\n  mode: 'dark',\n  log() { console.log(this.mode); },\n};\n\ntheme.log();        // 'dark' — called as method\nconst fn = theme.log;\nfn();               // undefined or error — lost this\n\nconst bound = theme.log.bind(theme);\nbound();            // 'dark' — this restored"
+    },
+    {
+      "type": "heading",
+      "id": "call-apply",
+      "level": 3,
+      "text": "call() and apply() — invoke with explicit this"
+    },
+    {
+      "type": "paragraph",
+      "content": "call and apply invoke a function immediately with a chosen this. call spreads arguments: fn.call(ctx, a, b). apply passes an array: fn.apply(ctx, [a, b]). Rare in daily React work, but interviewers love them, and they underpin how Function.prototype methods work."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function describe(label) {\n  return `${label}: ${this.mode}`;\n}\n\nconst prefs = { mode: 'system' };\n\ndescribe.call(prefs, 'Theme');   // 'Theme: system'\ndescribe.apply(prefs, ['Theme']); // same result"
+    },
+    {
+      "type": "heading",
+      "id": "bind",
+      "level": 3,
+      "text": "bind() — permanent this for callbacks"
+    },
+    {
+      "type": "paragraph",
+      "content": "bind returns a new function with this locked. Use it when passing object methods as callbacks — setTimeout, event listeners, array map over methods. In modern React you rarely need bind because hooks and arrow functions replace class patterns, but interviews still ask."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "class ThemeController {\n  constructor() { this.mode = 'light'; }\n  toggle() { this.mode = this.mode === 'light' ? 'dark' : 'light'; }\n}\n\nconst ctrl = new ThemeController();\n// Without bind, setTimeout loses this:\nsetTimeout(ctrl.toggle.bind(ctrl), 100);"
+    },
+    {
+      "type": "tip",
+      "title": "Production connection",
+      "content": "When you pass setTheme to child components via Context, the function reference stability matters for memoization — a topic you will deepen on Day 20. Today, define setTheme once in the provider with useCallback."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Context Types and Function Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Untyped Context defaults to any — unacceptable in production TypeScript. Define an interface for the context value, type your setter as a function type, and make the custom hook return that interface. This catches misuse at compile time and documents the contract for your team."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/theme.ts",
+      "code": "export type ThemePreference = 'light' | 'dark' | 'system';\nexport type ResolvedTheme = 'light' | 'dark';\n\nexport interface ThemeContextValue {\n  preference: ThemePreference;\n  resolvedTheme: ResolvedTheme;\n  setPreference: (preference: ThemePreference) => void;\n}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Function types like (preference: ThemePreference) => void tell TypeScript exactly what arguments the setter accepts. Alternatively, Dispatch<SetStateAction<ThemePreference>> works when the setter wraps useState. Pick one style per project and stay consistent."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "context/ThemeContext.ts",
+      "code": "import { createContext } from 'react';\nimport type { ThemeContextValue } from '../types/theme';\n\nexport const ThemeContext = createContext<ThemeContextValue | null>(null);"
+    },
+    {
+      "type": "warning",
+      "title": "Null default pattern",
+      "content": "Defaulting context to null lets your useTheme hook throw a clear error when someone forgets the provider. Never default to a fake object with no-op functions — silent failures hide bugs for weeks."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Context API Deep Dive"
+    },
+    {
+      "type": "heading",
+      "id": "context-model",
+      "level": 3,
+      "text": "How Context works — Provider, value, consumers"
+    },
+    {
+      "type": "paragraph",
+      "content": "createContext creates a container. Provider places a value on the tree. Any descendant calling useContext receives the nearest Provider's value. When the value changes, all consumers re-render. That last sentence is why you must be deliberate — Context is not free."
+    },
+    {
+      "type": "table",
+      "headers": ["Concept", "Role", "Production note"],
+      "rows": [
+        ["createContext", "Defines the context object", "Export from a dedicated file"],
+        ["Provider", "Supplies value to subtree", "Place once at app root"],
+        ["useContext", "Reads value in any descendant", "Wrap in custom hook useTheme"],
+        ["value prop", "The data consumers receive", "Memoize to avoid extra re-renders"]
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "theme-provider",
+      "level": 3,
+      "text": "Theme Provider — global side effects done right"
+    },
+    {
+      "type": "paragraph",
+      "content": "ThemeProvider owns preference state, resolves system mode via matchMedia, applies data-theme to document.documentElement, and persists to localStorage. It is the single source of truth — no component should read localStorage directly for theme."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "providers/ThemeProvider.tsx",
+      "code": "export function ThemeProvider({ children }: PropsWithChildren) {\n  const [preference, setPreference] = useState<ThemePreference>(() => {\n    return (localStorage.getItem('theme') as ThemePreference) ?? 'system';\n  });\n\n  const resolvedTheme = useResolvedTheme(preference);\n\n  useEffect(() => {\n    document.documentElement.setAttribute('data-theme', resolvedTheme);\n    localStorage.setItem('theme', preference);\n  }, [preference, resolvedTheme]);\n\n  const value = useMemo(\n    () => ({ preference, resolvedTheme, setPreference }),\n    [preference, resolvedTheme],\n  );\n\n  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;\n}"
+    },
+    {
+      "type": "note",
+      "title": "Preference vs resolved",
+      "content": "Users choose light, dark, or system. The browser only renders light or dark. System maps to OS preference via prefers-color-scheme. Store preference in state; derive resolvedTheme — never conflate them."
+    },
+    {
+      "type": "heading",
+      "id": "custom-hook",
+      "level": 3,
+      "text": "Custom useTheme hook — the public API"
+    },
+    {
+      "type": "paragraph",
+      "content": "Never export raw Context to feature components. A useTheme hook is your API boundary — it enforces provider presence, returns a typed object, and can evolve internals without touching every consumer."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "hooks/useTheme.ts",
+      "code": "export function useTheme(): ThemeContextValue {\n  const ctx = useContext(ThemeContext);\n  if (!ctx) {\n    throw new Error('useTheme must be used within ThemeProvider');\n  }\n  return ctx;\n}"
+    },
+    {
+      "type": "heading",
+      "id": "system-theme",
+      "level": 3,
+      "text": "System theme — listening to OS changes"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "function useResolvedTheme(preference: ThemePreference): ResolvedTheme {\n  const getSystem = () =>\n    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';\n\n  const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(getSystem);\n\n  useEffect(() => {\n    const mq = window.matchMedia('(prefers-color-scheme: dark)');\n    const handler = () => setSystemTheme(getSystem());\n    mq.addEventListener('change', handler);\n    return () => mq.removeEventListener('change', handler);\n  }, []);\n\n  if (preference === 'system') return systemTheme;\n  return preference;\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Theme Management System"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-light", "text": "Light theme mode with distinct visual tokens" },
+        { "id": "req-dark", "text": "Dark theme mode with distinct visual tokens" },
+        { "id": "req-system", "text": "System theme follows OS preference" },
+        { "id": "req-persist", "text": "Theme preference persists in localStorage" },
+        { "id": "req-provider", "text": "Global ThemeProvider at app root" },
+        { "id": "req-hook", "text": "useTheme hook consumed by toggle UI" },
+        { "id": "req-responsive", "text": "Responsive layout on mobile and desktop" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "Define CSS variables in tokens.css under [data-theme='light'] and [data-theme='dark']. Build a three-way toggle: Light | Dark | System. Test persistence by selecting dark, hard-refreshing, and confirming dark loads. Test system by changing OS appearance settings."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Week 3 Day 1 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-rerender",
+          "title": "Context re-render issues",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Toggling unrelated state re-renders the entire app. Cause: ThemeProvider passes value={{ preference, setPreference }} inline — new object every render. Fix: wrap value in useMemo with correct dependencies; wrap setPreference in useCallback if extracted separately."
+            }
+          ]
+        },
+        {
+          "id": "dbg-placement",
+          "title": "Wrong provider placement",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: useTheme throws 'must be used within ThemeProvider' on the navbar or a routed page. Cause: Provider is inside a single route or a feature folder instead of the root. Fix: move ThemeProvider above RouterProvider in your provider tree so every route and layout is wrapped."
+            }
+          ]
+        },
+        {
+          "id": "dbg-persistence",
+          "title": "Theme persistence bugs",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Theme flashes light then switches to dark on load, or resets after refresh. Cause: Reading localStorage in useEffect runs after first paint with default state. Fix: lazy useState initializer reads storage synchronously. For zero flash, set data-theme in index.html before React mounts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Focus — Context vs Props, Global State"
+    },
+    {
+      "type": "paragraph",
+      "content": "Expect these three questions today: When do props beat Context? When should you refuse Context entirely? What qualifies as global state? Your theme system is the proof point — preference is global, low-frequency, widely read. Cart with complex mutations graduates to Redux tomorrow. API cache graduates to RTK Query. Know the boundaries."
+    },
+    {
+      "type": "quote",
+      "content": "Context is not a state management silver bullet. It is a dependency injection mechanism for values that many components need at different nesting levels.",
+      "attribution": "React documentation"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-theme", "text": "Theme works — light, dark, system" },
+        { "id": "done-persist", "text": "Theme persists across reload" },
+        { "id": "done-responsive", "text": "Responsive" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

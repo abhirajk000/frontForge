@@ -1,0 +1,198 @@
+{
+  "id": "day05-lesson",
+  "metaId": "day05",
+  "title": "Day 05 — Dashboard Layout with React Router",
+  "summary": "Learn SPA routing with React Router — nested layouts, Link, Outlet, and navigation — by building a dashboard with sidebar, navbar, profile, settings, and 404.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your GitHub search and login live on one screen. Real products — Jira, Linear, Vercel — have dozens of pages sharing one shell. Today you add React Router and build a dashboard layout where sidebar and navbar persist while the main content swaps. URLs become shareable. Back button works. This is the architecture behind every SaaS admin panel."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Scope for Day 05",
+      "content": "Use React Router, Link, Outlet, and nested routes. Custom hooks and debounce come tomorrow on Day 06. Do not introduce Redux or Context yet."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Closures in routed components"
+    },
+    {
+      "type": "paragraph",
+      "content": "Each route renders components that attach event handlers. Those handlers are closures — they capture variables from the render where they were created. When ProfilePage defines onClick={() => navigate('/settings')}, it closes over navigate from that render. Closures are not router-specific but explain handler behavior across navigations."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "function Sidebar() {\n  const appName = 'FrontForge';\n\n  const logBrand = () => {\n    console.log(appName); // closure over appName\n  };\n\n  return <button type=\"button\" onClick={logBrand}>Log brand</button>;\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Route types"
+    },
+    {
+      "type": "paragraph",
+      "content": "When routes include parameters like /users/:id, useParams returns a typed object. Define a Params type or use generics from React Router. Today your routes may be static — still type NavItem config arrays."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "type NavItem = {\n  to: string;\n  label: string;\n  icon?: string;\n};\n\nconst sidebarLinks: NavItem[] = [\n  { to: '/dashboard', label: 'Dashboard' },\n  { to: '/profile', label: 'Profile' },\n  { to: '/settings', label: 'Settings' },\n];"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react-router",
+      "level": 2,
+      "text": "React Router — SPA navigation"
+    },
+    {
+      "type": "heading",
+      "id": "spa",
+      "level": 3,
+      "text": "SPA — one document, many views"
+    },
+    {
+      "type": "paragraph",
+      "content": "A Single Page Application loads index.html once. JavaScript changes the view when the URL changes. No white flash. No re-downloading CSS. React Router connects URL paths to component trees."
+    },
+    {
+      "type": "heading",
+      "id": "link-outlet",
+      "level": 3,
+      "text": "Link, NavLink, and Outlet"
+    },
+    {
+      "type": "table",
+      "headers": ["API", "Purpose"],
+      "rows": [
+        ["BrowserRouter", "Enables routing context for the app"],
+        ["Routes / Route", "Declare path → element mapping"],
+        ["Link", "Internal navigation without reload"],
+        ["NavLink", "Link with active style when route matches"],
+        ["Outlet", "Renders nested child route in layout"]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "layouts/DashboardLayout.tsx",
+      "code": "import { Outlet } from 'react-router-dom';\nimport { Sidebar } from '../components/Sidebar';\nimport { Navbar } from '../components/Navbar';\n\nexport function DashboardLayout() {\n  return (\n    <div className=\"dashboard\">\n      <Sidebar />\n      <div className=\"dashboard-main\">\n        <Navbar />\n        <main>\n          <Outlet />\n        </main>\n      </div>\n    </div>\n  );\n}"
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "App.tsx",
+      "code": "import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';\n\nexport function App() {\n  return (\n    <BrowserRouter>\n      <Routes>\n        <Route path=\"/\" element={<Navigate to=\"/dashboard\" replace />} />\n        <Route element={<DashboardLayout />}>\n          <Route path=\"dashboard\" element={<DashboardPage />} />\n          <Route path=\"profile\" element={<ProfilePage />} />\n          <Route path=\"settings\" element={<SettingsPage />} />\n        </Route>\n        <Route path=\"*\" element={<NotFoundPage />} />\n      </Routes>\n    </BrowserRouter>\n  );\n}"
+    },
+    {
+      "type": "warning",
+      "title": "Outlet is required",
+      "content": "If URL changes but content does not, you almost certainly forgot Outlet in the layout or nested routes incorrectly."
+    },
+    {
+      "type": "tip",
+      "title": "NavLink active class",
+      "content": "NavLink accepts className={({ isActive }) => isActive ? 'active' : ''} for sidebar highlight — interview-visible polish."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build-mission",
+      "level": 2,
+      "text": "Build Mission — Dashboard Layout"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-sidebar", "text": "Sidebar with links to dashboard, profile, settings" },
+        { "id": "req-navbar", "text": "Navbar with app title or user area" },
+        { "id": "req-nested", "text": "Nested layout with Outlet" },
+        { "id": "req-pages", "text": "Distinct content per page" },
+        { "id": "req-404", "text": "404 page for unknown routes" }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — routing mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "debug-route",
+          "title": "Wrong route",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: blank page or router warning. Cause: path typo or missing element. Fix: match Link to with Route path; use React Router devtools or console."
+            }
+          ]
+        },
+        {
+          "id": "debug-nav",
+          "title": "Broken navigation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: URL updates, content stuck. Cause: missing Outlet or flat routes instead of nested. Fix: nest child routes under layout Route with Outlet."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-routes", "text": "All routes navigate correctly" },
+        { "id": "done-layout", "text": "Sidebar and navbar persist" },
+        { "id": "done-404", "text": "404 works" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Quiz and interview complete" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

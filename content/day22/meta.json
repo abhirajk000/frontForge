@@ -1,0 +1,46 @@
+{
+  "id": "day22",
+  "version": "1.0.0",
+  "day": 22,
+  "week": 4,
+  "track": "react-interview",
+  "title": "Machine Coding Interview",
+  "subtitle": "90-minute build, debugging drills, code review, and 20 interview questions — no new theory",
+  "mission": "Machine Coding Interview",
+  "readingTimeMinutes": 15,
+  "estimatedBuildHours": 5,
+  "difficulty": "advanced",
+  "tags": ["interview", "machine-coding", "debugging", "code-review", "revision", "kanban"],
+  "topics": {
+    "javascript": ["arrays", "objects", "closures", "async", "event loop", "debounce"],
+    "typescript": ["props", "interfaces", "types", "API models"],
+    "react": ["components", "props", "state", "useEffect", "context", "router", "redux", "RTK Query", "performance"]
+  },
+  "prerequisites": [
+    "week1 — components, props, useState, forms, routing fundamentals",
+    "week2 — APIs, custom hooks, Context, dynamic routes, machine coding Round 2",
+    "week3 — Redux Toolkit, RTK Query, authentication, performance, dashboards",
+    "day21 — machine coding Round 3: auth, dashboard, Redux, API, theme without references"
+  ],
+  "expectedOutcome": [
+    "Complete a frontend machine coding round independently within 90 minutes",
+    "Fix common React bugs: infinite render, mutation, deps, keys, API, routing",
+    "Conduct a structured self code review on folder structure, naming, a11y, reusability",
+    "Answer 20 interview questions across JavaScript, React, TypeScript, architecture, and performance",
+    "Explain architectural trade-offs under interviewer pressure"
+  ],
+  "definitionOfDone": [
+    "Kanban Board machine coding challenge completed within 90-minute time box",
+    "All six debugging scenarios diagnosed and fixed in the provided buggy code",
+    "Self code review completed with written notes on structure, performance, and accessibility",
+    "20 interview questions answered out loud or in writing",
+    "Quiz completed with passing score",
+    "Reflection submitted with honest weak-area assessment",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 23,
+    "title": "Production Ready Frontend",
+    "summary": "Tomorrow you will refactor a previous project for production — folder structure, hooks, performance, accessibility, and senior-level architecture explanations."
+  }
+}

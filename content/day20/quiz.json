@@ -1,0 +1,251 @@
+{
+  "id": "day20-quiz",
+  "metaId": "day20",
+  "title": "Day 20 Quiz — React Performance Optimization",
+  "description": "Verify memo, hooks, lazy loading, memory concepts, and optimization judgment.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "React.memo prevents re-render when props are shallow-equal to previous render.",
+      "correctAnswer": true,
+      "explanation": "memo bails out if shallow compare finds same props.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "memo"
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What does useCallback return?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A memoized function reference"
+        },
+        {
+          "id": "b",
+          "text": "A memoized computed value"
+        },
+        {
+          "id": "c",
+          "text": "A DOM node"
+        },
+        {
+          "id": "d",
+          "text": "A Promise"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "useCallback caches the function itself between renders when deps unchanged.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "hooks"
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "Primary benefit of React.lazy and code splitting?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Smaller initial bundle — load routes on demand"
+        },
+        {
+          "id": "b",
+          "text": "Eliminates all re-renders"
+        },
+        {
+          "id": "c",
+          "text": "Replaces Redux"
+        },
+        {
+          "id": "d",
+          "text": "Fixes TypeScript errors"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Dynamic import splits chunks loaded when user navigates to route.",
+      "difficulty": "easy",
+      "tags": [
+        "code-splitting"
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which cause unnecessary child re-renders with React.memo? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inline arrow function props"
+        },
+        {
+          "id": "b",
+          "text": "New object literal props each render"
+        },
+        {
+          "id": "c",
+          "text": "Stable useCallback reference"
+        },
+        {
+          "id": "d",
+          "text": "Primitive string props unchanged"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b"
+      ],
+      "explanation": "New function/object references each render break shallow equality.",
+      "difficulty": "medium",
+      "tags": [
+        "react",
+        "performance"
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Wrap lazy routes with {{blank1}} and provide a fallback UI.",
+      "blanks": [
+        {
+          "id": "blank1",
+          "acceptedAnswers": [
+            "Suspense",
+            "React.Suspense"
+          ]
+        }
+      ],
+      "explanation": "Suspense catches loading state while lazy chunk downloads.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "lazy"
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "Does memoized child re-render when parent passes inline () => {} each time?",
+      "code": "const Child = React.memo(() => <div />);\n// Parent: <Child onClick={() => {}} />",
+      "language": "javascript",
+      "correctOutput": "yes",
+      "explanation": "New function reference every parent render — memo comparison fails.",
+      "difficulty": "hard",
+      "tags": [
+        "react",
+        "memo"
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "When should you NOT use React.memo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expensive list row re-rendering unnecessarily"
+        },
+        {
+          "id": "b",
+          "text": "Cheap component always receiving new props"
+        },
+        {
+          "id": "c",
+          "text": "Heavy chart with stable props"
+        },
+        {
+          "id": "d",
+          "text": "Large table cell with stable data"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Memo overhead exceeds benefit when props always change or render is trivial.",
+      "difficulty": "medium",
+      "tags": [
+        "performance"
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "code-completion",
+      "prompt": "Complete lazy import.",
+      "code": "const Dashboard = {{lazy}}(() => import(\"./Dashboard\"));",
+      "language": "typescript",
+      "blanks": [
+        {
+          "id": "lazy",
+          "acceptedAnswers": [
+            "lazy",
+            "React.lazy"
+          ]
+        }
+      ],
+      "explanation": "React.lazy accepts dynamic import returning default export.",
+      "difficulty": "easy",
+      "tags": [
+        "react",
+        "lazy"
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Explain difference between useMemo and useCallback.",
+      "acceptedKeywords": [
+        "value",
+        "function",
+        "cache",
+        "reference"
+      ],
+      "sampleAnswer": "useMemo caches a computed value result between renders when dependencies unchanged. useCallback caches a function reference itself — useful for stable props to memoized children. Both avoid unnecessary work but cache different things.",
+      "explanation": "Common interview distinction.",
+      "difficulty": "medium",
+      "tags": [
+        "react",
+        "hooks"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Garbage collection reclaims memory when? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object has zero reachable references"
+        },
+        {
+          "id": "b",
+          "text": "Developer calls free()"
+        },
+        {
+          "id": "c",
+          "text": "Closure no longer referenced"
+        },
+        {
+          "id": "d",
+          "text": "Every render automatically"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c"
+      ],
+      "explanation": "JS GC is automatic when objects unreachable — no manual free().",
+      "difficulty": "medium",
+      "tags": [
+        "javascript",
+        "memory"
+      ]
+    }
+  ]
+}

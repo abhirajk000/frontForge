@@ -1,0 +1,72 @@
+{
+  "id": "day20-resources",
+  "metaId": "day20",
+  "title": "Day 20 Resources",
+  "description": "Official React documentation for memo, hooks, lazy, and performance.",
+  "resources": [
+    {
+      "id": "res-memo",
+      "title": "React — memo",
+      "url": "https://react.dev/reference/react/memo",
+      "type": "documentation",
+      "description": "React.memo API reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-usememo",
+      "title": "React — useMemo",
+      "url": "https://react.dev/reference/react/useMemo",
+      "type": "documentation",
+      "description": "Caching expensive calculations.",
+      "recommended": true
+    },
+    {
+      "id": "res-usecallback",
+      "title": "React — useCallback",
+      "url": "https://react.dev/reference/react/useCallback",
+      "type": "documentation",
+      "description": "Caching function references.",
+      "recommended": true
+    },
+    {
+      "id": "res-lazy",
+      "title": "React — lazy",
+      "url": "https://react.dev/reference/react/lazy",
+      "type": "documentation",
+      "description": "Dynamic component loading.",
+      "recommended": true
+    },
+    {
+      "id": "res-suspense",
+      "title": "React — Suspense",
+      "url": "https://react.dev/reference/react/Suspense",
+      "type": "documentation",
+      "description": "Loading fallbacks for lazy components.",
+      "recommended": true
+    },
+    {
+      "id": "res-perf",
+      "title": "React — Performance",
+      "url": "https://react.dev/learn/render-and-commit",
+      "type": "documentation",
+      "description": "Render and commit phases explained.",
+      "recommended": true
+    },
+    {
+      "id": "res-gc",
+      "title": "MDN — Memory Management",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management",
+      "type": "documentation",
+      "description": "Memory lifecycle and garbage collection.",
+      "recommended": true
+    },
+    {
+      "id": "res-profiler",
+      "title": "React DevTools — Profiler",
+      "url": "https://react.dev/learn/react-developer-tools",
+      "type": "documentation",
+      "description": "Using Profiler to find bottlenecks.",
+      "recommended": false
+    }
+  ]
+}

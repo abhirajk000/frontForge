@@ -1,0 +1,38 @@
+{
+  "id": "day10-reflection",
+  "metaId": "day10",
+  "title": "Day 10 Reflection",
+  "description": "Solidify list rendering and filtering before Day 11 infinite scroll.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Walk through your filter pipeline: how do category, price, search, and sort combine into the final product list?",
+      "guidance": "Mention filter, sort, and whether you used useMemo.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Why is using index as key dangerous when the list can be sorted or filtered?",
+      "guidance": "Connect to React reconciliation and component identity.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "When did you apply React.memo and what props did ProductCard receive?",
+      "guidance": "Explain what triggers a re-render despite memo.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "Did you mutate the products array anywhere? How did you avoid it?",
+      "guidance": "Mention spread, slice, or filter returning new arrays.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "How is today's client-side filtering different from Day 09 server-side search?",
+      "guidance": "Trade-offs: data size, latency, API design.",
+      "minWords": 25
+    }
+  ]
+}

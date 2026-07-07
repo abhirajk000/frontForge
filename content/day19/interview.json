@@ -1,0 +1,157 @@
+{
+  "id": "day19-interview",
+  "metaId": "day19",
+  "title": "Day 19 Interview Prep",
+  "description": "Practice dashboard architecture, conditional rendering, role-based UI, and data tables.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "How do you implement role-based UI in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Conditional rendering for permissions.",
+      "keyPoints": [
+        "Read role from auth",
+        "Conditional render",
+        "Route guards",
+        "Backend enforcement"
+      ],
+      "sampleAnswer": "I read user.role from auth context or Redux. Admin-only buttons use {role === 'admin' && <Button />}. Routes wrap in RequireAdmin guard. I always note backend must enforce too — frontend hiding is UX not security.",
+      "followUps": [
+        "Permission arrays?",
+        "Feature flags?"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "What array methods power dashboard data pipelines?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Data transformation fundamentals.",
+      "keyPoints": [
+        "filter for search",
+        "reduce for aggregates",
+        "slice for pagination",
+        "sort for ordering"
+      ],
+      "sampleAnswer": "filter narrows rows by search and role. reduce sums revenue for analytics cards. sort orders by column. slice extracts current page after filter. I chain them immutably without mutating source arrays.",
+      "followUps": [
+        "Server-side pagination?",
+        "Big O of filter chain?"
+      ]
+    },
+    {
+      "id": "int-m01",
+      "question": "Client-side vs server-side pagination — tradeoffs?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Scale awareness.",
+      "keyPoints": [
+        "Client for small datasets",
+        "Server for large tables",
+        "URL params",
+        "RTK Query page arg"
+      ],
+      "sampleAnswer": "Client-side paginate after fetch works for hundreds of rows — simple, instant filter. Server-side with page/limit query params scales to millions — less memory, faster initial load. I mention RTK Query skip/take args and Day 13 URL sync for shareable pages.",
+      "followUps": [
+        "Cursor pagination?",
+        "Virtual scrolling?"
+      ]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type dashboard models in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Domain type design.",
+      "keyPoints": [
+        "Stats interface",
+        "UserRow type",
+        "Filter state",
+        "Role unions"
+      ],
+      "sampleAnswer": "DashboardStats holds numeric aggregates. UserRow types table row with role union user | admin. TableFilters types search string, role filter, page, pageSize. Union types prevent invalid role strings at compile time.",
+      "followUps": [
+        "Zod validation?",
+        "API DTO mapping?"
+      ]
+    },
+    {
+      "id": "int-m03",
+      "question": "Describe dashboard layout component structure.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Component composition.",
+      "keyPoints": [
+        "Shell layout",
+        "Sidebar nav",
+        "Outlet for routes",
+        "Responsive grid"
+      ],
+      "sampleAnswer": "DashboardLayout wraps authenticated pages: Sidebar with nav links, Header with user menu, main Outlet. Analytics grid uses CSS grid auto-fit. Table section full width below cards. Layout persists across nested routes via React Router outlet.",
+      "followUps": [
+        "Collapsible sidebar?",
+        "Mobile drawer nav?"
+      ]
+    },
+    {
+      "id": "int-h01",
+      "question": "Search returns zero rows but user sees page 5 empty. Debug.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Pagination + filter interaction.",
+      "keyPoints": [
+        "Page not reset",
+        "Total pages miscalculation",
+        "Off-by-one slice",
+        "Empty state"
+      ],
+      "sampleAnswer": "Filter reduced results to 3 rows but page index still 5 — slice returns empty. Fix: reset page to 0 when search or filter changes. Compute totalPages from filtered.length. Show empty state component when filtered.length === 0.",
+      "followUps": [
+        "useEffect deps?",
+        "Derived state anti-pattern?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "Regular user deletes admin via DevTools manipulating DOM. Is your app secure?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Frontend vs backend security.",
+      "keyPoints": [
+        "UI hiding insufficient",
+        "API authorization",
+        "403 responses",
+        "Audit logging"
+      ],
+      "sampleAnswer": "No — frontend role checks are bypassable. Secure apps validate JWT role on every admin API endpoint returning 403. I explain I hide UI for UX but backend enforces. Mention OWASP and principle of least privilege.",
+      "followUps": [
+        "RBAC vs ABAC?",
+        "JWT role claim trust?"
+      ]
+    },
+    {
+      "id": "int-s01",
+      "question": "Design admin dashboard state: local vs Redux vs URL?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "State placement for dashboard filters.",
+      "keyPoints": [
+        "URL for shareable filters",
+        "Redux for shared complex state",
+        "Local for ephemeral UI",
+        "Avoid over-engineering"
+      ],
+      "sampleAnswer": "Table filters and page sync to URL searchParams — shareable and bookmarkable. Auth user in Redux from Day 18. Modal open state local. Fetched users in RTK Query cache. I avoid putting filter state in Redux unless multiple distant components need it — URL is source of truth for dashboards.",
+      "followUps": [
+        "nuqs library?",
+        "Reset filters on logout?"
+      ],
+      "redFlags": [
+        "All state in one useState object",
+        "No empty states",
+        "Pagination before filter"
+      ]
+    }
+  ]
+}

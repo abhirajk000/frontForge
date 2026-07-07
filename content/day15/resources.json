@@ -1,0 +1,72 @@
+{
+  "id": "day15-resources",
+  "metaId": "day15",
+  "title": "Day 15 Resources",
+  "description": "Official docs for Context API, this/call/apply/bind, and theme persistence patterns.",
+  "resources": [
+    {
+      "id": "res-context",
+      "title": "React — Passing Data Deeply with Context",
+      "url": "https://react.dev/learn/passing-data-deeply-with-context",
+      "type": "documentation",
+      "description": "Official Context mental model — when to use it and how providers work.",
+      "recommended": true
+    },
+    {
+      "id": "res-usecontext",
+      "title": "React — useContext",
+      "url": "https://react.dev/reference/react/useContext",
+      "type": "documentation",
+      "description": "API reference for consuming context in functional components.",
+      "recommended": true
+    },
+    {
+      "id": "res-scaling-context",
+      "title": "React — Scaling Up with Reducer and Context",
+      "url": "https://react.dev/learn/scaling-up-with-reducer-and-context",
+      "type": "documentation",
+      "description": "Patterns for combining context with reducers — bridges Day 12 cart to today's deep dive.",
+      "recommended": true
+    },
+    {
+      "id": "res-this-mdn",
+      "title": "MDN — this",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this",
+      "type": "documentation",
+      "description": "How this is determined in functions, methods, and strict mode.",
+      "recommended": true
+    },
+    {
+      "id": "res-bind-mdn",
+      "title": "MDN — Function.prototype.bind",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind",
+      "type": "documentation",
+      "description": "bind, call, and apply — classic interview JavaScript.",
+      "recommended": true
+    },
+    {
+      "id": "res-prefers-color",
+      "title": "MDN — prefers-color-scheme",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme",
+      "type": "documentation",
+      "description": "Detect OS dark/light preference for system theme mode.",
+      "recommended": true
+    },
+    {
+      "id": "res-localstorage",
+      "title": "MDN — Window.localStorage",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+      "type": "documentation",
+      "description": "Persist theme preference across sessions.",
+      "recommended": false
+    },
+    {
+      "id": "res-context-pitfalls",
+      "title": "React — Before You Use Context",
+      "url": "https://react.dev/learn/passing-data-deeply-with-context#before-you-use-context",
+      "type": "documentation",
+      "description": "Official guidance on when NOT to use Context — interview essential.",
+      "recommended": true
+    }
+  ]
+}

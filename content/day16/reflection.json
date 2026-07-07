@@ -1,0 +1,38 @@
+{
+  "id": "day16-reflection",
+  "metaId": "day16",
+  "title": "Day 16 Reflection",
+  "description": "Solidify Redux Toolkit patterns before RTK Query tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "When would you keep todo state in Context/useReducer vs Redux Toolkit?",
+      "guidance": "Compare Day 12 cart with today todos.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "Did you accidentally mutate state? How did Redux Toolkit Immer help or confuse you?",
+      "guidance": "Mention DevTools or mutation warnings.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Explain pure functions and why your reducers must follow that rule.",
+      "guidance": "Use addTodo as an example.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-04",
+      "question": "How does your filter selector derive active and completed lists?",
+      "guidance": "Describe selectFilteredTodos logic.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "What would break if you introduced RTK Query today instead of waiting for Day 17?",
+      "guidance": "Preview server state separation without implementing.",
+      "minWords": 30
+    }
+  ]
+}

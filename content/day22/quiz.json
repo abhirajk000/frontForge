@@ -1,0 +1,141 @@
+{
+  "id": "day22-quiz",
+  "metaId": "day22",
+  "title": "Day 22 Quiz — Pre-Interview Revision Check",
+  "description": "Quick assessment across JavaScript, React, TypeScript, and architecture before the 90-minute machine coding round. Passing is revision — failing means re-read that topic before building.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "What does debounce solve in a search input?",
+      "options": [
+        { "id": "a", "text": "Encrypts API requests" },
+        { "id": "b", "text": "Delays execution until user stops typing, reducing API calls" },
+        { "id": "c", "text": "Caches API responses permanently" },
+        { "id": "d", "text": "Prevents React re-renders entirely" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Debounce waits for a pause in input before firing — core search optimization from Week 2.",
+      "difficulty": "easy",
+      "tags": ["javascript", "debounce"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "Closures allow an inner function to access variables from an outer function even after the outer function has returned.",
+      "correctAnswer": true,
+      "explanation": "Closures are fundamental to hooks, debounce implementations, and many interview questions.",
+      "difficulty": "easy",
+      "tags": ["javascript", "closures"]
+    },
+    {
+      "id": "q03",
+      "type": "code-output",
+      "prompt": "What is logged?",
+      "code": "console.log(Promise.resolve(1) === Promise.resolve(1));\nconsole.log({ a: 1 } === { a: 1 });",
+      "language": "javascript",
+      "correctOutput": "false\nfalse",
+      "explanation": "Objects and promises are compared by reference, not value — critical for React state and deps.",
+      "difficulty": "medium",
+      "tags": ["javascript", "objects"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which cause infinite re-renders? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "useEffect(() => setCount(c => c + 1)) with no dependency array" },
+        { "id": "b", "text": "useEffect(() => fetchData(), [query]) when query is stable" },
+        { "id": "c", "text": "setState in render body without condition" },
+        { "id": "d", "text": "useEffect(() => {}, []) on mount" }
+      ],
+      "correctOptionIds": ["a", "c"],
+      "explanation": "Missing deps with setState and setState during render both cause render loops.",
+      "difficulty": "hard",
+      "tags": ["react", "debugging"]
+    },
+    {
+      "id": "q05",
+      "type": "single-choice",
+      "prompt": "When should you use Redux Toolkit over Context?",
+      "options": [
+        { "id": "a", "text": "Always — Context is deprecated" },
+        { "id": "b", "text": "Complex shared state with many actions, middleware, and DevTools needs" },
+        { "id": "c", "text": "Only for theme preference" },
+        { "id": "d", "text": "Never — use only useState" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "RTK fits complex global state; Context fits low-frequency widely read values like theme.",
+      "difficulty": "medium",
+      "tags": ["react", "redux", "architecture"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "Type component props with a TypeScript {{blank1}}. Type API shapes with {{blank2}} matching the JSON contract.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["interface", "type"] },
+        { "id": "blank2", "acceptedAnswers": ["interface", "type", "API model"] }
+      ],
+      "explanation": "interface and type both work for props and API models — consistency matters in interviews.",
+      "difficulty": "easy",
+      "tags": ["typescript"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "What is the primary benefit of RTK Query over manual fetch in useEffect?",
+      "options": [
+        { "id": "a", "text": "Eliminates all re-renders" },
+        { "id": "b", "text": "Built-in caching, invalidation, and loading/error state" },
+        { "id": "c", "text": "Replaces React Router" },
+        { "id": "d", "text": "Removes need for TypeScript" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "RTK Query handles server state lifecycle — Week 3 core concept.",
+      "difficulty": "medium",
+      "tags": ["react", "RTK Query"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "In one sentence: why use array index as key is dangerous in a Kanban task list?",
+      "acceptedKeywords": ["reorder", "delete", "wrong", "identity", "stable", "id"],
+      "sampleAnswer": "Index keys break React's identity tracking when tasks are added, removed, or reordered — causing wrong DOM reuse, lost input state, and incorrect deletes.",
+      "explanation": "Classic machine coding and debugging interview trap.",
+      "difficulty": "medium",
+      "tags": ["react", "keys"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the immutable task status update.",
+      "code": "setTasks(prev => prev.{{method}}(t =>\n  t.id === taskId ? { ...t, status: newStatus } : t\n));",
+      "language": "typescript",
+      "blanks": [
+        { "id": "method", "acceptedAnswers": ["map"] }
+      ],
+      "explanation": "map returns a new array with one updated item — never mutate prev in place.",
+      "difficulty": "medium",
+      "tags": ["javascript", "immutability"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "First action in a 90-minute machine coding round?",
+      "options": [
+        { "id": "a", "text": "Install Redux and RTK Query immediately" },
+        { "id": "b", "text": "Clarify requirements, sketch folder structure, define MVP scope" },
+        { "id": "c", "text": "Build pixel-perfect CSS before any logic" },
+        { "id": "d", "text": "Copy solution from previous project" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Interviewers score requirement clarification and planning before lines of code.",
+      "difficulty": "easy",
+      "tags": ["architecture", "machine-coding"]
+    }
+  ]
+}

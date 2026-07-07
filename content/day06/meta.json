@@ -1,0 +1,46 @@
+{
+  "id": "day06",
+  "version": "1.0.0",
+  "day": 6,
+  "week": 1,
+  "track": "react-interview",
+  "title": "Custom Hooks and Responsive Layout",
+  "subtitle": "Debounced search, theme toggle, and reusable layout architecture",
+  "mission": "Build reusable layouts and custom hooks.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 3,
+  "difficulty": "intermediate",
+  "tags": ["react", "custom-hooks", "debounce", "responsive", "layout", "composition"],
+  "topics": {
+    "javascript": ["debounce"],
+    "typescript": ["custom hook types"],
+    "react": ["custom hooks", "layout components", "composition"]
+  },
+  "prerequisites": [
+    "day05 — React Router dashboard with sidebar and navbar",
+    "day04 — useEffect and fetch",
+    "day03 — reusable UI components"
+  ],
+  "expectedOutcome": [
+    "Extract debounce logic into a useDebounce custom hook",
+    "Type custom hooks with explicit return types",
+    "Build responsive sidebar and navbar that adapt to mobile",
+    "Implement theme toggle with state and document class or data attribute",
+    "Add debounced search bar integrated with routing or GitHub search",
+    "Explain custom hooks vs plain functions in interviews"
+  ],
+  "definitionOfDone": [
+    "useDebounce hook delays value updates by configurable ms",
+    "Search bar uses debounce before triggering fetch or filter",
+    "Sidebar collapses or becomes drawer on mobile breakpoint",
+    "Theme toggle switches light/dark with persisted preference in localStorage",
+    "Navbar and sidebar composed in layout without duplicated markup",
+    "Code pushed to Git",
+    "Quiz and interview completed"
+  ],
+  "tomorrowPreview": {
+    "day": 7,
+    "title": "Machine Coding Round 1",
+    "summary": "Tomorrow is your 90-minute Week 1 review build: login, dashboard, sidebar, and navbar — from memory, no AI, simulating a real machine coding interview."
+  }
+}

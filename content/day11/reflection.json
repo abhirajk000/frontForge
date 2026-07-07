@@ -1,0 +1,38 @@
+{
+  "id": "day11-reflection",
+  "metaId": "day11",
+  "title": "Day 11 Reflection",
+  "description": "Solidify infinite scroll and event loop knowledge before Day 12 Context API.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Explain the event loop order: synchronous code, microtasks, then macrotasks. Give one example of each.",
+      "guidance": "Mention Promise.then, setTimeout, and console.log.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "How does your Intersection Observer trigger the next page load? What happens in cleanup?",
+      "guidance": "Describe sentinel ref, callback, and disconnect.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Did you hit duplicate fetch or duplicate item bugs? What guard prevented them?",
+      "guidance": "Mention isLoading, hasMore, or deduplication by id.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "How is infinite scroll pagination different from Day 09 button pagination?",
+      "guidance": "UX, state append vs replace, observer vs click.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "What would break if you forgot observer.disconnect() on unmount?",
+      "guidance": "Memory leaks, stale callbacks, setState on unmounted component.",
+      "minWords": 25
+    }
+  ]
+}

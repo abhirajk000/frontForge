@@ -1,0 +1,32 @@
+{
+  "id": "day06-reflection",
+  "metaId": "day06",
+  "title": "Day 06 Reflection",
+  "description": "Custom hooks are how seniors avoid copy-paste — document what you extracted before machine coding tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Describe your useDebounce implementation. What goes in the effect dependency array and why?",
+      "guidance": "value, delay, cleanup with clearTimeout.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "How does debounced search change behavior compared to Day 04 submit-only search?",
+      "guidance": "API calls, UX, race conditions.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-03",
+      "question": "What responsive changes did you make to sidebar and navbar? What breaks below 768px without them?",
+      "guidance": "Drawer, hamburger, overflow.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "Which logic is now a custom hook vs staying in the component? Would you extract anything else?",
+      "guidance": "useTheme, useDebounce — honest next steps.",
+      "minWords": 30
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "day06-resources",
+  "metaId": "day06",
+  "title": "Day 06 Resources",
+  "description": "Official docs for custom hooks, effects cleanup, debounce, and responsive layout.",
+  "resources": [
+    {
+      "id": "res-custom-hooks",
+      "title": "React — Reusing Logic with Custom Hooks",
+      "url": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+      "type": "documentation",
+      "description": "Official custom hooks guide — primary reading for today.",
+      "recommended": true
+    },
+    {
+      "id": "res-effect-cleanup",
+      "title": "React — Effect Cleanup",
+      "url": "https://react.dev/learn/synchronizing-with-effects#step-4-adding-cleanup-if-needed",
+      "type": "documentation",
+      "description": "clearTimeout in debounce hooks — prevents leaks and warnings.",
+      "recommended": true
+    },
+    {
+      "id": "res-rules-hooks",
+      "title": "React — Rules of Hooks",
+      "url": "https://react.dev/reference/rules/rules-of-hooks",
+      "type": "documentation",
+      "description": "Only call hooks at top level and from React functions.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-debounce",
+      "title": "MDN — setTimeout",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/setTimeout",
+      "type": "documentation",
+      "description": "Timer API used in debounce implementations.",
+      "recommended": false
+    },
+    {
+      "id": "res-mdn-media",
+      "title": "MDN — Using media queries",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries",
+      "type": "documentation",
+      "description": "Responsive sidebar and navbar breakpoints.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-localstorage",
+      "title": "MDN — Window.localStorage",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+      "type": "documentation",
+      "description": "Persist theme preference across sessions.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts-generics-hooks",
+      "title": "TypeScript — Generics",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "type": "documentation",
+      "description": "Typing useDebounce<T> and hook return values.",
+      "recommended": false
+    },
+    {
+      "id": "res-react-ts-hooks",
+      "title": "React TypeScript Cheatsheet — Hooks",
+      "url": "https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks",
+      "type": "reference",
+      "description": "Typing custom hooks and return tuples.",
+      "recommended": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "day02-reflection",
+  "metaId": "day02",
+  "title": "Day 02 Reflection",
+  "description": "Capture what clicked and what confused you — these notes power spaced review before Day 07 machine coding.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Explain props vs state using your login page as the example. Which values were props? Which were state?",
+      "guidance": "Name specific variables: email, isLoading, onSubmit, etc.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "What bug did you encounter with controlled inputs or state updates? What fixed it?",
+      "guidance": "Reference the debugging section if you avoided bugs — explain how you would diagnose each symptom.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Why does React want immutable state updates for objects? What breaks if you mutate?",
+      "guidance": "Mention references, re-renders, predictability.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "How did you structure TypeScript types for your form? Would you use interface or type alias and why?",
+      "guidance": "There is no wrong answer if you justify consistency.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "What is one UX improvement you would add to your login page before shipping to production?",
+      "guidance": "Think accessibility, security messaging, rate limiting UI — not backend.",
+      "minWords": 25
+    }
+  ]
+}

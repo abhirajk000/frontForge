@@ -1,0 +1,283 @@
+{
+  "id": "day09-lesson",
+  "metaId": "day09",
+  "title": "Day 09 — Movie Search Application",
+  "summary": "Optimize search with debouncing, extract custom hooks, type paginated APIs with generics, and build a movie search app with loading, empty, error, and pagination states.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 08 taught you to fetch data and handle UI states. Day 09 teaches you to fetch smartly. Every production search — Netflix, Amazon, Google — debounces keystrokes so the server is not hammered on every letter. You will build that optimization, extract it into a custom hook, and add pagination on top of yesterday's fetch patterns."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 2 Day 2",
+      "content": "You already know fetch, useEffect, and controlled inputs from Week 1 and Day 08. Today adds debouncing and custom hooks. Do NOT introduce Context API (Day 12) or Redux (Week 3)."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Debouncing, Timers, Event Loop Intro"
+    },
+    {
+      "type": "heading",
+      "id": "debouncing",
+      "level": 3,
+      "text": "Debouncing — wait until the user stops typing"
+    },
+    {
+      "type": "paragraph",
+      "content": "Debouncing delays an action until input settles. Type 'batman' quickly — without debounce that is six API calls. With a 400ms debounce, one call fires 400ms after the last keystroke. This is how real search bars work."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "debounce-concept.ts",
+      "code": "function debounce<T extends (...args: unknown[]) => void>(fn: T, delay: number): T {\n  let timerId: ReturnType<typeof setTimeout>;\n\n  return ((...args: unknown[]) => {\n    clearTimeout(timerId);\n    timerId = setTimeout(() => fn(...args), delay);\n  }) as T;\n}\n\n// In React you implement this pattern inside useEffect — see useDebounce below"
+    },
+    {
+      "type": "heading",
+      "id": "timers",
+      "level": 3,
+      "text": "Timers — setTimeout and cleanup"
+    },
+    {
+      "type": "paragraph",
+      "content": "setTimeout schedules a macrotask. clearTimeout cancels a pending timer. In React, every time the search term changes you must clear the previous timer in useEffect cleanup — otherwise stale timers fire with old values."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "useEffect(() => {\n  const timerId = setTimeout(() => {\n    setDebouncedSearch(search);\n  }, 400);\n\n  return () => clearTimeout(timerId);\n}, [search]);"
+    },
+    {
+      "type": "heading",
+      "id": "event-loop",
+      "level": 3,
+      "text": "Event loop — introduction"
+    },
+    {
+      "type": "paragraph",
+      "content": "JavaScript runs one call stack at a time. setTimeout callbacks are macrotasks queued after the current stack clears. fetch Promises resolve as microtasks. Debounce timers sit in the macrotask queue — understanding this helps you explain why debounced search feels instant but API calls happen later. Deep dive on Day 11."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-debounce",
+          "label": "Debounce",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Use debounce for search-as-you-type, window resize handlers, and scroll position saves. Wait until activity stops."
+            }
+          ]
+        },
+        {
+          "id": "tab-throttle",
+          "label": "Throttle (preview)",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Throttle fires at most once per interval — useful for scroll events. Search uses debounce, not throttle. Know the difference in interviews."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Do not fetch on every onChange",
+      "content": "The number-one Day 09 bug: calling fetch inside onChange without debounce. Open Network tab — if you see six requests for six keystrokes, you forgot debouncing."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Generic API Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Paginated APIs share the same shape: results array, page number, total pages. Generics let you define PaginatedResponse<T> once and reuse it for movies, products, and users."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/api.ts",
+      "code": "export interface PaginatedResponse<T> {\n  page: number;\n  total_pages: number;\n  total_results: number;\n  results: T[];\n}\n\nexport interface Movie {\n  id: number;\n  title: string;\n  poster_path: string | null;\n  release_date: string;\n}\n\nexport type MovieSearchResponse = PaginatedResponse<Movie>;"
+    },
+    {
+      "type": "tip",
+      "title": "Production habit",
+      "content": "Keep generic wrappers in src/types/api.ts. Feature-specific types like Movie live in src/types/movie.ts. Components import MovieSearchResponse — never inline generic shapes in JSX."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Custom Hooks and Search Optimization"
+    },
+    {
+      "type": "heading",
+      "id": "useDebounce",
+      "level": 3,
+      "text": "useDebounce — your first extracted hook"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom hooks extract reusable stateful logic. useDebounce takes a value and delay, returns the debounced value. Rules: name starts with use; can call other hooks; same rules as components."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "hooks/useDebounce.ts",
+      "code": "import { useEffect, useState } from 'react';\n\nexport function useDebounce<T>(value: T, delay: number): T {\n  const [debouncedValue, setDebouncedValue] = useState(value);\n\n  useEffect(() => {\n    const timerId = setTimeout(() => setDebouncedValue(value), delay);\n    return () => clearTimeout(timerId);\n  }, [value, delay]);\n\n  return debouncedValue;\n}"
+    },
+    {
+      "type": "heading",
+      "id": "controlled-search",
+      "level": 3,
+      "text": "Controlled search input"
+    },
+    {
+      "type": "paragraph",
+      "content": "Search term lives in useState. Input value={search} onChange updates search immediately for responsive UI. Fetch triggers on debouncedSearch — not on every keystroke. Reset page to 1 when debouncedSearch changes."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "const [search, setSearch] = useState('');\nconst [page, setPage] = useState(1);\nconst debouncedSearch = useDebounce(search, 400);\n\nuseEffect(() => {\n  setPage(1);\n}, [debouncedSearch]);\n\nuseEffect(() => {\n  if (!debouncedSearch.trim()) return;\n  fetchMovies(debouncedSearch, page).then(setMovies).catch(setError);\n}, [debouncedSearch, page]);"
+    },
+    {
+      "type": "note",
+      "title": "Separate input from fetch trigger",
+      "content": "search drives the input. debouncedSearch drives the API. page drives pagination. Three related states — do not collapse them into one variable or pagination breaks."
+    },
+    {
+      "type": "table",
+      "headers": ["State", "When", "What to show"],
+      "rows": [
+        ["Empty", "No debounced search term yet", "Prompt: search for a movie"],
+        ["Loading", "Request in flight", "Spinner or skeleton cards"],
+        ["Error", "API failure", "Message + Retry button"],
+        ["Success", "Results returned", "Movie grid + pagination"],
+        ["No results", "API returns empty array", "'No movies found' message"]
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Movie Search Application"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-search", "text": "Controlled search input with debounced API trigger" },
+        { "id": "req-debounce", "text": "useDebounce custom hook in src/hooks/" },
+        { "id": "req-loading", "text": "Loading indicator during fetch" },
+        { "id": "req-empty", "text": "Empty state before search and when zero results" },
+        { "id": "req-error", "text": "Error UI with retry" },
+        { "id": "req-pagination", "text": "Next/previous page controls" },
+        { "id": "req-responsive", "text": "Responsive movie grid layout" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "Sign up for a free TMDB API key; store it in .env as VITE_TMDB_API_KEY. Test debounce by typing quickly and watching Network tab — one request per pause, not per letter. Reset page when search changes."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Day 09 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-multiple",
+          "title": "Multiple API requests",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Network tab shows b, ba, bat requests. Cause: fetch in onChange without debounce. Fix: use useDebounce; fetch in useEffect when debouncedSearch changes."
+            }
+          ]
+        },
+        {
+          "id": "dbg-stale",
+          "title": "Stale state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Old movie list flashes before new results. Cause: Slow response from previous query arrives after fast new query. Fix: AbortController or cancelled flag from Day 08; clear movies when query changes."
+            }
+          ]
+        },
+        {
+          "id": "dbg-deps",
+          "title": "Wrong dependency array",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Double fetch on page change or infinite loop. Cause: Unstable deps or fetch effect missing page or debouncedSearch. Fix: [debouncedSearch, page] with ESLint exhaustive-deps enabled."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-debounce", "text": "Debounced search working" },
+        { "id": "done-states", "text": "Loading, empty, error states" },
+        { "id": "done-pagination", "text": "Pagination working" },
+        { "id": "done-hook", "text": "useDebounce extracted" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

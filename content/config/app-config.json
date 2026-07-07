@@ -1,0 +1,10 @@
+{
+  "id": "frontforge-app",
+  "version": "1.0.0",
+  "name": "FrontForge",
+  "tagline": "Build. Think. Ship. Get Hired.",
+  "description": "A production-grade, content-driven platform for learning React and JavaScript through building.",
+  "track": "react-interview",
+  "totalDays": 24,
+  "weeks": 4
+}

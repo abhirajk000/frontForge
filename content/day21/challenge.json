@@ -1,0 +1,73 @@
+{
+  "id": "day21-challenge",
+  "metaId": "day21",
+  "title": "Machine Coding Round 3 — Week 3 Integrated Build",
+  "mission": "Machine Coding Round 3",
+  "description": "150-minute timed build from scratch: theme system, Redux store, RTK Query API, authentication, and admin dashboard — without referring to previous day code.",
+  "estimatedMinutes": 150,
+  "difficulty": "advanced",
+  "requirements": [
+    "Complete build in 150 minutes under exam conditions",
+    "Theme system: light/dark modes with localStorage persistence and ThemeProvider",
+    "Redux store with configureStore and at least one client slice (auth or ui)",
+    "RTK Query API with fetch for products or users — query + at least one mutation",
+    "Login and logout flow with JWT or mock token storage",
+    "Protected routes redirecting unauthenticated users to login",
+    "Admin dashboard with analytics cards and user/product table",
+    "Search or filter on table data",
+    "Role badge or conditional admin UI",
+    "Loading and error states on API calls",
+    "Do NOT use AI, Google, or previous day source folders during build",
+    "Write self-review README section listing weak Week 3 areas"
+  ],
+  "acceptanceCriteria": [
+    "Timer stopped at or before 150 minutes with attempt documented",
+    "Theme toggles and persists across reload",
+    "Unauthenticated users cannot access dashboard routes",
+    "Login establishes session and redirects to dashboard",
+    "RTK Query fetches and displays server data with cache working after mutation",
+    "Dashboard shows at least two analytics metrics and a data table",
+    "npm run build passes at end of session",
+    "Git commit with message indicating machine coding attempt",
+    "Self-review notes identify 2+ weak Week 3 topics"
+  ],
+  "hints": [
+    "Scaffold in order: theme → store shell → API → auth → dashboard — do not jump ahead.",
+    "Mock API with json-server if backend unavailable — focus on architecture not infra.",
+    "Copy patterns from memory, not from old repos — that is the exercise.",
+    "If stuck 10+ minutes on one bug, stub the feature and move on.",
+    "Day 22 will test the same stack under different time pressure — note gaps today."
+  ],
+  "bonus": {
+    "title": "If time remains after 150 min",
+    "description": "Optional polish only after core definition of done.",
+    "requirements": [
+      "Lazy load dashboard route with Suspense",
+      "Memoize table rows with React.memo",
+      "Pagination on user table"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-time",
+      "title": "Running out of time",
+      "symptom": "120 min in with no auth",
+      "cause": "Over-engineering theme or perfect CSS early",
+      "fix": "Skip polish; stub dashboard; ship auth + protected route minimum"
+    },
+    {
+      "id": "dbg-store",
+      "title": "Store not updating",
+      "symptom": "RTK Query data undefined",
+      "cause": "Forgot api middleware or reducer in configureStore",
+      "fix": "Verify reducerPath and middleware concat"
+    },
+    {
+      "id": "dbg-auth",
+      "title": "Auth flash on reload",
+      "symptom": "Redirect loop or login flash",
+      "cause": "No loading gate during token hydration",
+      "fix": "Auth status loading until localStorage read completes"
+    }
+  ]
+}

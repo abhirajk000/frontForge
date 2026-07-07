@@ -1,0 +1,38 @@
+{
+  "id": "day19-reflection",
+  "metaId": "day19",
+  "title": "Day 19 Reflection",
+  "description": "Solidify dashboard patterns before performance optimization tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Walk through your filter → sort → paginate pipeline.",
+      "guidance": "Name array methods used at each step.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "How did you gate admin UI vs regular user views?",
+      "guidance": "Route guard and conditional render.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "What dashboard types did you define and why?",
+      "guidance": "DashboardStats, UserRow, TableFilters.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-04",
+      "question": "What pagination bug did you avoid or fix?",
+      "guidance": "Page reset on filter change.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "Which components will you memoize on Day 20?",
+      "guidance": "Preview performance targets.",
+      "minWords": 30
+    }
+  ]
+}

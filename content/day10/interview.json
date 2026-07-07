@@ -1,0 +1,129 @@
+{
+  "id": "day10-interview",
+  "metaId": "day10",
+  "title": "Day 10 Interview Prep",
+  "description": "Practice keys, list rendering, filtering, and React.memo performance basics.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Why do React lists need keys?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Reconciliation understanding from Week 1.",
+      "keyPoints": [
+        "Help React identify which items changed",
+        "Stable identity across re-renders",
+        "Must be unique among siblings",
+        "Not passed to component as prop"
+      ],
+      "sampleAnswer": "Keys help React match list items across re-renders during reconciliation. When the list reorders or filters, stable keys tell React which DOM nodes correspond to which data. Without keys, React may reuse wrong component instances — losing state and causing bugs.",
+      "followUps": ["Can key be duplicate?", "Key on Fragment?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "Why should you avoid array index as key?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Practical key selection judgment.",
+      "keyPoints": [
+        "Index changes when list reorders",
+        "Wrong component state after sort/filter",
+        "Acceptable only for static never-reordered lists",
+        "Use stable id from data"
+      ],
+      "sampleAnswer": "When a list is sorted or filtered, index no longer maps to the same item. React reuses component instances at each index — wrong product data or lost input focus. I use product.id unless the list is static and never reordered.",
+      "followUps": ["When is index OK?", "Composite keys?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is React.memo and when do you use it?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Introduction-level performance awareness.",
+      "keyPoints": [
+        "Higher-order component skipping re-render",
+        "Shallow prop comparison",
+        "Useful for expensive list items",
+        "Profile before applying everywhere"
+      ],
+      "sampleAnswer": "React.memo wraps a component and skips re-render if props are shallowly equal to last render. I use it on ProductCard in large grids where parent filter state changes but most product props stay the same. I profile first — memo is not free.",
+      "followUps": ["memo vs useMemo?", "Custom compare function?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "How do you implement category, price, search, and sort filters together?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Array chaining in real UI code.",
+      "keyPoints": [
+        "Chain filter methods or single filter with compound condition",
+        "Copy before sort",
+        "useMemo for derived list",
+        "Separate filter state variables"
+      ],
+      "sampleAnswer": "I keep category, minPrice, maxPrice, search, and sortBy in state. useMemo derives filteredProducts: filter by category, filter by price range, filter by search term, then sort a copied array. Components render sortedProducts.map with product.id keys.",
+      "followUps": ["Server-side vs client-side filters?", "Debounced search here?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you model a Product in TypeScript for an e-commerce listing?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Practical domain modeling.",
+      "keyPoints": [
+        "id, title, price, category, image",
+        "Optional fields with ?",
+        "SortOption union type",
+        "Separate from CartItem (Day 12)"
+      ],
+      "sampleAnswer": "Product interface with id: number, title: string, price: number, category: string, image: string, optional description. SortOption as union 'price-asc' | 'price-desc' | 'name-asc'. FilterState interface if multiple filters are grouped.",
+      "followUps": ["Readonly<Product>?", "Branded types for price?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "Parent re-renders but ProductCard has React.memo — cards still all re-render. Why?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Shallow compare pitfalls.",
+      "keyPoints": [
+        "Inline functions/objects as props",
+        "New product reference every render",
+        "Context changes bypass memo",
+        "React DevTools highlight updates"
+      ],
+      "sampleAnswer": "memo does shallow compare. If I pass onAdd={() => add(product.id)} or style={{ width: 100 }} every render, props are new references — memo bails out of skipping. Fix: stable callbacks with useCallback, pass primitives, or pass product from memoized list with stable references.",
+      "followUps": ["useCallback cost?", "When memo hurts?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "A product list of 500 items lags when typing in search. What do you investigate?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Performance debugging workflow.",
+      "keyPoints": [
+        "Re-filtering on every keystroke without useMemo",
+        "Missing debounce for search input",
+        "All cards re-rendering",
+        "Virtualization for very large lists (preview)"
+      ],
+      "sampleAnswer": "I profile with React DevTools. Check if filtered list recomputes every render — wrap in useMemo. Debounce search input like Day 09. Verify ProductCard memo and stable props. For 500+ DOM nodes, mention virtualization (react-window) as next step — not required today.",
+      "followUps": ["Virtualization?", "useDeferredValue?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Teammate mutates products array with products.sort() in render. What's wrong?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Immutability awareness before Day 12.",
+      "keyPoints": [
+        "Mutates React state directly",
+        "Same reference — React may skip re-render",
+        "Subtle sort order bugs",
+        "Fix with spread copy"
+      ],
+      "sampleAnswer": "sort mutates in place. If products is state, they mutated state directly — React may not detect change (same reference) or cause inconsistent UI. Fix: const sorted = [...products].sort(...). Set state with new array. Same immutability rule applies to cart on Day 12.",
+      "followUps": ["Immer library?", "Structured cloning?"],
+      "redFlags": ["Mutation is fine if it works", "Cannot explain React state immutability"]
+    }
+  ]
+}

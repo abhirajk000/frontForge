@@ -1,0 +1,129 @@
+{
+  "id": "day12-interview",
+  "metaId": "day12",
+  "title": "Day 12 Interview Prep",
+  "description": "Practice Context API, immutability, reducer pattern, and state sharing.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is React Context and when do you use it?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Appropriate Context usage — not over-application.",
+      "keyPoints": [
+        "Share data without prop drilling",
+        "Provider/Consumer or useContext pattern",
+        "Good for theme, auth, cart, locale",
+        "Not for all application state"
+      ],
+      "sampleAnswer": "Context lets me pass data through the component tree without prop drilling. I create a context, wrap subtrees with Provider, and read with useContext. I use it for cart, theme, or auth — data many distant components need. I avoid it for every local UI state.",
+      "followUps": ["Context vs Redux?", "Performance concerns?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "Why must React state updates be immutable?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Core React mental model.",
+      "keyPoints": [
+        "Reference equality for change detection",
+        "Mutation skips re-render",
+        "Predictable time-travel debugging",
+        "Spread/map/filter patterns"
+      ],
+      "sampleAnswer": "React compares state by reference. Mutating an array in place keeps the same reference — React may not re-render. Creating new objects/arrays signals change. Immutability also makes updates predictable and enables Redux DevTools time travel.",
+      "followUps": ["Immer library?", "Structured clone?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is the reducer pattern in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "useReducer introduction from roadmap.",
+      "keyPoints": [
+        "Pure function (state, action) => newState",
+        "dispatch sends actions",
+        "Centralizes complex transitions",
+        "Same pattern as Redux"
+      ],
+      "sampleAnswer": "useReducer takes a reducer function and initial state. Reducer is pure: (state, action) => newState. Components call dispatch({ type: 'ADD_ITEM', payload }) instead of many setState calls. Cart logic with add/remove/quantity fits reducers well.",
+      "followUps": ["useReducer vs useState?", "When extract reducer to file?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "How do you implement ADD_ITEM when the product may already be in the cart?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Immutable update logic in reducer.",
+      "keyPoints": [
+        "Find existing by id",
+        "Increment quantity with map + spread",
+        "Append new item if not found",
+        "Never duplicate rows"
+      ],
+      "sampleAnswer": "In ADD_ITEM case, check state.items.find(i => i.id === payload.id). If exists, return items mapped — matching id gets { ...item, quantity: item.quantity + 1 }. If not, append { ...payload, quantity: 1 } with spread. Never push to existing array.",
+      "followUps": ["UPDATE_QUANTITY at 0?", "Normalize cart state?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type cart actions with TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Discriminated unions in reducers.",
+      "keyPoints": [
+        "CartAction union with type literal",
+        "Payload per action type",
+        "Switch narrows action in cases",
+        "CartItem and CartState interfaces"
+      ],
+      "sampleAnswer": "CartAction is a union: { type: 'ADD_ITEM'; payload: Product } | { type: 'REMOVE_ITEM'; payload: { id: number } } | etc. Reducer switch on action.type — TypeScript narrows payload. CartItem has id, title, price, quantity. CartState holds items array.",
+      "followUps": ["Redux Toolkit createSlice?", "Zod for actions?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "Cart works on cart page but navbar badge shows 0. Debug steps?",
+      "difficulty": "medium",
+      "category": "scenario",
+      "whatInterviewerTests": "Context wiring debugging.",
+      "keyPoints": [
+        "Check both components inside same Provider",
+        "Verify useCart reads same context",
+        "Badge computes from state.items not local state",
+        "Provider wraps router root"
+      ],
+      "sampleAnswer": "Likely navbar is outside CartProvider or reads local state instead of context. I verify CartProvider wraps both routes in main.tsx. Navbar uses useCart().state.items.reduce for count. React DevTools shows context value updating on dispatch.",
+      "followUps": ["Multiple providers?", "Context default value pitfalls?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Context causes re-renders in unrelated components. How do you optimize?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Context performance awareness before Week 3 Redux.",
+      "keyPoints": [
+        "Split contexts — state vs dispatch",
+        "useMemo on provider value",
+        "memo on consumers",
+        "Redux/Zustand for complex apps"
+      ],
+      "sampleAnswer": "All useContext consumers re-render when provider value changes. I split CartStateContext and CartDispatchContext so components needing only dispatch do not re-render on item changes. useMemo stabilizes value object. For large apps, Week 3 Redux or selector libraries help further.",
+      "followUps": ["use-context-selector?", "Zustand comparison?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Reducer mutates state.items.push but UI sometimes updates. Is this OK?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Immutability discipline under pressure.",
+      "keyPoints": [
+        "Mutation is never acceptable in reducer",
+        "Occasional updates are luck/stricter mode",
+        "Breaks time-travel and predictability",
+        "Fix with immutable patterns"
+      ],
+      "sampleAnswer": "Never OK in production reducer. Mutation may appear to work when React batches or same reference accidentally triggers other updates — fragile and breaks Strict Mode double-invoke. I refactor to return new state with spread/map. Reducers must be pure and immutable.",
+      "followUps": ["Strict Mode double reducer?", "Immer in Redux?"],
+      "redFlags": ["Mutation works so it is fine", "Cannot explain reference equality"]
+    }
+  ]
+}

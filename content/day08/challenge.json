@@ -1,0 +1,69 @@
+{
+  "id": "day08-challenge",
+  "metaId": "day08",
+  "title": "Build a Weather Dashboard",
+  "mission": "Build a Weather Dashboard.",
+  "description": "Fetch live weather data for any city and present it through a polished dashboard with loading skeleton, error recovery, and responsive layout.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "City search input with controlled state and form submit",
+    "Fetch weather from OpenWeatherMap API (or equivalent) using async/await",
+    "Store API key in VITE_WEATHER_API_KEY environment variable",
+    "TypeScript interfaces for API response including nested main and weather fields",
+    "useEffect or submit handler pattern with correct dependency management",
+    "Loading skeleton that mirrors weather card layout",
+    "Error panel with human-readable message and Retry button",
+    "Empty state before first successful search",
+    "Weather card displaying city name, temperature, description, humidity, wind speed",
+    "Responsive design for mobile and desktop"
+  ],
+  "acceptanceCriteria": [
+    "Searching 'London' displays real weather data",
+    "Invalid city shows error UI without crashing the app",
+    "Retry button re-attempts the last failed query",
+    "Loading skeleton visible during fetch — no flash of stale data from previous city",
+    "No infinite network requests in DevTools Network tab",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git with .env excluded via .gitignore"
+  ],
+  "hints": [
+    "Create src/types/weather.ts for API interfaces before writing JSX.",
+    "Separate fetchWeather(city) in src/api/weather.ts — keep components thin.",
+    "Use a query state separate from input state: user types in city, submit sets query.",
+    "Add cancelled flag in useEffect cleanup to handle rapid consecutive searches.",
+    "Map 404 responses to 'City not found' for users."
+  ],
+  "bonus": {
+    "title": "Production polish",
+    "description": "Optional enhancements that impress in portfolio reviews.",
+    "requirements": [
+      "Show weather icon from API icon code",
+      "Display last updated timestamp",
+      "Persist last searched city in sessionStorage and restore on refresh"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-infinite",
+      "title": "Infinite API calls",
+      "symptom": "Network tab shows continuous duplicate requests; browser slows down",
+      "cause": "useEffect updates state that is also in its dependency array without a guard, or missing dependency array entirely",
+      "fix": "Use stable dependencies; only set query on submit; separate input city from fetch trigger query"
+    },
+    {
+      "id": "dbg-deps",
+      "title": "Missing dependency array",
+      "symptom": "Fetch runs on every keystroke or every render",
+      "cause": "useEffect with fetch inside but no second argument",
+      "fix": "Add [query] or move fetch to submit handler; run exhaustive-deps lint rule"
+    },
+    {
+      "id": "dbg-api-error",
+      "title": "API error handling",
+      "symptom": "Blank card after failed search or uncaught promise in console",
+      "cause": "Not checking response.ok; missing try/catch around await fetch",
+      "fix": "Throw custom errors for !response.ok; catch and setError; never assume JSON shape on errors"
+    }
+  ]
+}

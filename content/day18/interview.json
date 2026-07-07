@@ -1,0 +1,158 @@
+{
+  "id": "day18-interview",
+  "metaId": "day18",
+  "title": "Day 18 Interview Prep",
+  "description": "Practice JWT, auth storage, protected routes, and authentication architecture.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is JWT and how does frontend use it?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Basic auth token understanding.",
+      "keyPoints": [
+        "Three segments",
+        "Payload has claims",
+        "Bearer header",
+        "Server validates signature"
+      ],
+      "sampleAnswer": "JWT is a signed token with header, payload, and signature. After login the server returns a JWT; the client stores it and sends Authorization: Bearer <token> on requests. I decode payload client-side only for UX like expiry display — trust comes from server validation.",
+      "followUps": [
+        "Refresh tokens?",
+        "Where store JWT?"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "How do protected routes work in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Route guard implementation.",
+      "keyPoints": [
+        "Wrapper component",
+        "Check auth state",
+        "Navigate to login",
+        "Preserve return URL"
+      ],
+      "sampleAnswer": "I wrap private routes in a ProtectedRoute component that reads auth state. If not authenticated, it renders Navigate to /login with location state for post-login redirect. Public routes like login sit outside the guard. I show a loading state while hydrating token from storage.",
+      "followUps": [
+        "Role-based routes?",
+        "Lazy loaded routes?"
+      ]
+    },
+    {
+      "id": "int-m01",
+      "question": "localStorage vs sessionStorage vs httpOnly cookies for auth?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Storage tradeoff knowledge.",
+      "keyPoints": [
+        "XSS vs CSRF",
+        "Persistence scope",
+        "JS accessibility",
+        "Production preference"
+      ],
+      "sampleAnswer": "localStorage persists across sessions but is readable by JS — XSS risk. sessionStorage clears on tab close. httpOnly cookies are not JS-accessible — better XSS protection but need CSRF tokens. I explain tradeoffs; production teams often choose httpOnly cookies with SameSite attributes.",
+      "followUps": [
+        "Secure flag?",
+        "Token refresh flow?"
+      ]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type auth state in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Auth domain modeling.",
+      "keyPoints": [
+        "User interface",
+        "Nullable user/token",
+        "Status enum",
+        "Typed hooks"
+      ],
+      "sampleAnswer": "I define User with id, email, role. AuthState has user: User | null, token: string | null, and status union idle | loading | authenticated | error. Login action uses LoginCredentials. Typed useAuth hook returns discriminated state so components narrow safely.",
+      "followUps": [
+        "Role union types?",
+        "RTK auth slice?"
+      ]
+    },
+    {
+      "id": "int-m03",
+      "question": "Walk through login to protected page flow.",
+      "difficulty": "medium",
+      "category": "scenario",
+      "whatInterviewerTests": "End-to-end auth narrative.",
+      "keyPoints": [
+        "Submit credentials",
+        "Store token",
+        "Update state",
+        "Redirect",
+        "Attach headers"
+      ],
+      "sampleAnswer": "User submits login form. Client POSTs credentials. Server returns JWT and user. Client saves token to storage, updates auth state, redirects to saved location or dashboard. Subsequent RTK Query calls use prepareHeaders to attach Bearer token. ProtectedRoute allows access because isAuthenticated is true.",
+      "followUps": [
+        "What on 401?",
+        "Concurrent tabs?"
+      ]
+    },
+    {
+      "id": "int-h01",
+      "question": "User sees flash of dashboard then login page on refresh. Why?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Auth hydration race debugging.",
+      "keyPoints": [
+        "Default authenticated false",
+        "Async storage read",
+        "Loading gate",
+        "SSR hydration"
+      ],
+      "sampleAnswer": "Initial render assumes logged out while token still loading from localStorage. ProtectedRoute redirects, then auth hydrates and flips state. Fix: auth status starts as loading; ProtectedRoute renders spinner until hydration completes. Never render redirect decision on uninitialized auth.",
+      "followUps": [
+        "preloadedState?",
+        "Zustand persist?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "API returns 401 on expired token. What should the client do?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Token lifecycle handling.",
+      "keyPoints": [
+        "Clear auth state",
+        "Redirect login",
+        "Optional refresh",
+        "Global interceptor"
+      ],
+      "sampleAnswer": "On 401 I clear token and auth state, redirect to login with message. Ideally a refresh token flow retries once before logout — but if no refresh, hard logout is correct. I implement this in baseQuery wrapper or axios interceptor globally so every endpoint handles it consistently.",
+      "followUps": [
+        "Silent refresh?",
+        "Race with multiple 401s?"
+      ]
+    },
+    {
+      "id": "int-s01",
+      "question": "Design auth: Context vs Redux slice vs RTK Query mutation only?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Auth architecture for medium apps.",
+      "keyPoints": [
+        "Auth is client state",
+        "Token in slice or context",
+        "Login as mutation",
+        "Single source of truth"
+      ],
+      "sampleAnswer": "For apps with Redux from Day 16, auth lives in an auth slice — token, user, status. Login/logout are slice reducers fed by RTK Query auth endpoints or createAsyncThunk. Context works for smaller apps. I avoid duplicating user in Context and Redux. prepareHeaders reads token from auth slice — one source of truth.",
+      "followUps": [
+        "OAuth social login?",
+        "Multi-tenant auth?"
+      ],
+      "redFlags": [
+        "Trusting client-decoded JWT for authorization",
+        "Storing passwords in state",
+        "No loading gate on hydration"
+      ]
+    }
+  ]
+}

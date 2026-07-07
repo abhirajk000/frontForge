@@ -1,0 +1,72 @@
+{
+  "id": "day02-resources",
+  "metaId": "day02",
+  "title": "Day 02 Resources",
+  "description": "Official docs for state, forms, and TypeScript props — read after building.",
+  "resources": [
+    {
+      "id": "res-state",
+      "title": "React — State: A Component's Memory",
+      "url": "https://react.dev/learn/state-a-components-memory",
+      "type": "documentation",
+      "description": "Official useState introduction with mental model for re-renders.",
+      "recommended": true
+    },
+    {
+      "id": "res-props",
+      "title": "React — Passing Props to a Component",
+      "url": "https://react.dev/learn/passing-props-to-a-component",
+      "type": "documentation",
+      "description": "How props flow and how to destructure them — builds on Day 01.",
+      "recommended": true
+    },
+    {
+      "id": "res-forms",
+      "title": "React — Responding to Events",
+      "url": "https://react.dev/learn/responding-to-events",
+      "type": "documentation",
+      "description": "Event handlers, preventDefault, and typing patterns for forms.",
+      "recommended": true
+    },
+    {
+      "id": "res-controlled",
+      "title": "React — Manipulating the DOM with Refs (Controlled vs Uncontrolled context)",
+      "url": "https://react.dev/learn/manipulating-the-dom-with-refs",
+      "type": "documentation",
+      "description": "Read the contrast between controlling inputs with state vs refs.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts-interfaces",
+      "title": "TypeScript — Object Types",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
+      "type": "documentation",
+      "description": "Interfaces, type aliases, and optional properties for form types.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-spread",
+      "title": "MDN — Spread syntax",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax",
+      "type": "documentation",
+      "description": "Spread for objects and arrays — foundation for immutable state updates.",
+      "recommended": false
+    },
+    {
+      "id": "res-mdn-rest",
+      "title": "MDN — Rest parameters and spread",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters",
+      "type": "documentation",
+      "description": "Rest in destructuring — omitting sensitive fields before logging.",
+      "recommended": false
+    },
+    {
+      "id": "res-react-forms-cheatsheet",
+      "title": "React TypeScript Cheatsheet — Forms and Events",
+      "url": "https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events",
+      "type": "reference",
+      "description": "Copy-paste-safe event types for inputs and forms.",
+      "recommended": true
+    }
+  ]
+}

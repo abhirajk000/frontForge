@@ -1,0 +1,44 @@
+{
+  "id": "day13",
+  "version": "1.0.0",
+  "day": 13,
+  "week": 2,
+  "track": "react-interview",
+  "title": "User Profile & Dynamic Routing",
+  "subtitle": "Dynamic routes, URL params, optional chaining, and navigation patterns",
+  "mission": "Build User Profile & Dynamic Routing.",
+  "readingTimeMinutes": 20,
+  "estimatedBuildHours": 3.5,
+  "difficulty": "intermediate",
+  "tags": ["react", "react-router", "dynamic-routes", "url-params", "optional-chaining", "nullish-coalescing"],
+  "topics": {
+    "javascript": ["optional chaining", "nullish coalescing"],
+    "typescript": ["route parameter types"],
+    "react": ["dynamic routes", "URL params", "navigation"]
+  },
+  "prerequisites": [
+    "week1 — React Router nested layouts from Day 5",
+    "day08 — optional chaining for API data",
+    "day12 — Context cart accessible across routes"
+  ],
+  "expectedOutcome": [
+    "Define dynamic routes with URL parameters like /users/:userId",
+    "Read and type route params with useParams in TypeScript",
+    "Fetch and display user profile details from API or mock data",
+    "Navigate programmatically with useNavigate and Link",
+    "Handle invalid user IDs with a Not Found page"
+  ],
+  "definitionOfDone": [
+    "Dynamic route /users/:userId renders profile page",
+    "Profile displays name, email, avatar, and bio from API",
+    "Navigation links from user list to profile pages",
+    "Invalid userId shows Not Found UI",
+    "Optional chaining prevents crashes on missing profile fields",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 14,
+    "title": "Machine Coding Round 2",
+    "summary": "Tomorrow is your 120-minute Week 2 review build — product listing, search, filter, pagination, and cart without referring to previous code."
+  }
+}

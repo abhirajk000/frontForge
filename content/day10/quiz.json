@@ -1,0 +1,141 @@
+{
+  "id": "day10-quiz",
+  "metaId": "day10",
+  "title": "Day 10 Quiz — Lists, Filtering, Keys, and React.memo",
+  "description": "Verify array chaining, product types, list keys, and React.memo performance basics.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "Array.prototype.sort() returns a new array without modifying the original.",
+      "correctAnswer": false,
+      "explanation": "sort mutates the array in place. Copy with spread or slice before sorting state arrays.",
+      "difficulty": "easy",
+      "tags": ["javascript", "sort"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "Why use product.id as key instead of array index?",
+      "options": [
+        { "id": "a", "text": "Indexes are slower to compare" },
+        { "id": "b", "text": "Index changes when list is sorted or filtered, breaking React reconciliation" },
+        { "id": "c", "text": "React requires numeric keys" },
+        { "id": "d", "text": "Indexes cause TypeScript errors" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Stable unique keys let React match the same item across reorders. Index keys misidentify components after sort/filter.",
+      "difficulty": "easy",
+      "tags": ["react", "keys"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does React.memo do?",
+      "options": [
+        { "id": "a", "text": "Caches API responses" },
+        { "id": "b", "text": "Skips re-render if props are shallowly equal to previous render" },
+        { "id": "c", "text": "Memoizes all hooks inside the component" },
+        { "id": "d", "text": "Prevents state updates" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "memo wraps a component and bails out of re-render when props haven't changed.",
+      "difficulty": "medium",
+      "tags": ["react", "memo"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which defeat React.memo optimization? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Passing inline arrow function as prop every render" },
+        { "id": "b", "text": "Passing product object with same reference" },
+        { "id": "c", "text": "Passing inline object literal as prop every render" },
+        { "id": "d", "text": "Passing primitive string title prop unchanged" }
+      ],
+      "correctOptionIds": ["a", "c"],
+      "explanation": "New function/object references every render fail shallow compare. Stable primitives and same object references allow memo to skip.",
+      "difficulty": "hard",
+      "tags": ["react", "memo", "performance"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Use {{blank1}} to derive filteredProducts from products and filter state without recomputing every render. Chain {{blank2}} and sort on a copied array.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["useMemo"] },
+        { "id": "blank2", "acceptedAnswers": ["filter", ".filter"] }
+      ],
+      "explanation": "useMemo caches derived list; filter returns new arrays without mutation.",
+      "difficulty": "medium",
+      "tags": ["react", "filter"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What is the length of result?",
+      "code": "const products = [{ id: 1, price: 100 }, { id: 2, price: 300 }, { id: 3, price: 200 }];\nconst result = products.filter(p => p.price >= 150).map(p => p.id);",
+      "language": "typescript",
+      "correctOutput": "2",
+      "explanation": "Products with price 300 and 200 pass the filter — two items.",
+      "difficulty": "easy",
+      "tags": ["javascript", "filter"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Client-side filter vs Day 09 server search — when is client-side appropriate?",
+      "options": [
+        { "id": "a", "text": "Always — server search is obsolete" },
+        { "id": "b", "text": "When dataset is small enough to load once and filter in memory" },
+        { "id": "c", "text": "Only for static HTML sites" },
+        { "id": "d", "text": "Never — always paginate on server" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Small catalogs filter client-side for instant UX. Large datasets need server-side search and pagination.",
+      "difficulty": "medium",
+      "tags": ["architecture", "filter"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "Why should you copy an array before calling sort() on React state data?",
+      "acceptedKeywords": ["mutate", "immutable", "state", "copy", "spread"],
+      "sampleAnswer": "sort mutates in place. React state must be treated as immutable — mutating state arrays directly skips change detection and causes bugs. Copy with [...arr] or arr.slice() first.",
+      "explanation": "Immutability discipline prepares for Day 12 cart updates.",
+      "difficulty": "medium",
+      "tags": ["javascript", "immutability"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the memoized ProductCard export.",
+      "code": "export const ProductCard = {{memo}}(function ProductCard({ product }: Props) {\n  return <div>{product.title}</div>;\n});",
+      "language": "tsx",
+      "blanks": [
+        { "id": "memo", "acceptedAnswers": ["memo", "React.memo"] }
+      ],
+      "explanation": "memo from React wraps the component for shallow prop comparison.",
+      "difficulty": "easy",
+      "tags": ["react", "memo"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "What happens if you use Math.random() as list key?",
+      "options": [
+        { "id": "a", "text": "Better performance" },
+        { "id": "b", "text": "React remounts every item every render — state and focus lost" },
+        { "id": "c", "text": "Keys become more unique over time" },
+        { "id": "d", "text": "Nothing — keys are optional" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Random keys change every render. React treats each item as new — full unmount/remount cycle.",
+      "difficulty": "medium",
+      "tags": ["react", "keys"]
+    }
+  ]
+}

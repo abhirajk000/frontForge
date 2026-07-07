@@ -1,0 +1,72 @@
+{
+  "id": "day23-resources",
+  "metaId": "day23",
+  "title": "Day 23 Resources",
+  "description": "Official documentation for production refactor — folder structure, performance, accessibility, and architecture decisions. Review only, no new concepts.",
+  "resources": [
+    {
+      "id": "res-react-perf",
+      "title": "React — Performance",
+      "url": "https://react.dev/learn/render-and-commit",
+      "type": "documentation",
+      "description": "Render and commit model — foundation for memo, useMemo, useCallback decisions.",
+      "recommended": true
+    },
+    {
+      "id": "res-react-lazy",
+      "title": "React — lazy and Suspense",
+      "url": "https://react.dev/reference/react/lazy",
+      "type": "documentation",
+      "description": "Code splitting and lazy loading patterns for production routes.",
+      "recommended": true
+    },
+    {
+      "id": "res-react-memo",
+      "title": "React — memo",
+      "url": "https://react.dev/reference/react/memo",
+      "type": "documentation",
+      "description": "When and how to apply React.memo after profiling.",
+      "recommended": true
+    },
+    {
+      "id": "res-rtk-query",
+      "title": "Redux Toolkit — RTK Query Overview",
+      "url": "https://redux-toolkit.js.org/rtk-query/overview",
+      "type": "documentation",
+      "description": "Server state caching and invalidation — architecture discussion reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-redux-style",
+      "title": "Redux — Style Guide",
+      "url": "https://redux.js.org/style-guide/",
+      "type": "documentation",
+      "description": "Folder structure and state management best practices for production apps.",
+      "recommended": false
+    },
+    {
+      "id": "res-router",
+      "title": "React Router — Route",
+      "url": "https://reactrouter.com/en/main/route/route",
+      "type": "documentation",
+      "description": "Routing architecture decisions and protected route patterns.",
+      "recommended": true
+    },
+    {
+      "id": "res-a11y",
+      "title": "WAI-ARIA — Button Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
+      "type": "documentation",
+      "description": "Accessibility pass reference for interactive refactor elements.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts-handbook",
+      "title": "TypeScript — Handbook",
+      "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+      "type": "documentation",
+      "description": "Strict typing for props, API models, and refactor type safety.",
+      "recommended": true
+    }
+  ]
+}

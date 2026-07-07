@@ -1,0 +1,65 @@
+{
+  "id": "day16",
+  "version": "1.0.0",
+  "day": 16,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Todo Manager using Redux Toolkit",
+  "subtitle": "Pure functions, slice types, and immutable global state with Redux Toolkit",
+  "mission": "Build Todo Manager using Redux Toolkit.",
+  "readingTimeMinutes": 30,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": [
+    "react",
+    "redux",
+    "redux-toolkit",
+    "slice",
+    "selectors",
+    "immutable",
+    "todo"
+  ],
+  "topics": {
+    "javascript": [
+      "functions vs classes",
+      "pure functions"
+    ],
+    "typescript": [
+      "slice types",
+      "store types"
+    ],
+    "react": [
+      "Redux Toolkit",
+      "store",
+      "slice",
+      "actions",
+      "selectors"
+    ]
+  },
+  "prerequisites": [
+    "day15 — ThemeProvider, Context API deep dive, useTheme hook, localStorage persistence",
+    "day12 — useReducer immutability patterns from shopping cart",
+    "week2 — custom hooks, component composition from Days 8–11"
+  ],
+  "expectedOutcome": [
+    "Explain functions vs classes and why reducers must be pure functions",
+    "Type Redux slices and RootState with TypeScript",
+    "Configure a Redux store with configureStore and typed hooks",
+    "Create a todos slice with createSlice, reducers, and actions",
+    "Use selectors to derive filtered and completed todo lists",
+    "Compare Redux Toolkit vs Context for complex mutable global state"
+  ],
+  "definitionOfDone": [
+    "Add, delete, and update todos via Redux actions",
+    "Filter todos by all, active, and completed",
+    "Completed tasks section or count displays correctly",
+    "No direct state mutation in reducers",
+    "Store typed with RootState and AppDispatch",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 17,
+    "title": "Product Management using RTK Query",
+    "summary": "Tomorrow you will layer server state on top of your Redux store with RTK Query — query hooks, mutations, cache, and invalidations for product CRUD."
+  }
+}

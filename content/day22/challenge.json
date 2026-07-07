@@ -1,0 +1,95 @@
+{
+  "id": "day22-challenge",
+  "metaId": "day22",
+  "title": "Machine Coding — Kanban Board",
+  "mission": "Machine Coding Interview",
+  "description": "Today's assigned project (randomly selected from the interview pool): build a Kanban Board in 90 minutes with TypeScript, API integration, clean architecture, and full UI states. Treat this exactly like a live machine coding round — clarify requirements, plan structure, ship a working MVP, then iterate.",
+  "estimatedMinutes": 90,
+  "difficulty": "advanced",
+  "requirements": [
+    "Three columns: To Do, In Progress, Done — each displays task cards",
+    "Fetch tasks from a REST API (JSONPlaceholder /todos or custom mock API)",
+    "Add new task with title via form input",
+    "Move task between columns (buttons acceptable — drag-and-drop is bonus)",
+    "Delete task from any column",
+    "TypeScript interfaces for Task, Column, and API responses",
+    "Feature-based folder structure: components, hooks, api, types",
+    "Loading skeleton while fetching initial tasks",
+    "Error UI with retry on API failure",
+    "Empty state per column when no tasks exist",
+    "Responsive layout — usable on mobile and desktop",
+    "No complete solution copy-paste — build from scratch under time pressure"
+  ],
+  "acceptanceCriteria": [
+    "Interviewer can add a task and see it in To Do within 90 minutes",
+    "Moving a task updates UI immediately with immutable state updates",
+    "API failure shows error panel; retry recovers without page refresh",
+    "Empty columns show helpful message, not blank space",
+    "npm run build passes with strict TypeScript",
+    "No infinite re-renders in Network or React DevTools",
+    "Folder structure is explainable in under 60 seconds",
+    "Candidate can articulate trade-offs when asked"
+  ],
+  "hints": [
+    "Spend first 5 minutes clarifying scope with your imaginary interviewer: move via buttons is fine.",
+    "Map API todos to Kanban columns using status field or local column assignment.",
+    "Separate fetchTasks() in api/ — keep page component under 80 lines.",
+    "Use a single tasks state array; derive column contents with filter — avoid three separate arrays that drift.",
+    "Start with static columns and local state; wire API second if time is tight.",
+    "Announce your plan out loud — interviewers score communication."
+  ],
+  "bonus": {
+    "title": "Interview impress",
+    "description": "Only if core requirements ship before the 90-minute bell.",
+    "requirements": [
+      "Drag-and-drop between columns",
+      "Persist column state to localStorage",
+      "Filter tasks by search input with debounce",
+      "Optimistic UI on task move with rollback on failure"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-infinite",
+      "title": "Infinite Rendering",
+      "symptom": "Browser freezes; React DevTools shows thousands of renders; Network tab floods",
+      "cause": "useEffect calls setState without dependency array, or setState triggers effect that sets same state again",
+      "fix": "Add correct dependency array; guard effect with condition; never set state unconditionally on every render"
+    },
+    {
+      "id": "dbg-mutation",
+      "title": "State Mutation",
+      "symptom": "Moving a task does not re-render; React DevTools state looks updated but UI is stale",
+      "cause": "tasks.push() or column.tasks = newTasks mutates state array in place instead of spreading into new array",
+      "fix": "setTasks(prev => prev.map(t => t.id === id ? { ...t, status } : t)) — always return new references"
+    },
+    {
+      "id": "dbg-deps",
+      "title": "Missing Dependency",
+      "symptom": "Stale task list after filter change; effect never re-fetches when searchQuery updates",
+      "cause": "useEffect(() => fetchTasks(query), []) — empty deps ignore query changes",
+      "fix": "Include searchQuery in dependency array or move fetch to event handler; run exhaustive-deps lint"
+    },
+    {
+      "id": "dbg-key",
+      "title": "Wrong Key",
+      "symptom": "Deleting one task removes wrong card; input focus jumps between rows; state mixes up after reorder",
+      "cause": "Using array index as key in tasks.map((task, i) => <Card key={i} />)",
+      "fix": "Use stable unique id: key={task.id}. Never use index for dynamic lists with add/remove/reorder"
+    },
+    {
+      "id": "dbg-api",
+      "title": "API Failure",
+      "symptom": "White screen or uncaught promise rejection when API returns 500; no user feedback",
+      "cause": "Missing try/catch; assuming fetch throws on HTTP errors; not checking response.ok",
+      "fix": "Wrap async in try/catch; check response.ok; setError state; render ErrorPanel with retry handler"
+    },
+    {
+      "id": "dbg-routing",
+      "title": "Routing Bug",
+      "symptom": "Navigating to /board/123 shows blank page; useParams returns undefined; 404 on refresh",
+      "cause": "Route defined as /board/:id but link goes to /boards/123; or missing catch-all route; SPA not configured for production",
+      "fix": "Align path strings between Route path and Link to; type useParams; add NotFound route; verify vite base"
+    }
+  ]
+}

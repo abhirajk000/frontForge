@@ -1,0 +1,72 @@
+{
+  "id": "day14-resources",
+  "metaId": "day14",
+  "title": "Day 14 Resources",
+  "description": "Official documentation allowed during Machine Coding Round 2 — bookmark before starting the timer.",
+  "resources": [
+    {
+      "id": "res-react",
+      "title": "React — Official Documentation",
+      "url": "https://react.dev/reference/react",
+      "type": "documentation",
+      "description": "Hooks, components, and patterns — primary reference during timed build.",
+      "recommended": true
+    },
+    {
+      "id": "res-router",
+      "title": "React Router — Official Documentation",
+      "url": "https://reactrouter.com/en/main",
+      "type": "documentation",
+      "description": "Routes, Link, useNavigate, useParams — allowed during build.",
+      "recommended": true
+    },
+    {
+      "id": "res-typescript",
+      "title": "TypeScript — Handbook",
+      "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+      "type": "documentation",
+      "description": "Interfaces, generics, unions — allowed during build.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-fetch",
+      "title": "MDN — Fetch API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+      "type": "documentation",
+      "description": "HTTP requests and error handling — allowed during build.",
+      "recommended": true
+    },
+    {
+      "id": "res-mdn-array",
+      "title": "MDN — Array methods",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+      "type": "documentation",
+      "description": "filter, map, sort, reduce for listing and cart logic.",
+      "recommended": true
+    },
+    {
+      "id": "res-context-reducer",
+      "title": "React — Scaling Up with Reducer and Context",
+      "url": "https://react.dev/learn/scaling-up-with-reducer-and-context",
+      "type": "documentation",
+      "description": "Cart architecture pattern from Day 12 — allowed reference.",
+      "recommended": true
+    },
+    {
+      "id": "res-custom-hooks",
+      "title": "React — Reusing Logic with Custom Hooks",
+      "url": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+      "type": "documentation",
+      "description": "useDebounce extraction — allowed during build.",
+      "recommended": true
+    },
+    {
+      "id": "res-event-loop",
+      "title": "MDN — Event Loop",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
+      "type": "documentation",
+      "description": "Microtask/macrotask reference for interview review after build.",
+      "recommended": false
+    }
+  ]
+}

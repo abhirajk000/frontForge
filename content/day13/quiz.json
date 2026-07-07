@@ -1,0 +1,141 @@
+{
+  "id": "day13-quiz",
+  "metaId": "day13",
+  "title": "Day 13 Quiz — Dynamic Routing and URL Params",
+  "description": "Verify dynamic routes, useParams, navigation, optional chaining, and route param typing.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "URL route parameters from useParams are always strings.",
+      "correctAnswer": true,
+      "explanation": "URL segments are strings. Parse to number when needed: Number(userId) or parseInt(userId, 10).",
+      "difficulty": "easy",
+      "tags": ["react-router", "params"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "Which route defines a dynamic userId parameter?",
+      "options": [
+        { "id": "a", "text": "path: 'users/userId'" },
+        { "id": "b", "text": "path: 'users/:userId'" },
+        { "id": "c", "text": "path: 'users/{userId}'" },
+        { "id": "d", "text": "path: 'users?userId'" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "React Router uses :paramName for dynamic URL segments.",
+      "difficulty": "easy",
+      "tags": ["react-router", "dynamic-routes"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does user?.bio ?? 'No bio' return when user.bio is an empty string ''?",
+      "options": [
+        { "id": "a", "text": "'No bio' — empty string is falsy" },
+        { "id": "b", "text": "'' — empty string is not nullish" },
+        { "id": "c", "text": "undefined" },
+        { "id": "d", "text": "null" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "?? only falls back for null or undefined. Empty string is valid and preserved. || would fall back for falsy values.",
+      "difficulty": "medium",
+      "tags": ["javascript", "nullish-coalescing"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which enable SPA navigation without full page reload? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "React Router Link component" },
+        { "id": "b", "text": "useNavigate() hook" },
+        { "id": "c", "text": "<a href='/users/1'>" },
+        { "id": "d", "text": "navigate('/users/1') from useNavigate" }
+      ],
+      "correctOptionIds": ["a", "b", "d"],
+      "explanation": "Link and useNavigate use client-side routing. Plain anchor tags cause full reload and lose SPA state.",
+      "difficulty": "medium",
+      "tags": ["react-router", "navigation"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Read URL params with {{blank1}}. Define dynamic segment as :userId in the {{blank2}} config.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["useParams"] },
+        { "id": "blank2", "acceptedAnswers": ["route", "router", "routes"] }
+      ],
+      "explanation": "useParams extracts param values; route path defines dynamic segments.",
+      "difficulty": "medium",
+      "tags": ["react-router", "params"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What is logged?",
+      "code": "const user = null;\nconsole.log(user?.profile?.name ?? 'Guest');",
+      "language": "typescript",
+      "correctOutput": "Guest",
+      "explanation": "Optional chaining on null returns undefined; ?? falls back to 'Guest'.",
+      "difficulty": "easy",
+      "tags": ["javascript", "optional-chaining"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Why use a catch-all * route?",
+      "options": [
+        { "id": "a", "text": "To load CSS globally" },
+        { "id": "b", "text": "To show Not Found UI for unmatched URLs" },
+        { "id": "c", "text": "To enable infinite scroll" },
+        { "id": "d", "text": "To parse query strings" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Catch-all route matches any unmatched path — standard 404 handling in SPAs.",
+      "difficulty": "easy",
+      "tags": ["react-router", "not-found"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "Why must useEffect refetch when userId param changes?",
+      "acceptedKeywords": ["param", "change", "navigate", "URL", "mount", "dependency"],
+      "sampleAnswer": "When user navigates from /users/1 to /users/2, the same UserProfilePage component instance may remount or update. useEffect with [userId] dependency refetches the correct profile for the new URL param.",
+      "explanation": "Same component, different params — dependency array drives refetch.",
+      "difficulty": "medium",
+      "tags": ["react", "useEffect", "routing"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete typed useParams usage.",
+      "code": "const { userId } = useParams<{{UserRouteParams}}>();",
+      "language": "tsx",
+      "blanks": [
+        { "id": "UserRouteParams", "acceptedAnswers": ["UserRouteParams"] }
+      ],
+      "explanation": "Generic param to useParams types the expected param keys.",
+      "difficulty": "easy",
+      "tags": ["typescript", "react-router"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "Where should CartProvider wrap relative to Router for cart on profile page?",
+      "options": [
+        { "id": "a", "text": "Inside each page component only" },
+        { "id": "b", "text": "Above Router so all routes access Context" },
+        { "id": "c", "text": "CartProvider replaces Router" },
+        { "id": "d", "text": "Below NotFound route only" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Provider must wrap all components that use useCart — typically at app root above routes.",
+      "difficulty": "medium",
+      "tags": ["react", "context", "routing"]
+    }
+  ]
+}

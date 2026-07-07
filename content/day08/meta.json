@@ -1,0 +1,44 @@
+{
+  "id": "day08",
+  "version": "1.0.0",
+  "day": 8,
+  "week": 2,
+  "track": "react-interview",
+  "title": "Weather Dashboard",
+  "subtitle": "Fetch APIs, useEffect, and production UI states — loading, error, empty",
+  "mission": "Build a Weather Dashboard.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": ["react", "useEffect", "fetch", "async-await", "api", "loading", "error-handling"],
+  "topics": {
+    "javascript": ["fetch API", "async/await review", "error handling", "optional chaining"],
+    "typescript": ["API interfaces", "nested object types"],
+    "react": ["data fetching", "useEffect review", "loading states", "error states", "empty states"]
+  },
+  "prerequisites": [
+    "week1 — functional components, props, useState, controlled forms",
+    "week1 — useEffect and async patterns from Days 4–6",
+    "day07 — machine coding review: login, dashboard layout, router, custom hooks fundamentals"
+  ],
+  "expectedOutcome": [
+    "Fetch weather data from a real HTTP API using async/await",
+    "Model API responses with TypeScript interfaces including nested objects",
+    "Manage loading, error, success, and empty UI states in a single feature",
+    "Use useEffect with a correct dependency array to avoid infinite requests",
+    "Explain useEffect lifecycle and Fetch vs Axios in interview terms"
+  ],
+  "definitionOfDone": [
+    "API returns weather data for a searched city",
+    "Loading skeleton displays while fetching",
+    "Error UI displays with a working retry button on failure",
+    "Empty state shows before first search or when input is cleared",
+    "Layout is responsive on mobile and desktop",
+    "Code is pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 9,
+    "title": "Movie Search Application",
+    "summary": "Tomorrow you will optimize search with debouncing, extract a useDebounce custom hook, and add pagination — building on today's fetch and state patterns."
+  }
+}

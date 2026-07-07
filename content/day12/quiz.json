@@ -1,0 +1,141 @@
+{
+  "id": "day12-quiz",
+  "metaId": "day12",
+  "title": "Day 12 Quiz — Context, Reducer, and Immutability",
+  "description": "Verify immutable updates, cart types, Context API, and useReducer patterns.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "You can safely mutate state.items with push() if you call setState afterward.",
+      "correctAnswer": false,
+      "explanation": "Mutating then setState with same reference may skip re-render. Always return new array/object references.",
+      "difficulty": "easy",
+      "tags": ["javascript", "immutability"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What problem does React Context solve?",
+      "options": [
+        { "id": "a", "text": "Prop drilling — passing props through many intermediate components" },
+        { "id": "b", "text": "Slow API responses" },
+        { "id": "c", "text": "CSS scoping" },
+        { "id": "d", "text": "TypeScript type inference" }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Context shares values deep in the tree without passing props at every level.",
+      "difficulty": "easy",
+      "tags": ["react", "context"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does useReducer provide over useState for cart logic?",
+      "options": [
+        { "id": "a", "text": "Faster renders" },
+        { "id": "b", "text": "Centralized predictable state transitions with typed actions" },
+        { "id": "c", "text": "Automatic localStorage sync" },
+        { "id": "d", "text": "Required for Context to work" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Reducer consolidates complex update logic. useState works with Context too — reducer scales better for carts.",
+      "difficulty": "medium",
+      "tags": ["react", "useReducer"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which are immutable cart updates? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "state.items.filter(i => i.id !== id)" },
+        { "id": "b", "text": "state.items.push(newItem); return state" },
+        { "id": "c", "text": "[...state.items, { ...product, quantity: 1 }]" },
+        { "id": "d", "text": "state.items.map(i => i.id === id ? { ...i, quantity: 2 } : i)" }
+      ],
+      "correctOptionIds": ["a", "c", "d"],
+      "explanation": "filter, spread append, and map with spread item create new references. push mutates in place.",
+      "difficulty": "hard",
+      "tags": ["javascript", "immutability"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Create Context with {{blank1}}. Read it in components with {{blank2}}.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["createContext"] },
+        { "id": "blank2", "acceptedAnswers": ["useContext"] }
+      ],
+      "explanation": "createContext defines the context; useContext reads the nearest provider value.",
+      "difficulty": "medium",
+      "tags": ["react", "context"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "After dispatch ADD_ITEM for id 1 twice (item already exists with quantity 1), what is quantity?",
+      "code": "// Reducer increments existing item quantity on ADD_ITEM\n// Initial: [{ id: 1, quantity: 1 }]\n// Dispatch ADD_ITEM id: 1 again",
+      "language": "typescript",
+      "correctOutput": "2",
+      "explanation": "ADD_ITEM should increment existing item quantity, not add duplicate row.",
+      "difficulty": "medium",
+      "tags": ["react", "reducer"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Why throw an error in useCart() when context is null?",
+      "options": [
+        { "id": "a", "text": "TypeScript requires it" },
+        { "id": "b", "text": "Fail fast when hook used outside CartProvider — clearer debugging" },
+        { "id": "c", "text": "Prevent cart from being empty" },
+        { "id": "d", "text": "Required by useReducer" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Explicit error beats silent undefined behavior when provider is missing.",
+      "difficulty": "medium",
+      "tags": ["react", "context"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "When should you NOT use Context for state management?",
+      "acceptedKeywords": ["frequent", "re-render", "local", "redux", "performance", "everything"],
+      "sampleAnswer": "Avoid Context for frequently changing state consumed by many components — causes wide re-renders. Local state belongs in useState. Very large apps often move to Redux or split contexts. Do not put everything in one context.",
+      "explanation": "Context is for shared moderate-frequency state like cart, theme, auth.",
+      "difficulty": "medium",
+      "tags": ["react", "context", "architecture"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the discriminated action type.",
+      "code": "type CartAction =\n  | { type: 'ADD_ITEM'; payload: Product }\n  | { type: {{REMOVE_ITEM}}; payload: { id: number } };",
+      "language": "typescript",
+      "blanks": [
+        { "id": "REMOVE_ITEM", "acceptedAnswers": ["REMOVE_ITEM"] }
+      ],
+      "explanation": "Discriminated unions use literal type strings to narrow action payloads in reducer.",
+      "difficulty": "easy",
+      "tags": ["typescript", "cart"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "Cart total should be calculated as:",
+      "options": [
+        { "id": "a", "text": "Sum of item prices only" },
+        { "id": "b", "text": "Sum of price × quantity for each item" },
+        { "id": "c", "text": "Number of items in cart" },
+        { "id": "d", "text": "Highest item price" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Line total is price × quantity. Cart total sums all line totals.",
+      "difficulty": "easy",
+      "tags": ["javascript", "cart"]
+    }
+  ]
+}

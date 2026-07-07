@@ -1,0 +1,173 @@
+{
+  "id": "day01-interview",
+  "metaId": "day01",
+  "title": "Day 01 Interview Prep",
+  "description": "Practice explaining React fundamentals the way frontend interviews at product companies expect — clear, concise, with trade-offs.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Why React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Do you understand the problem React solves, or are you reciting marketing copy?",
+      "keyPoints": [
+        "Declarative UI — describe what UI should look like for a given state",
+        "Component composition — reusable, testable units",
+        "Efficient updates via reconciliation / Virtual DOM",
+        "Large ecosystem and hiring market"
+      ],
+      "sampleAnswer": "React helps teams build complex interactive UIs by letting developers compose reusable components and declare UI as a function of state. Instead of manually updating the DOM, React computes minimal changes. I would choose React for large SPAs with rich interactivity; for mostly static content I might pick simpler tools.",
+      "followUps": [
+        "When would you NOT choose React?",
+        "How does React compare to Vue or Svelte for your use case?"
+      ],
+      "redFlags": [
+        "React is the best framework for everything",
+        "Cannot explain declarative vs imperative"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is JSX and how is it different from HTML?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Basic syntax knowledge and awareness that JSX is compiled.",
+      "keyPoints": [
+        "JSX is syntax extension compiled to React.createElement",
+        "className, htmlFor, camelCase attributes",
+        "JavaScript expressions in curly braces",
+        "Stricter than HTML — must return single parent or fragment"
+      ],
+      "sampleAnswer": "JSX lets me write UI that looks like HTML inside JavaScript. It compiles to React.createElement calls. It differs from HTML: I use className instead of class, embed expressions with {}, and must close all tags. It is not sent to the browser directly — the build step compiles it.",
+      "followUps": ["What happens to JSX during build?", "Can you use if statements directly in JSX?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is a functional component?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Can you define the building block of modern React apps?",
+      "keyPoints": [
+        "A function that returns JSX",
+        "PascalCase naming convention",
+        "Receives props as an argument",
+        "Preferred over class components in modern codebases"
+      ],
+      "sampleAnswer": "A functional component is a JavaScript function — usually arrow or function declaration — that accepts props and returns JSX. It is the standard way to build UI in modern React. I keep components small and typed with TypeScript props interfaces.",
+      "followUps": ["How would you type props?", "When were class components used?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Why Vite instead of older React tooling?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Awareness of developer experience and modern bundling.",
+      "keyPoints": [
+        "Native ES modules in dev for fast cold start",
+        "Fast HMR — edits reflect quickly",
+        "Rollup-based optimized production builds",
+        "Sensible defaults for TypeScript"
+      ],
+      "sampleAnswer": "Vite uses native ES modules during development so the dev server starts almost instantly and HMR is fast. For production it bundles with Rollup. Compared to older webpack-based setups, the feedback loop is significantly better, which matters for team productivity.",
+      "followUps": ["What is HMR?", "What runs in production — the dev server or a build?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "Explain let vs const and why it matters in React code.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "JS fundamentals and immutability awareness before state topics.",
+      "keyPoints": [
+        "const prevents rebinding, not deep immutability",
+        "let for intentional reassignment",
+        "Avoid var due to hoisting/function scope",
+        "Immutability habits prepare for state updates"
+      ],
+      "sampleAnswer": "I default to const because it prevents accidental reassignment and documents intent. let is for values that truly change, like loop indices. var is avoided in modern code. In React, state updates should produce new references rather than mutating objects — const helps build that mental habit.",
+      "followUps": ["Does const make arrays immutable?", "What happens if you mutate state directly?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "Why use TypeScript with React?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Practical value, not buzzwords.",
+      "keyPoints": [
+        "Prop type safety at component boundaries",
+        "Better IDE autocomplete and refactors",
+        "Self-documenting interfaces",
+        "Trade-off: setup cost vs long-term maintainability"
+      ],
+      "sampleAnswer": "TypeScript catches prop and API shape errors before runtime and makes refactors safer in large codebases. I type component props explicitly and let inference handle locals. The trade-off is slightly more upfront work, but it pays off as the team and codebase grow.",
+      "followUps": ["What is type inference?", "How do you type children props?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Explain the Virtual DOM at a high level. What problem does it solve?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Conceptual depth without over-claiming performance expertise.",
+      "keyPoints": [
+        "In-memory representation of UI",
+        "Diff/reconciliation on state change",
+        "Batches minimal real DOM updates",
+        "Not always faster than manual DOM — trade-off is developer productivity"
+      ],
+      "sampleAnswer": "React maintains a lightweight tree representing the UI. On state change it builds a new tree, diffs against the previous, and updates only what changed in the real DOM. The goal is predictable, efficient updates without manual DOM manipulation. I would not claim Virtual DOM is always faster — for simple pages direct DOM can be fine — but for complex UIs the model scales better for teams.",
+      "followUps": [
+        "What is reconciliation?",
+        "When might React be slower than vanilla JS?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "How would you structure a small React project on day one so it scales to a larger app?",
+      "difficulty": "hard",
+      "category": "architecture",
+      "whatInterviewerTests": "Folder structure thinking and separation of concerns early.",
+      "keyPoints": [
+        "One component per file",
+        "Typed props at boundaries",
+        "App.tsx as composition root",
+        "Flat components folder OK initially; feature folders later",
+        "Avoid god components"
+      ],
+      "sampleAnswer": "I start with src/components for UI pieces, each in its own file with typed props. App.tsx only composes layout. I keep data arrays outside JSX and map to components. As the app grows, I group by feature — features/auth, features/dashboard — and extract shared UI to components/. I never put fetch logic in presentational components even later.",
+      "followUps": ["When do you split into feature folders?", "Where do types live?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "You join a team and see a 400-line App.tsx with Navbar, Hero, and API calls mixed together. What do you recommend?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Refactoring judgment without rewriting everything day one.",
+      "keyPoints": [
+        "Extract presentational components first",
+        "Move data fetching to hooks or services later",
+        "Incremental refactor — ship value between steps",
+        "Align with team conventions"
+      ],
+      "sampleAnswer": "I would not rewrite in one PR. First I extract Navbar, Hero, and Footer into components with typed props — behavior unchanged, tests or manual QA pass. Next I move static data to constants. If API calls exist, I extract a custom hook in a follow-up PR. I document the plan so the team sees incremental improvement, not a big-bang refactor.",
+      "followUps": [
+        "How do you prevent regressions during refactor?",
+        "What metrics convince a manager to allow refactor time?"
+      ],
+      "redFlags": ["Rewrite from scratch immediately", "No mention of incremental delivery"]
+    },
+    {
+      "id": "int-s02",
+      "question": "A junior developer says React is slow because Virtual DOM is heavy. How do you respond in a code review discussion?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Communication, technical accuracy, mentorship tone.",
+      "keyPoints": [
+        "Virtual DOM overhead exists but is usually not the first bottleneck",
+        "Measure before optimizing",
+        "Real issues: unnecessary re-renders, large bundles, layout thrashing",
+        "Acknowledge trade-offs honestly"
+      ],
+      "sampleAnswer": "I would agree that abstraction has cost, but challenge the assumption without profiling. React is slow usually because of unnecessary re-renders, huge component trees, or unoptimized assets — not Virtual DOM itself. I would suggest React DevTools Profiler and bundle analysis before architectural changes. If the UI is truly simple and static, simpler tools might be appropriate — context matters.",
+      "followUps": ["What tools would you use to profile?", "Name one optimization for later weeks"]
+    }
+  ]
+}

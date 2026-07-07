@@ -1,0 +1,76 @@
+{
+  "id": "day21",
+  "version": "1.0.0",
+  "day": 21,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Machine Coding Round 3",
+  "subtitle": "150-minute Week 3 review — auth, dashboard, Redux, RTK Query, and theme without references",
+  "mission": "Machine Coding Round 3",
+  "readingTimeMinutes": 20,
+  "estimatedBuildHours": 2.5,
+  "difficulty": "advanced",
+  "tags": [
+    "react",
+    "machine-coding",
+    "review",
+    "interview",
+    "week3",
+    "redux",
+    "auth"
+  ],
+  "topics": {
+    "javascript": [
+      "week 3 review",
+      "promises",
+      "JWT",
+      "array methods",
+      "memory"
+    ],
+    "typescript": [
+      "week 3 review",
+      "API models",
+      "auth types",
+      "dashboard models"
+    ],
+    "react": [
+      "Redux Toolkit",
+      "RTK Query",
+      "authentication",
+      "dashboard",
+      "performance",
+      "theme"
+    ]
+  },
+  "prerequisites": [
+    "day15 — ThemeProvider, useTheme, localStorage persistence",
+    "day16 — Redux Toolkit store, slices, selectors",
+    "day17 — RTK Query product CRUD and cache invalidation",
+    "day18 — JWT auth, protected routes, session flow",
+    "day19 — admin dashboard, role-based UI, search/filter/pagination",
+    "day20 — React.memo, lazy routes, performance patterns"
+  ],
+  "expectedOutcome": [
+    "Build authentication, dashboard, Redux store, API integration, and theme in 150 minutes without copying old code",
+    "Demonstrate Week 3 concepts under interview time pressure",
+    "Explain architectural decisions: Redux vs Context, RTK Query, auth flow, memoization",
+    "Identify personal weak areas before Week 4 interview simulation"
+  ],
+  "definitionOfDone": [
+    "Timed 150-minute build completed under exam conditions",
+    "Theme system with light/dark and persistence",
+    "Redux store with at least one client slice",
+    "RTK Query API integration for products or users",
+    "Login/logout with protected routes",
+    "Admin dashboard with analytics and user table basics",
+    "No AI, no Google — official docs only during build",
+    "Self-review notes listing weak Week 3 topics",
+    "Quiz and interview completed",
+    "Git push of machine coding attempt"
+  ],
+  "tomorrowPreview": {
+    "day": 22,
+    "title": "Machine Coding Interview",
+    "summary": "Week 4 begins with a 90-minute machine coding interview, debugging drills, code review, and 20 interview questions — no new theory, pure simulation."
+  }
+}

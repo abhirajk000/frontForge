@@ -1,0 +1,129 @@
+{
+  "id": "day13-interview",
+  "metaId": "day13",
+  "title": "Day 13 Interview Prep",
+  "description": "Practice React Router, dynamic routing, URL params, and navigation patterns.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "How do dynamic routes work in React Router?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Basic routing configuration knowledge.",
+      "keyPoints": [
+        ":paramName syntax in path",
+        "Same component, different URL data",
+        "useParams reads param values",
+        "Nested dynamic routes possible"
+      ],
+      "sampleAnswer": "I define path 'users/:userId' in route config. React Router matches /users/1 and /users/42. UserProfilePage reads userId via useParams and fetches that user. One component handles all user IDs — data comes from URL.",
+      "followUps": ["Optional params?", "Multiple dynamic segments?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is the difference between Link and useNavigate?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Declarative vs imperative navigation.",
+      "keyPoints": [
+        "Link is declarative JSX anchor",
+        "useNavigate is programmatic function",
+        "Both avoid full page reload",
+        "navigate(-1) for history back"
+      ],
+      "sampleAnswer": "Link is declarative — I use it in user lists and nav menus. useNavigate returns a function for programmatic navigation — after delete confirm, redirect on 404, or navigate(-1) to go back. Both use client-side routing without reload.",
+      "followUps": ["Navigate with state?", "Replace vs push?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What is optional chaining and when do you use it on profile pages?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Defensive rendering — also covered Day 08.",
+      "keyPoints": [
+        "?. short-circuits on nullish",
+        "Prevents runtime TypeError",
+        "Combine with ?? for fallbacks",
+        "Essential before data loads"
+      ],
+      "sampleAnswer": "Optional chaining (?.) stops property access when intermediate value is null or undefined. On profiles, user?.company?.name prevents crash when company is missing. I combine with ?? for display fallbacks like 'N/A'.",
+      "followUps": ["?. vs &&?", "?? vs ||?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "How do you type useParams in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Route param typing in production apps.",
+      "keyPoints": [
+        "useParams<UserRouteParams>()",
+        "Params are string | undefined",
+        "Validate and parse before use",
+        "User interface separate from params"
+      ],
+      "sampleAnswer": "I define type UserRouteParams = { userId: string }. useParams<UserRouteParams>() gives typed userId as string | undefined. I guard if (!userId) and parse Number(userId) with validation. User data interface is separate — params type only describes URL.",
+      "followUps": ["Generated route types?", "Zod validate params?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "User navigates /users/1 then /users/2. Profile shows stale user 1 data. Fix?",
+      "difficulty": "medium",
+      "category": "scenario",
+      "whatInterviewerTests": "useEffect dependency with route params.",
+      "keyPoints": [
+        "Missing userId in effect deps",
+        "Fetch only on mount with []",
+        "Reset loading state on param change",
+        "Cleanup flag for race condition"
+      ],
+      "sampleAnswer": "useEffect likely missing userId dependency — fetches only on mount. Fix: useEffect(() => { fetchUser(userId) }, [userId]). Clear user state or show loading when userId changes. Add cleanup flag from Day 08 for race between slow requests.",
+      "followUps": ["React Router loader pattern?", "key prop on route element?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "How do you implement a Not Found page for invalid routes and invalid user IDs?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "404 handling at route and data level.",
+      "keyPoints": [
+        "Catch-all * route for unknown paths",
+        "API 404 maps to NotFound component",
+        "Validate param format before fetch",
+        "Different copy for route vs resource 404"
+      ],
+      "sampleAnswer": "Route level: { path: '*', element: <NotFoundPage /> } catches bad URLs. Resource level: fetch user by ID, if 404 response render NotFound or inline message. I validate userId is numeric before fetch. User sees 'User not found' vs 'Page not found'.",
+      "followUps": ["HTTP status in SPA?", "redirect vs 404 page?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Compare URL params, query strings, and route state for passing data.",
+      "difficulty": "hard",
+      "category": "architecture",
+      "whatInterviewerTests": "Routing design decisions.",
+      "keyPoints": [
+        "Params identify resource — /users/42",
+        "Query strings filter/search — ?sort=price",
+        "State is ephemeral — lost on refresh",
+        "Params enable deep linking and sharing"
+      ],
+      "sampleAnswer": "URL params identify resources — /users/42 is shareable and bookmarkable. Query strings modify view — /products?category=electronics. navigate state passes data without URL but lost on refresh — OK for transient UI, not primary data. Profile ID belongs in params.",
+      "followUps": ["Search params with useSearchParams?", "RESTful URL design?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Cart Context stops working after adding React Router. Diagnose.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Provider tree and SPA navigation integration.",
+      "keyPoints": [
+        "Provider must wrap routes",
+        "Full reload breaks Context",
+        "Using <a> instead of Link",
+        "Multiple React roots"
+      ],
+      "sampleAnswer": "Likely CartProvider is inside one route instead of wrapping Router — navigating unmounts provider. Or team used <a href> causing full reload resetting state. Fix: CartProvider at root above BrowserRouter. All navigation via Link/useNavigate.",
+      "followUps": ["Persist cart localStorage?", "Provider order with Router?"],
+      "redFlags": ["Context and Router cannot coexist", "Suggest full page reload for navigation"]
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "id": "day08-lesson",
+  "metaId": "day08",
+  "title": "Day 08 — Weather Dashboard",
+  "summary": "Review async JavaScript, type real API responses, and use useEffect to fetch weather data while handling loading, error, empty, and success states like a production dashboard.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Week 1 taught you to build UI that reacts to user input. Week 2 teaches you to build UI that reacts to the outside world — APIs, latency, failures, and empty results. Every dashboard at Flipkart, Razorpay, or a weather startup follows the same state machine: idle → loading → success | error. Today you implement that machine for a weather search."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 2 starts here",
+      "content": "You already know useState and forms from Week 1. Today adds useEffect for side effects and fetch for HTTP. Do not introduce debouncing (Day 09), Context (Day 12), or Redux (Week 3)."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Fetch, Async/Await, Errors, Optional Chaining"
+    },
+    {
+      "type": "heading",
+      "id": "fetch",
+      "level": 3,
+      "text": "Fetch API — how browsers talk to servers"
+    },
+    {
+      "type": "paragraph",
+      "content": "fetch returns a Promise. It does not throw on HTTP 404 or 500 — only on network failure. Production code always checks response.ok before parsing JSON. This surprises juniors and fails interviews."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "fetch-weather.ts",
+      "code": "export async function fetchWeather(city: string): Promise<WeatherResponse> {\n  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`;\n\n  const response = await fetch(url);\n\n  if (!response.ok) {\n    throw new Error(`Weather API failed: ${response.status}`);\n  }\n\n  return response.json() as Promise<WeatherResponse>;\n}"
+    },
+    {
+      "type": "heading",
+      "id": "async-await",
+      "level": 3,
+      "text": "Async/await review"
+    },
+    {
+      "type": "paragraph",
+      "content": "async functions always return Promises. await pauses within the async function until the Promise settles. In React event handlers and useEffect callbacks, wrap async work in try/catch/finally — never leave a floating Promise that fails silently."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "async function load(city: string) {\n  setIsLoading(true);\n  setError(null);\n  try {\n    const data = await fetchWeather(city);\n    setWeather(data);\n  } catch (err) {\n    setError(err instanceof Error ? err.message : 'Something went wrong');\n  } finally {\n    setIsLoading(false);\n  }\n}"
+    },
+    {
+      "type": "heading",
+      "id": "optional-chaining",
+      "level": 3,
+      "text": "Optional chaining — safe nested access"
+    },
+    {
+      "type": "paragraph",
+      "content": "APIs return nested objects. Before data arrives, weather is null. Use optional chaining and nullish coalescing to avoid runtime crashes when rendering."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "<p>{weather?.main?.temp ?? '—'}°C</p>\n<p>{weather?.weather?.[0]?.description ?? 'No data'}</p>"
+    },
+    {
+      "type": "warning",
+      "title": "Error handling discipline",
+      "content": "Distinguish network errors, HTTP errors, and JSON parse errors. Users need actionable messages — 'City not found' beats 'Error: 404'. Map status codes in your fetch layer."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — API Interfaces and Nested Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Define interfaces that mirror the API contract — not your ideal shape. Start from real JSON, trim to fields you render. Nested types document structure and enable autocomplete in JSX."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/weather.ts",
+      "code": "export interface WeatherCondition {\n  main: string;\n  description: string;\n  icon: string;\n}\n\nexport interface WeatherMain {\n  temp: number;\n  feels_like: number;\n  humidity: number;\n}\n\nexport interface WeatherResponse {\n  name: string;\n  main: WeatherMain;\n  weather: WeatherCondition[];\n  wind: { speed: number };\n}"
+    },
+    {
+      "type": "tip",
+      "title": "Production habit",
+      "content": "Keep API types in src/types/ or src/features/weather/types.ts. Never inline 20-field interfaces inside components. If the API changes, you update one file."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Data Fetching with useEffect"
+    },
+    {
+      "type": "heading",
+      "id": "useEffect-review",
+      "level": 3,
+      "text": "useEffect review — when fetch belongs"
+    },
+    {
+      "type": "paragraph",
+      "content": "useEffect runs after render when dependencies change. Use it for synchronizing with external systems — APIs, subscriptions, document title. For weather search, two valid patterns: fetch on button click (no useEffect needed) or fetch when city state changes (useEffect with [city] dependency). Today use search-on-submit first, then optionally refetch when city updates via useEffect — understand both."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "const [city, setCity] = useState('');\nconst [query, setQuery] = useState<string | null>(null);\n\n// Fetch when query changes — query is set on form submit\nuseEffect(() => {\n  if (!query) return;\n\n  let cancelled = false;\n\n  async function load() {\n    setIsLoading(true);\n    setError(null);\n    try {\n      const data = await fetchWeather(query);\n      if (!cancelled) setWeather(data);\n    } catch (err) {\n      if (!cancelled) setError(getErrorMessage(err));\n    } finally {\n      if (!cancelled) setIsLoading(false);\n    }\n  }\n\n  load();\n  return () => { cancelled = true; };\n}, [query]);"
+    },
+    {
+      "type": "note",
+      "title": "Cleanup flag",
+      "content": "If the user searches again before the first request finishes, cleanup prevents setting state on an unmounted or stale request. This is the foundation of race-condition handling before Day 09."
+    },
+    {
+      "type": "heading",
+      "id": "ui-states",
+      "level": 3,
+      "text": "Loading, error, empty, success — the four UI states"
+    },
+    {
+      "type": "table",
+      "headers": ["State", "When", "What to show"],
+      "rows": [
+        ["Empty", "No search yet or query is blank", "Prompt: enter a city"],
+        ["Loading", "Request in flight", "Skeleton or spinner — never flash success data"],
+        ["Error", "Network or API failure", "Message + Retry button"],
+        ["Success", "Valid response", "Weather card with typed fields"]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "Render with explicit conditionals or a small status enum. Avoid showing stale weather from a previous city while loading the next — clear or skeleton the card when query changes."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "type Status = 'idle' | 'loading' | 'error' | 'success';\n\n// Derive status from isLoading, error, weather — keeps JSX readable\nif (status === 'idle') return <EmptyState />;\nif (status === 'loading') return <WeatherSkeleton />;\nif (status === 'error') return <ErrorPanel message={error} onRetry={() => setQuery(city)} />;\nreturn <WeatherCard data={weather!} />;"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Weather Dashboard"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-search", "text": "Search input for city name with submit action" },
+        { "id": "req-card", "text": "Weather card showing temp, description, humidity, wind" },
+        { "id": "req-skeleton", "text": "Loading skeleton matching card layout" },
+        { "id": "req-error", "text": "Error UI with clear message" },
+        { "id": "req-retry", "text": "Retry button re-runs the failed request" },
+        { "id": "req-responsive", "text": "Responsive layout on mobile and desktop" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "Sign up for a free OpenWeatherMap API key; store it in .env as VITE_WEATHER_API_KEY. Add .env to .gitignore. Use encodeURIComponent for city names with spaces. Test error path by searching a nonsense city string."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Week 2 Day 1 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-infinite",
+          "title": "Infinite API calls",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Network tab shows hundreds of identical requests. Cause: useEffect without a dependency array, or an object/array dependency recreated every render. Fix: add a stable dependency array [query]; never pass inline objects as deps; set state inside effect only when values actually change."
+            }
+          ]
+        },
+        {
+          "id": "dbg-deps",
+          "title": "Missing dependency array",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Effect runs after every render. Cause: useEffect(() => { fetch... }) with no second argument. Fix: pass [] for mount-only or [query] for fetch-on-query-change. ESLint react-hooks/exhaustive-deps is your friend — do not disable it without understanding why."
+            }
+          ]
+        },
+        {
+          "id": "dbg-api-error",
+          "title": "API error handling",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: UI shows success with undefined fields or uncaught promise rejection. Cause: assuming fetch throws on 404, or not checking response.ok. Fix: throw after !response.ok; catch in try/catch; type narrow error messages for users."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-api", "text": "API working" },
+        { "id": "done-loading", "text": "Loading skeleton" },
+        { "id": "done-error", "text": "Error UI with retry" },
+        { "id": "done-responsive", "text": "Responsive" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

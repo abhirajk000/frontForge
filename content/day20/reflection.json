@@ -1,0 +1,38 @@
+{
+  "id": "day20-reflection",
+  "metaId": "day20",
+  "title": "Day 20 Reflection",
+  "description": "Solidify performance patterns before Week 3 machine coding tomorrow.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "What did React DevTools Profiler show before vs after optimization?",
+      "guidance": "Render counts or commit duration.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-02",
+      "question": "Which component benefited most from React.memo and why?",
+      "guidance": "ProductRow or similar list item.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Did useCallback fix a memo break? What was the unstable prop?",
+      "guidance": "Inline function example.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-04",
+      "question": "How much did lazy loading reduce initial bundle or load time?",
+      "guidance": "Chunk names or build analyze output.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "What would you rebuild differently under 150-minute pressure tomorrow?",
+      "guidance": "Preview Day 21 machine coding mindset.",
+      "minWords": 30
+    }
+  ]
+}

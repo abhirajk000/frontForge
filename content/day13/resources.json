@@ -1,0 +1,72 @@
+{
+  "id": "day13-resources",
+  "metaId": "day13",
+  "title": "Day 13 Resources",
+  "description": "Official docs for React Router dynamic routes, URL params, and optional chaining.",
+  "resources": [
+    {
+      "id": "res-router-params",
+      "title": "React Router — URL Values",
+      "url": "https://reactrouter.com/en/main/start/concepts#url-values",
+      "type": "documentation",
+      "description": "Dynamic segments, params, and route matching concepts.",
+      "recommended": true
+    },
+    {
+      "id": "res-use-params",
+      "title": "React Router — useParams",
+      "url": "https://reactrouter.com/en/main/hooks/use-params",
+      "type": "documentation",
+      "description": "Reading URL parameters in route components.",
+      "recommended": true
+    },
+    {
+      "id": "res-use-navigate",
+      "title": "React Router — useNavigate",
+      "url": "https://reactrouter.com/en/main/hooks/use-navigate",
+      "type": "documentation",
+      "description": "Programmatic navigation and redirects.",
+      "recommended": true
+    },
+    {
+      "id": "res-link",
+      "title": "React Router — Link",
+      "url": "https://reactrouter.com/en/main/components/link",
+      "type": "documentation",
+      "description": "Declarative navigation without full page reload.",
+      "recommended": true
+    },
+    {
+      "id": "res-not-found",
+      "title": "React Router — Catch-all / 404 routes",
+      "url": "https://reactrouter.com/en/main/start/tutorial#the-contact-route-404",
+      "type": "documentation",
+      "description": "Not Found route pattern for invalid URLs.",
+      "recommended": true
+    },
+    {
+      "id": "res-optional-chaining",
+      "title": "MDN — Optional chaining (?.)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining",
+      "type": "documentation",
+      "description": "Safe access for nullable profile fields.",
+      "recommended": true
+    },
+    {
+      "id": "res-nullish",
+      "title": "MDN — Nullish coalescing (??)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing",
+      "type": "documentation",
+      "description": "Fallback values for null or undefined profile data.",
+      "recommended": false
+    },
+    {
+      "id": "res-jsonplaceholder-users",
+      "title": "JSONPlaceholder — Users API",
+      "url": "https://jsonplaceholder.typicode.com/users",
+      "type": "documentation",
+      "description": "Mock user API for profile fetch by ID.",
+      "recommended": true
+    }
+  ]
+}

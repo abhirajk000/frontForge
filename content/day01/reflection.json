@@ -1,0 +1,38 @@
+{
+  "id": "day01-reflection",
+  "metaId": "day01",
+  "title": "Day 01 Reflection",
+  "description": "Solidify what you learned by writing — not copying — your own understanding. These notes become searchable in FrontForge later.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "In your own words, why does React exist? What problem would you have without it on a dashboard with 50 interactive widgets?",
+      "guidance": "Think about manual DOM updates vs declaring UI from state. Mention maintainability, not just performance.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-02",
+      "question": "What is the difference between JSX and HTML? List at least three concrete differences you used today.",
+      "guidance": "className, expressions in {}, closing tags, fragments — pick what you actually encountered.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-03",
+      "question": "Which bug did you hit while building the landing page — or which from the debugging section would have fooled you? How did you diagnose it?",
+      "guidance": "Write the symptom, what you checked, and the fix. This is interview gold.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-04",
+      "question": "Why did you type component props with TypeScript instead of leaving them as any?",
+      "guidance": "Connect to catching mistakes early and documenting the component API.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "What would you improve on your landing page if you had one more hour?",
+      "guidance": "Accessibility, spacing, copy, component extraction — prioritize like a senior engineer.",
+      "minWords": 25
+    }
+  ]
+}

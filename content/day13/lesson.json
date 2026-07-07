@@ -1,0 +1,249 @@
+{
+  "id": "day13-lesson",
+  "metaId": "day13",
+  "title": "Day 13 — User Profile & Dynamic Routing",
+  "summary": "Build dynamic routes with URL parameters, type route params in TypeScript, navigate programmatically, and safely render profile data with optional chaining.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Your app has products, cart, and infinite feeds — but URLs still look static. Production apps are route-driven: /users/42, /products/iphone-15, /orders/abc123. Today you wire URL parameters to React components, fetch profile data by ID, and handle missing users gracefully."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 2 Day 6",
+      "content": "You learned nested routes on Day 5 and optional chaining on Day 8. Today combines them with dynamic segments. Cart Context from Day 12 should still work across profile routes."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Optional Chaining and Nullish Coalescing"
+    },
+    {
+      "type": "heading",
+      "id": "optional-chaining",
+      "level": 3,
+      "text": "Optional chaining — safe profile field access"
+    },
+    {
+      "type": "paragraph",
+      "content": "User profiles have nullable fields — missing avatar, empty bio, undefined address. Optional chaining (?.) short-circuits to undefined instead of throwing. Nullish coalescing (??) provides fallbacks only for null/undefined, not for 0 or empty string."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "<img src={user?.avatar?.url ?? '/default-avatar.png'} alt={user?.name ?? 'User'} />\n<p>{user?.bio ?? 'No bio available'}</p>\n<p>{user?.address?.city ?? 'Unknown city'}</p>"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-question",
+          "label": "?. operator",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Stops evaluation and returns undefined if left side is nullish. Essential for API-driven profile pages before data loads."
+            }
+          ]
+        },
+        {
+          "id": "tab-nullish",
+          "label": "?? operator",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "user.followers ?? 0 falls back only when null/undefined. user.followers || 0 wrongly replaces 0 followers with 0 anyway — but || replaces 0 with fallback in other cases."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "|| vs ??",
+      "content": "Use ?? for default display values when 0 or '' are valid. Use || when you want falsy values to trigger fallback."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Route Parameter Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "useParams returns string | undefined for each param. Define a Params type and validate before fetch. User model interface matches API shape."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/user.ts",
+      "code": "export interface User {\n  id: number;\n  name: string;\n  email: string;\n  phone?: string;\n  website?: string;\n  company?: { name: string };\n}\n\n// Route params — always strings from URL\nexport type UserRouteParams = {\n  userId: string;\n};"
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "const { userId } = useParams<UserRouteParams>();\n\nuseEffect(() => {\n  if (!userId || isNaN(Number(userId))) {\n    setNotFound(true);\n    return;\n  }\n  fetchUser(Number(userId)).then(setUser).catch(handleError);\n}, [userId]);"
+    },
+    {
+      "type": "tip",
+      "title": "Validate params",
+      "content": "URL params are always strings. Parse and validate before API calls. Invalid IDs should route to Not Found — not crash the app."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React Router — Dynamic Routes and Navigation"
+    },
+    {
+      "type": "heading",
+      "id": "dynamic-routes",
+      "level": 3,
+      "text": "Dynamic routes — :param segments"
+    },
+    {
+      "type": "paragraph",
+      "content": "Colon prefix defines a dynamic segment. /users/:userId matches /users/1 and /users/42 with userId param extracted. Same component renders different data based on URL."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "{\n  path: 'users',\n  children: [\n    { index: true, element: <UserListPage /> },\n    { path: ':userId', element: <UserProfilePage /> },\n  ],\n},\n{ path: '*', element: <NotFoundPage /> },"
+    },
+    {
+      "type": "heading",
+      "id": "navigation",
+      "level": 3,
+      "text": "Navigation — Link and useNavigate"
+    },
+    {
+      "type": "paragraph",
+      "content": "Link renders an anchor that navigates without full page reload — SPA navigation. useNavigate returns a function for programmatic navigation — after form submit, on 404 redirect, or go back."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "// Declarative — user list\n<Link to={`/users/${user.id}`}>{user.name}</Link>\n\n// Programmatic — profile page\nconst navigate = useNavigate();\n<button onClick={() => navigate('/users')}>Back to users</button>\n<button onClick={() => navigate(-1)}>Go back</button>"
+    },
+    {
+      "type": "note",
+      "title": "Deep linking",
+      "content": "Users can paste /users/5 directly in the browser. useEffect must fetch on mount when userId param is present — same pattern as Day 08 query-driven fetch."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — User Profile & Dynamic Routing"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-dynamic", "text": "Dynamic route /users/:userId" },
+        { "id": "req-profile", "text": "Profile details from API" },
+        { "id": "req-nav", "text": "Link navigation from user list" },
+        { "id": "req-notfound", "text": "Not Found for invalid userId" },
+        { "id": "req-safe", "text": "Optional chaining on nullable fields" },
+        { "id": "req-states", "text": "Loading and error states on profile fetch" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "JSONPlaceholder: GET https://jsonplaceholder.typicode.com/users/:id. Invalid IDs return 404 — map to NotFound component. Keep CartProvider above Router so cart works on profile page."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Day 13 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-params",
+          "title": "Wrong route params",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: userId undefined. Cause: Route uses :id but useParams reads userId. Fix: names must match exactly."
+            }
+          ]
+        },
+        {
+          "id": "dbg-nav",
+          "title": "Navigation bugs",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Full page reload on click. Cause: <a href='/users/1'>. Fix: React Router Link preserves SPA state including Context."
+            }
+          ]
+        },
+        {
+          "id": "dbg-crash",
+          "title": "Missing field crash",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: White screen on profile. Cause: user.company.name when company is undefined. Fix: user?.company?.name ?? 'N/A'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-route", "text": "Dynamic route working" },
+        { "id": "done-profile", "text": "Profile details displayed" },
+        { "id": "done-nav", "text": "Navigation working" },
+        { "id": "done-notfound", "text": "Not Found handled" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

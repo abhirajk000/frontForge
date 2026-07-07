@@ -1,0 +1,72 @@
+{
+  "id": "day12-resources",
+  "metaId": "day12",
+  "title": "Day 12 Resources",
+  "description": "Official docs for Context API, useReducer, and immutable state updates.",
+  "resources": [
+    {
+      "id": "res-context",
+      "title": "React — Passing Data Deeply with Context",
+      "url": "https://react.dev/learn/passing-data-deeply-with-context",
+      "type": "documentation",
+      "description": "Official Context mental model and provider pattern.",
+      "recommended": true
+    },
+    {
+      "id": "res-usecontext",
+      "title": "React — useContext",
+      "url": "https://react.dev/reference/react/useContext",
+      "type": "documentation",
+      "description": "Reading context values in child components.",
+      "recommended": true
+    },
+    {
+      "id": "res-usereducer",
+      "title": "React — useReducer",
+      "url": "https://react.dev/reference/react/useReducer",
+      "type": "documentation",
+      "description": "Reducer pattern for complex state transitions.",
+      "recommended": true
+    },
+    {
+      "id": "res-extract-reducer",
+      "title": "React — Extracting State Logic into a Reducer",
+      "url": "https://react.dev/learn/extracting-state-logic-into-a-reducer",
+      "type": "documentation",
+      "description": "Action types, dispatch, and reducer structure.",
+      "recommended": true
+    },
+    {
+      "id": "res-spread",
+      "title": "MDN — Spread syntax",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax",
+      "type": "documentation",
+      "description": "Immutable object and array updates with spread.",
+      "recommended": true
+    },
+    {
+      "id": "res-immutable-array",
+      "title": "MDN — Array.prototype.map",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map",
+      "type": "documentation",
+      "description": "Update cart items immutably with map.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts-unions",
+      "title": "TypeScript — Union Types",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types",
+      "type": "documentation",
+      "description": "Discriminated union for CartAction types.",
+      "recommended": true
+    },
+    {
+      "id": "res-scaling-context",
+      "title": "React — Scaling Up with Reducer and Context",
+      "url": "https://react.dev/learn/scaling-up-with-reducer-and-context",
+      "type": "documentation",
+      "description": "Combining reducer and context — today's architecture pattern.",
+      "recommended": true
+    }
+  ]
+}

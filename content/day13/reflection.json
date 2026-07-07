@@ -1,0 +1,38 @@
+{
+  "id": "day13-reflection",
+  "metaId": "day13",
+  "title": "Day 13 Reflection",
+  "description": "Solidify routing before Day 14 machine coding round.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "How does React Router match /users/:userId to a component? What does useParams return?",
+      "guidance": "Mention dynamic segment and string param values.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "How did you handle an invalid userId? What UI and fetch logic did you use?",
+      "guidance": "404 response, Not Found component, or conditional render.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Where did optional chaining and nullish coalescing prevent crashes in your profile page?",
+      "guidance": "Reference specific nullable fields from API.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "What is the difference between Link and useNavigate? When did you use each?",
+      "guidance": "Declarative vs programmatic navigation.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "How does today's routing connect the cart, products, and user profile in one app?",
+      "guidance": "Router layout, Context provider placement, shared navbar.",
+      "minWords": 25
+    }
+  ]
+}

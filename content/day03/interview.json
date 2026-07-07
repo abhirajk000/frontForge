@@ -1,0 +1,129 @@
+{
+  "id": "day03-interview",
+  "metaId": "day03",
+  "title": "Day 03 Interview Prep",
+  "description": "Practice explaining keys, list rendering, composition, and why reusable components matter in design systems and product teams.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Why do we need keys in React lists?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Reconciliation basics — not just 'because React says so'.",
+      "keyPoints": [
+        "Stable identity across re-renders",
+        "Efficient DOM updates when items move",
+        "Preserves state in list items correctly",
+        "Should be unique among siblings"
+      ],
+      "sampleAnswer": "Keys tell React which item in a list corresponds to which previous item. When the list changes, React uses keys to diff efficiently and avoid reusing the wrong DOM node. I use stable ids from data — not random values or index when the list can reorder.",
+      "followUps": ["When is index as key acceptable?", "What breaks if keys duplicate?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is the children prop and how do you use it?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Composition pattern understanding.",
+      "keyPoints": [
+        "Nested content between component tags",
+        "Can be elements, text, or render props later",
+        "Enables wrapper components",
+        "Typed as React.ReactNode in TypeScript"
+      ],
+      "sampleAnswer": "children is the content nested inside a component's JSX tags. A Card component can render {children} in its body so callers pass arbitrary content. I type it React.ReactNode in TypeScript. It is how I build flexible layout wrappers without prop drilling every possible slot.",
+      "followUps": ["children vs render prop?", "How type children strictly?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "Why build reusable components instead of copying JSX?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Maintainability and design system thinking.",
+      "keyPoints": [
+        "DRY — fix once, fix everywhere",
+        "Consistent UX and accessibility",
+        "Faster feature development",
+        "Easier testing"
+      ],
+      "sampleAnswer": "Reusable components encode design and behavior once. When we fix an accessibility bug in TextInput, every form benefits. Product teams ship faster because engineers compose primitives instead of rewriting markup. The trade-off is upfront API design — props must stay flexible but not bloated.",
+      "followUps": ["When is duplication OK?", "How do you version a design system?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain map, filter, and reduce — when would you use each in a React form?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Array method fluency tied to UI tasks.",
+      "keyPoints": [
+        "map transforms to JSX or new arrays",
+        "filter removes items by predicate",
+        "reduce aggregates to single value",
+        "Often chained in data prep before render"
+      ],
+      "sampleAnswer": "map renders a list of fields or options to components. filter removes empty error messages before showing a summary. reduce might count how many fields failed validation. I keep heavy logic outside JSX when readability suffers — prepare data, then map in return.",
+      "followUps": ["map vs forEach?", "Immutable patterns with reduce?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you design props for a reusable TextInput?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "API design for shared UI.",
+      "keyPoints": [
+        "value + onChange for controlled usage",
+        "label, error, id/htmlFor linkage",
+        "Extend native input attributes selectively",
+        "Avoid baking form-specific state inside"
+      ],
+      "sampleAnswer": "I expose value, onChange, label, error, name, and id. The parent owns state. I extend React.InputHTMLAttributes for optional native props but omit value/onChange from spread to avoid conflicts. Error is optional string; component renders nothing when absent. Keeps the input presentational.",
+      "followUps": ["Generic props pattern?", "Forward refs for focus?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "What is composition in React?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Architecture vocabulary beyond inheritance.",
+      "keyPoints": [
+        "Build complex UI from simple pieces",
+        "children and component nesting",
+        "Prefer composition over class inheritance",
+        "Specialized components wrap generic ones"
+      ],
+      "sampleAnswer": "Composition means assembling UI from smaller components — Button inside Form, FormField wrapping TextInput. React favors composition over inheritance. I might have a generic Box with children and a specialized LoginForm that composes field components without extending a base class.",
+      "followUps": ["Compound components pattern?", "How does this relate to slots in Vue?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "A list of editable rows loses focus when typing after a parent re-render. Keys use array index. What is happening?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Practical key debugging.",
+      "keyPoints": [
+        "Index keys shift when items insert/delete",
+        "React reuses wrong component instance",
+        "Focus tied to DOM node identity",
+        "Fix: stable id from server or client uuid"
+      ],
+      "sampleAnswer": "Index keys cause React to associate row state with position, not identity. When the list reorders or prepends items, indices shift and React reconciles incorrectly — inputs remount and focus jumps. I switch to stable row ids from data. I only use index for static lists that never reorder.",
+      "followUps": ["How generate ids for new rows?", "Profiler to confirm remount?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "Your team has twelve slightly different input components. How do you consolidate without a six-month design system project?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Incremental refactor judgment.",
+      "keyPoints": [
+        "Audit differences — props vs true variants",
+        "Extract TextInput with variant prop",
+        "Migrate highest-traffic forms first",
+        "Document deprecation path"
+      ],
+      "sampleAnswer": "I inventory props each variant needs — often 80% overlap. I extract one TextInput with size and error variants, migrate login and signup first, leave edge cases on old components temporarily. I ship weekly increments with visual regression checks. Full design system is the goal; consolidation is the first PR, not a freeze.",
+      "followUps": ["Who owns the API review?", "Breaking change policy?"],
+      "redFlags": ["Big-bang rewrite", "Ignore edge case forms"]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "day24-challenge",
+  "metaId": "day24",
+  "title": "Mock Frontend Interview — Five Rounds",
+  "mission": "Mock Frontend Interview",
+  "description": "Complete five timed mock interview rounds back-to-back under real interview conditions. Round 1: JavaScript (30 min). Round 2: React (30 min). Round 3: Machine Coding (60 min). Round 4: Project Discussion (45 min). Round 5: Debugging (30 min). No AI. No Google. Official docs only during Round 3. This is your graduation simulation.",
+  "estimatedMinutes": 195,
+  "difficulty": "advanced",
+  "requirements": [
+    "Round 1 — JavaScript (30 min): answer questions on closures, event loop, async/await, promises, objects, arrays, map/filter/reduce, debounce, this/call/bind/apply",
+    "Round 2 — React (30 min): answer questions on JSX, components, props, state, useEffect, useMemo, useCallback, useRef, Context, Redux, RTK Query, routing, performance",
+    "Round 3 — Machine Coding (60 min): build ONE randomly assigned project — Todo, Product Dashboard, Kanban, Movie Search, or Weather Dashboard",
+    "Round 3 constraints: TypeScript, responsive, API integration, loading/error/empty states, clean architecture — no AI, no Google, official docs only",
+    "Round 4 — Project Discussion (45 min): explain FrontForge architecture, JSON renderer, folder structure, design decisions, challenges, improvements",
+    "Round 4 also covers your Day 23 refactored project — defend architecture and trade-offs",
+    "Round 5 — Debugging (30 min): fix React bugs, performance issues, TypeScript errors, and routing problems in provided scenarios",
+    "Complete self-evaluation rubric: JavaScript, React, TypeScript, Redux, Performance, Machine Coding, Project Discussion, Communication (1–5 stars each)",
+    "Verify final graduation checklist: fundamentals, Redux, RTK Query, routing, APIs, performance, debugging, machine coding, portfolio, resume, LinkedIn"
+  ],
+  "acceptanceCriteria": [
+    "All five rounds completed within their time boxes — use a timer",
+    "Round 1: can trace async code and explain event loop order without notes",
+    "Round 2: explains Context vs Redux vs RTK Query with trade-offs unprompted",
+    "Round 3: MVP ships in 60 minutes with loading, error, and empty states",
+    "Round 3: folder structure explainable in 60 seconds",
+    "Round 4: FrontForge JSON renderer and block registry explained clearly",
+    "Round 4: names three honest trade-offs and three future improvements",
+    "Round 5: all four debugging categories addressed with documented root cause",
+    "Self-evaluation completed honestly — no category left blank",
+    "Graduation checklist verified — ready to apply for frontend roles"
+  ],
+  "hints": [
+    "Schedule breaks between rounds — 5 minutes to reset mimics real interview loops.",
+    "Round 1–2: answer out loud even if alone — communication is scored.",
+    "Round 3: same MVP-first strategy as Day 21–22 — types, static UI, API, polish.",
+    "Round 4: open FrontForge repo side by side — point to actual files while explaining.",
+    "Round 5: narrate reproduce → isolate → fix → verify for each bug.",
+    "If a round goes poorly, finish it anyway — recovery under pressure is interview skill."
+  ],
+  "bonus": {
+    "title": "Graduation with distinction",
+    "description": "If all core rounds complete with self-eval average 4+ stars.",
+    "requirements": [
+      "Record full mock and review communication filler words",
+      "Write a post-mortem: one strength and one gap per round",
+      "Update GitHub README on best project with architecture section from Day 23",
+      "Send one application within 48 hours of graduation"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-r5-infinite",
+      "title": "Round 5 — Infinite Rendering",
+      "symptom": "Round 3 submission freezes browser; thousands of renders in Profiler",
+      "cause": "useEffect sets state without dependency array, or setState in render body",
+      "fix": "Add correct deps; move setState to event handler; guard effect with condition"
+    },
+    {
+      "id": "dbg-r5-perf",
+      "title": "Round 5 — Performance Bug",
+      "symptom": "Search input laggy; every keystroke re-renders entire list of 200 items",
+      "cause": "Unmemoized list items; parent state update re-renders all children; missing debounce",
+      "fix": "Debounce search state update; React.memo on list item; useMemo filtered list"
+    },
+    {
+      "id": "dbg-r5-ts",
+      "title": "Round 5 — TypeScript Error",
+      "symptom": "useParams returns string | undefined; component crashes accessing .id without guard",
+      "cause": "Assumed route param always present; missing null check after useParams",
+      "fix": "Guard: if (!id) return <NotFound />; narrow type before use"
+    },
+    {
+      "id": "dbg-r5-route",
+      "title": "Round 5 — Routing Issue",
+      "symptom": "Detail page blank on refresh; works on client navigation only",
+      "cause": "SPA hosting missing fallback to index.html; or Route path mismatch with Link",
+      "fix": "Align Route and Link paths; configure host rewrite; add catch-all NotFound route"
+    },
+    {
+      "id": "dbg-r5-mutation",
+      "title": "Round 5 — State Mutation",
+      "symptom": "UI does not update after edit; React DevTools shows state changed but render skipped",
+      "cause": "Direct mutation: items[i].title = newTitle instead of immutable map update",
+      "fix": "setItems(prev => prev.map(item => item.id === id ? { ...item, title } : item))"
+    },
+    {
+      "id": "dbg-r5-api",
+      "title": "Round 5 — API Failure Uncaught",
+      "symptom": "White screen when API returns 500; console shows unhandled promise rejection",
+      "cause": "fetch without try/catch; assuming non-ok response throws automatically",
+      "fix": "try/catch async; check response.ok; setError with user-facing retry UI"
+    }
+  ]
+}

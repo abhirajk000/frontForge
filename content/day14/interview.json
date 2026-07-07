@@ -1,0 +1,133 @@
+{
+  "id": "day14-interview",
+  "metaId": "day14",
+  "title": "Day 14 Interview Prep",
+  "description": "Cumulative Week 2 interview practice — APIs, hooks, Context, routing, performance, event loop.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "Walk through your Machine Coding Round 2 architecture in two minutes.",
+      "difficulty": "easy",
+      "category": "architecture",
+      "whatInterviewerTests": "Can you articulate structure under pressure?",
+      "keyPoints": [
+        "Folder structure by feature",
+        "CartProvider at root",
+        "Custom hooks for debounce",
+        "Filter pipeline with useMemo",
+        "Types in separate files"
+      ],
+      "sampleAnswer": "I scaffolded features/products and features/cart. CartProvider wraps BrowserRouter at root. useDebounce handles search. useMemo derives filtered sorted products. Cart uses useReducer with ADD_ITEM, REMOVE_ITEM, UPDATE_QUANTITY. Types in src/types. API layer separate from components.",
+      "followUps": ["What would you refactor first?", "How add tests?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "Explain debouncing and how you implemented it this week.",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Day 09 core — must own this after Week 2.",
+      "keyPoints": [
+        "Wait until typing stops",
+        "useDebounce hook with setTimeout",
+        "Cleanup clearTimeout",
+        "Fetch on debounced value not raw input"
+      ],
+      "sampleAnswer": "Debouncing delays API calls until user stops typing. useDebounce holds debouncedValue updated via setTimeout in useEffect with cleanup. Search input updates immediately; fetch effect depends on debouncedSearch. Prevents request storm and race conditions.",
+      "followUps": ["Debounce vs throttle?", "useDeferredValue?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "Why Context + useReducer for the cart instead of prop drilling?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Day 12 state sharing rationale.",
+      "keyPoints": [
+        "Cart needed on listing, cart page, navbar",
+        "Prop drilling breaks at depth",
+        "Reducer centralizes cart logic",
+        "Redux is Week 3 — Context sufficient today"
+      ],
+      "sampleAnswer": "Cart state is needed on product listing, cart page, and navbar badge — three branches of the tree. Prop drilling passes handlers through intermediate components that do not use cart. Context + useReducer gives any component dispatch and state without drilling.",
+      "followUps": ["When switch to Redux?", "Split context performance?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain microtasks vs macrotasks with a code example.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Day 11 depth — cumulative Week 2.",
+      "keyPoints": [
+        "Promise.then is microtask",
+        "setTimeout is macrotask",
+        "Microtasks drain fully first",
+        "Connect to debounce and fetch ordering"
+      ],
+      "sampleAnswer": "After sync code, all microtasks run — Promise.then, queueMicrotask. Then one macrotask — setTimeout, I/O. Example: log 1, setTimeout log 4, Promise log 3, log 2 → output 1, 2, 3, 4. Debounce timer is macrotask; fetch resolution is microtask.",
+      "followUps": ["async/await scheduling?", "requestAnimationFrame queue?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you prevent unnecessary re-renders in a product listing?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Day 10 performance basics.",
+      "keyPoints": [
+        "React.memo on ProductCard",
+        "useMemo for filtered list",
+        "Stable keys with product.id",
+        "Avoid inline object/function props",
+        "Profile before optimizing"
+      ],
+      "sampleAnswer": "I memo ProductCard so unchanged products skip re-render when filter state changes. useMemo caches filtered sorted list. Keys use product.id. I avoid inline arrow props that break memo. I verify with React DevTools highlight updates — optimize only what profiling shows.",
+      "followUps": ["useCallback when?", "Virtualization threshold?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "How would you add /products/:productId to your Round 2 app?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Day 13 dynamic routing applied to e-commerce.",
+      "keyPoints": [
+        "Route path :productId",
+        "useParams typed",
+        "Fetch by ID in useEffect",
+        "Link from product card",
+        "Not Found for invalid ID"
+      ],
+      "sampleAnswer": "Add route products/:productId with ProductDetailPage. useParams<{ productId: string }>(). useEffect fetches when productId changes. ProductCard Link to `/products/${product.id}`. API 404 shows Not Found. Optional chaining on nullable fields.",
+      "followUps": ["Loader vs useEffect fetch?", "Prefetch on hover?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "You have 30 minutes left in machine coding and cart is broken. Prioritize — what do you do?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Time management and debugging under pressure.",
+      "keyPoints": [
+        "Minimal cart: add + total first",
+        "Verify Provider wraps app",
+        "Console log dispatch and state",
+        "Skip polish features",
+        "Communicate trade-offs aloud in real interview"
+      ],
+      "sampleAnswer": "I strip cart to ADD_ITEM only — add button dispatches, cart page shows items and total. Verify CartProvider wraps router. Console.log reducer output. Skip quantity controls temporarily. Fix build errors before CSS. In real interview I narrate: 'Cart add works; quantity next if time permits.'",
+      "followUps": ["How test reducer quickly?", "When ask interviewer for scope cut?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Compare your Week 2 stack to Redux Toolkit. When would you reach for RTK?",
+      "difficulty": "hard",
+      "category": "architecture",
+      "whatInterviewerTests": "Bridge to Week 3 without knowing RTK deeply yet.",
+      "keyPoints": [
+        "Context + reducer sufficient for small apps",
+        "RTK for large teams, DevTools, middleware",
+        "RTK Query for server cache",
+        "Week 3 covers this — show awareness"
+      ],
+      "sampleAnswer": "My Week 2 cart uses Context + useReducer — fine for one feature, one app size. RTK when multiple global slices, middleware for logging/auth, Redux DevTools at scale, or RTK Query replacing manual fetch/cache. I would not add Redux to Round 2 — over-engineering under time pressure.",
+      "followUps": ["RTK Query vs React Query?", "Zustand middle ground?"],
+      "redFlags": ["Redux always required", "Cannot explain Context limits", "Never heard of RTK Query"]
+    }
+  ]
+}

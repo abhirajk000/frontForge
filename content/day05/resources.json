@@ -1,0 +1,72 @@
+{
+  "id": "day05-resources",
+  "metaId": "day05",
+  "title": "Day 05 Resources",
+  "description": "Official React Router documentation for nested layouts and navigation.",
+  "resources": [
+    {
+      "id": "res-rr-start",
+      "title": "React Router — Start Tutorial",
+      "url": "https://reactrouter.com/en/main/start/tutorial",
+      "type": "documentation",
+      "description": "Official tutorial — follow alongside today's build.",
+      "recommended": true
+    },
+    {
+      "id": "res-rr-nested",
+      "title": "React Router — Nested Routes",
+      "url": "https://reactrouter.com/en/main/start/tutorial#nested-routes",
+      "type": "documentation",
+      "description": "Layout routes and Outlet pattern for dashboard shell.",
+      "recommended": true
+    },
+    {
+      "id": "res-rr-link",
+      "title": "React Router — NavLink",
+      "url": "https://reactrouter.com/en/main/components/nav-link",
+      "type": "documentation",
+      "description": "Active link styling for sidebar navigation.",
+      "recommended": true
+    },
+    {
+      "id": "res-rr-outlet",
+      "title": "React Router — Outlet",
+      "url": "https://reactrouter.com/en/main/components/outlet",
+      "type": "documentation",
+      "description": "Child route rendering in parent layouts.",
+      "recommended": true
+    },
+    {
+      "id": "res-react-spa",
+      "title": "React — Adding React Router (React docs)",
+      "url": "https://react.dev/learn/creating-a-react-app#adding-a-router",
+      "type": "documentation",
+      "description": "React team guidance on choosing and adding a router.",
+      "recommended": false
+    },
+    {
+      "id": "res-mdn-closure",
+      "title": "MDN — Closures",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures",
+      "type": "documentation",
+      "description": "JavaScript closures — handlers in routed components.",
+      "recommended": false
+    },
+    {
+      "id": "res-vite-spa",
+      "title": "Vite — Deploying a Static Site (SPA fallback)",
+      "url": "https://vite.dev/guide/static-deploy.html",
+      "type": "documentation",
+      "description": "Production SPA refresh issues — read the deployment note.",
+      "recommended": false
+    },
+    {
+      "id": "res-rr-errors",
+      "title": "React Router — Error Boundaries",
+      "url": "https://reactrouter.com/en/main/route/error-boundary",
+      "type": "documentation",
+      "description": "Optional: route-level error handling for polish.",
+      "recommended": false
+    }
+  ]
+}

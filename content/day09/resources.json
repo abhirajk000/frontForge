@@ -1,0 +1,72 @@
+{
+  "id": "day09-resources",
+  "metaId": "day09",
+  "title": "Day 09 Resources",
+  "description": "Official docs for debouncing, custom hooks, and generic TypeScript — read after building the movie search app.",
+  "resources": [
+    {
+      "id": "res-custom-hooks",
+      "title": "React — Reusing Logic with Custom Hooks",
+      "url": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+      "type": "documentation",
+      "description": "Official custom hook patterns and extraction rules.",
+      "recommended": true
+    },
+    {
+      "id": "res-settimeout",
+      "title": "MDN — setTimeout",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/setTimeout",
+      "type": "documentation",
+      "description": "Timer API used inside useDebounce implementations.",
+      "recommended": true
+    },
+    {
+      "id": "res-cleartimeout",
+      "title": "MDN — clearTimeout",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout",
+      "type": "documentation",
+      "description": "Cleanup timers on every value change to prevent stale debounced updates.",
+      "recommended": true
+    },
+    {
+      "id": "res-event-loop",
+      "title": "MDN — Event Loop",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
+      "type": "documentation",
+      "description": "Introduction to how timers and callbacks are scheduled — interview topic today.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts-generics",
+      "title": "TypeScript — Generics",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "type": "documentation",
+      "description": "Generic PaginatedResponse<T> and reusable API types.",
+      "recommended": true
+    },
+    {
+      "id": "res-controlled",
+      "title": "React — Adding Interactivity (Controlled Inputs)",
+      "url": "https://react.dev/learn/reacting-to-input-with-state",
+      "type": "documentation",
+      "description": "Controlled search input patterns from Week 1 applied to search UIs.",
+      "recommended": false
+    },
+    {
+      "id": "res-tmdb",
+      "title": "TMDB — Getting Started",
+      "url": "https://developer.themoviedb.org/docs/getting-started",
+      "type": "documentation",
+      "description": "Movie search API used in today's build — sign up for a free API key.",
+      "recommended": true
+    },
+    {
+      "id": "res-abort",
+      "title": "MDN — AbortController",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
+      "type": "documentation",
+      "description": "Cancel in-flight fetch when search term changes — builds on Day 08 cleanup.",
+      "recommended": false
+    }
+  ]
+}

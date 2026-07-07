@@ -1,0 +1,70 @@
+{
+  "id": "day12-challenge",
+  "metaId": "day12",
+  "title": "Build a Shopping Cart",
+  "mission": "Build a Shopping Cart.",
+  "description": "Create a shopping cart with Context-backed global state, useReducer actions, and immutable updates — the pattern every e-commerce checkout flow builds on.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "CartContext with CartProvider wrapping the app",
+    "useReducer for cart state with typed actions",
+    "CartItem type with product id, title, price, quantity",
+    "ADD_ITEM action — add new or increment quantity if exists",
+    "REMOVE_ITEM action — remove by product id",
+    "UPDATE_QUANTITY action — set quantity, remove if 0",
+    "Cart page showing line items with quantity controls",
+    "Cart total computed from items (price × quantity sum)",
+    "Empty cart UI with link back to products",
+    "Cart icon/badge in navbar showing item count",
+    "Immutable updates only — no push, splice, or direct mutation"
+  ],
+  "acceptanceCriteria": [
+    "Adding same product twice increments quantity, not duplicate rows",
+    "Remove button deletes item from cart",
+    "Quantity decrease to 0 removes item",
+    "Total updates correctly when quantities change",
+    "Cart state accessible from product page and cart page without prop drilling",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Define CartAction as discriminated union: { type: 'ADD_ITEM'; payload: Product } | ...",
+    "Reducer must return new state object — never mutate state.items",
+    "Export useCart() custom hook that throws if used outside provider",
+    "Compute total in selector function or useMemo from cart items",
+    "Combine with Day 10 product listing — Add to Cart button on ProductCard"
+  ],
+  "bonus": {
+    "title": "Cart persistence",
+    "description": "Optional enhancements for portfolio reviews.",
+    "requirements": [
+      "Persist cart to localStorage and hydrate on load",
+      "Show subtotal per line item",
+      "Disable Add to Cart when item already at max quantity"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-mutation",
+      "title": "Mutating state",
+      "symptom": "UI does not update after cart action; React DevTools shows same reference",
+      "cause": "state.items.push(item) or item.quantity++ in reducer",
+      "fix": "Return { ...state, items: [...state.items, newItem] } or map for updates"
+    },
+    {
+      "id": "dbg-context",
+      "title": "Wrong Context updates",
+      "symptom": "Cart works in one component but not another; useCart throws",
+      "cause": "Component outside CartProvider or wrong context default value",
+      "fix": "Wrap App with CartProvider; useCart reads from created context; no default mutable object"
+    },
+    {
+      "id": "dbg-total",
+      "title": "Wrong total calculation",
+      "symptom": "Total does not match sum of line items",
+      "cause": "Summing prices without multiplying by quantity, or floating point display",
+      "fix": "items.reduce((sum, i) => sum + i.price * i.quantity, 0); use toFixed(2) for display"
+    }
+  ]
+}

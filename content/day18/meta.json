@@ -1,0 +1,63 @@
+{
+  "id": "day18",
+  "version": "1.0.0",
+  "day": 18,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Authentication Flow",
+  "subtitle": "JWT basics, auth types, protected routes, login/logout, and session persistence",
+  "mission": "Build Authentication Flow.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": [
+    "react",
+    "auth",
+    "jwt",
+    "protected-routes",
+    "localStorage",
+    "session"
+  ],
+  "topics": {
+    "javascript": [
+      "JWT basics",
+      "localStorage",
+      "sessionStorage"
+    ],
+    "typescript": [
+      "auth types"
+    ],
+    "react": [
+      "protected routes",
+      "route guards",
+      "authentication flow"
+    ]
+  },
+  "prerequisites": [
+    "day17 — RTK Query API layer, baseQuery, mutation hooks",
+    "day13 — dynamic routing and navigation from Week 2",
+    "day15 — localStorage persistence pattern from theme system"
+  ],
+  "expectedOutcome": [
+    "Explain JWT structure: header, payload, signature",
+    "Compare localStorage vs sessionStorage for token persistence",
+    "Type User, AuthState, and login credentials in TypeScript",
+    "Build login and logout flows with session management",
+    "Implement protected routes that redirect unauthenticated users",
+    "Attach auth tokens to RTK Query baseQuery headers",
+    "Explain authentication vs authorization in interviews"
+  ],
+  "definitionOfDone": [
+    "Login form authenticates and stores session token",
+    "Logout clears session and redirects to login",
+    "Protected routes block unauthenticated access",
+    "Authenticated users redirect away from login page",
+    "Token persists across page reload via storage",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 19,
+    "title": "Admin Dashboard",
+    "summary": "Tomorrow you will build an admin dashboard with role-based UI, analytics cards, user tables, search, filter, and pagination — gated by the auth you build today."
+  }
+}

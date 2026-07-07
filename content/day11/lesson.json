@@ -1,0 +1,274 @@
+{
+  "id": "day11-lesson",
+  "metaId": "day11",
+  "title": "Day 11 — Infinite Scrolling",
+  "summary": "Master the event loop, microtasks, and macrotasks; implement infinite scroll with Intersection Observer; append paginated data with loading, end, and retry states.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 09 paginated with buttons. Day 11 paginates with scroll. Twitter, Instagram, and LinkedIn feeds all use infinite scroll — load more when you approach the bottom. You will implement this with Intersection Observer and finally understand why Promise.then runs before setTimeout."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 2 Day 4",
+      "content": "You know pagination from Day 09 and list rendering from Day 10. Today adds Intersection Observer and event loop depth. Do NOT introduce Context API (tomorrow) or Redux (Week 3)."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Event Loop, Microtasks, Macrotasks"
+    },
+    {
+      "type": "heading",
+      "id": "event-loop",
+      "level": 3,
+      "text": "Event loop — how JavaScript handles async"
+    },
+    {
+      "type": "paragraph",
+      "content": "JavaScript is single-threaded. The call stack runs synchronous code. When async work completes, callbacks queue up. The event loop picks tasks when the stack is empty. Interviewers love asking what order console.log statements print."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "event-loop-demo.ts",
+      "code": "console.log('1 sync');\n\nsetTimeout(() => console.log('4 macrotask'), 0);\n\nPromise.resolve().then(() => console.log('3 microtask'));\n\nconsole.log('2 sync');\n\n// Output: 1, 2, 3, 4\n// Microtasks (Promises) run before macrotasks (setTimeout)"
+    },
+    {
+      "type": "heading",
+      "id": "microtasks",
+      "level": 3,
+      "text": "Microtasks — Promises and queueMicrotask"
+    },
+    {
+      "type": "paragraph",
+      "content": "Promise .then, .catch, .finally, and queueMicrotask enqueue microtasks. After current synchronous code finishes, ALL microtasks run before the next macrotask. fetch().then() callbacks are microtasks — they run before setTimeout from Day 09 debounce."
+    },
+    {
+      "type": "heading",
+      "id": "macrotasks",
+      "level": 3,
+      "text": "Macrotasks — setTimeout, setInterval, I/O"
+    },
+    {
+      "type": "paragraph",
+      "content": "setTimeout, setInterval, and DOM events are macrotasks. Intersection Observer callbacks are delivered as microtasks in modern browsers — they run promptly after layout. Understanding task ordering helps debug race conditions in paginated fetch."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-order",
+          "label": "Execution order",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "1. Run synchronous code until call stack empty. 2. Drain microtask queue completely. 3. Run one macrotask. 4. Repeat."
+            }
+          ]
+        },
+        {
+          "id": "tab-interview",
+          "label": "Interview tip",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Draw the queue diagram: Call Stack → Microtask Queue → Macrotask Queue. Walk through a code snippet line by line. This appears in senior frontend rounds."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Starvation risk",
+      "content": "Infinite microtask chains can starve macrotasks — UI never updates. Rare in app code but know the concept for interviews."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Observer Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Type IntersectionObserver callbacks with IntersectionObserverEntry from DOM lib. Type your paginated append state with generics from Day 09."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "hooks/useInfiniteScroll.ts",
+      "code": "type ObserverCallback = (\n  entries: IntersectionObserverEntry[],\n  observer: IntersectionObserver\n) => void;\n\nfunction handleIntersect(entries: IntersectionObserverEntry[]) {\n  const entry = entries[0];\n  if (entry?.isIntersecting) {\n    loadNextPage();\n  }\n}"
+    },
+    {
+      "type": "tip",
+      "title": "Ref typing",
+      "content": "const sentinelRef = useRef<HTMLDivElement>(null). Pass sentinelRef.current to observer.observe() inside useEffect after checking for null."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Intersection Observer and Pagination"
+    },
+    {
+      "type": "heading",
+      "id": "intersection-observer",
+      "level": 3,
+      "text": "Intersection Observer — detect when sentinel is visible"
+    },
+    {
+      "type": "paragraph",
+      "content": "Place an empty div at the list bottom. When it enters the viewport, load the next page. More efficient than scroll event listeners — browser optimizes visibility checks."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "const sentinelRef = useRef<HTMLDivElement>(null);\n\nuseEffect(() => {\n  const sentinel = sentinelRef.current;\n  if (!sentinel) return;\n\n  const observer = new IntersectionObserver(\n    (entries) => {\n      if (entries[0]?.isIntersecting && !isLoading && hasMore) {\n        loadNextPage();\n      }\n    },\n    { rootMargin: '100px' }\n  );\n\n  observer.observe(sentinel);\n  return () => observer.disconnect();\n}, [isLoading, hasMore, loadNextPage]);"
+    },
+    {
+      "type": "heading",
+      "id": "append-pagination",
+      "level": 3,
+      "text": "Append pagination — grow the list"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 09 replaced results on page change. Infinite scroll appends: setItems(prev => [...prev, ...newItems]). Track page increment, hasMore from API total_pages, and deduplicate by id if needed."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "const loadNextPage = useCallback(async () => {\n  if (isLoading || !hasMore) return;\n  setIsLoading(true);\n  setError(null);\n  try {\n    const data = await fetchPage(page);\n    setItems((prev) => [...prev, ...data.results]);\n    setHasMore(page < data.total_pages);\n    setPage((p) => p + 1);\n  } catch (err) {\n    setError(getErrorMessage(err));\n  } finally {\n    setIsLoading(false);\n  }\n}, [page, isLoading, hasMore]);"
+    },
+    {
+      "type": "note",
+      "title": "Immutable append",
+      "content": "Spread prev into new array — never push to state array directly. Same immutability rule as Day 10 sort and Day 12 cart."
+    },
+    {
+      "type": "heading",
+      "id": "lazy-loading",
+      "level": 3,
+      "text": "Lazy loading images"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add loading=\"lazy\" on img tags in long feeds. Browser defers off-screen image loads. Complements infinite scroll for performance."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Infinite Scroll Feed"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-auto", "text": "Auto load next page on scroll" },
+        { "id": "req-loading", "text": "Loading indicator during fetch" },
+        { "id": "req-end", "text": "End-of-list message when no more pages" },
+        { "id": "req-retry", "text": "Retry on failure without losing loaded items" },
+        { "id": "req-cleanup", "text": "Observer cleanup on unmount" },
+        { "id": "req-keys", "text": "Stable keys — no duplicate items" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "rootMargin: '100px' triggers load slightly before user hits bottom — smoother UX. Guard isLoading synchronously at start of loadNextPage. Test end state by mocking API with total_pages: 2."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Day 11 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-duplicate",
+          "title": "Duplicate API calls",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Page 2 fetched twice. Cause: Observer fires again before isLoading becomes true. Fix: Set isLoading true immediately; guard at top of loadNextPage."
+            }
+          ]
+        },
+        {
+          "id": "dbg-infinite",
+          "title": "Infinite rendering",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Browser freezes. Cause: setState loop from effect deps or loadNextPage recreated every render triggering observer. Fix: useCallback for loadNextPage; minimal stable deps."
+            }
+          ]
+        },
+        {
+          "id": "dbg-cleanup",
+          "title": "Observer cleanup",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Fetch after navigate away. Cause: Missing observer.disconnect(). Fix: return () => observer.disconnect() in useEffect cleanup."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-scroll", "text": "Auto load on scroll" },
+        { "id": "done-states", "text": "Loading, end, retry states" },
+        { "id": "done-cleanup", "text": "Observer cleanup" },
+        { "id": "done-eventloop", "text": "Can explain microtask vs macrotask" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

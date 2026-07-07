@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="FrontForge — build, think, ship and get hired by learning React and JavaScript through building."
+    />
+    <meta property="og:title" content="FrontForge — Build. Think. Ship. Get Hired." />
+    <meta
+      property="og:description"
+      content="A production-grade, content-driven platform for learning React through building real projects."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="FrontForge — Build. Think. Ship. Get Hired." />
+    <meta
+      name="twitter:description"
+      content="Learn React and JavaScript by building — lessons, quizzes, challenges, and interview prep."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title>FrontForge — Build. Think. Ship. Get Hired.</title>
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('frontforge:theme');
+          var theme = 'light';
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            var pref = typeof parsed === 'string' ? parsed : parsed.preference;
+            if (pref === 'dark') theme = 'dark';
+            else if (pref === 'system') {
+              theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+{
+  "id": "day23",
+  "version": "1.0.0",
+  "day": 23,
+  "week": 4,
+  "track": "react-interview",
+  "title": "Production Ready Frontend",
+  "subtitle": "Refactor a previous project for production — structure, hooks, performance, accessibility, and senior architecture explanations",
+  "mission": "Production Ready Frontend",
+  "readingTimeMinutes": 15,
+  "estimatedBuildHours": 5,
+  "difficulty": "advanced",
+  "tags": [
+    "interview",
+    "production",
+    "refactor",
+    "architecture",
+    "performance",
+    "accessibility",
+    "code-review"
+  ],
+  "topics": {
+    "javascript": [
+      "immutability",
+      "custom hooks",
+      "debounce",
+      "error handling"
+    ],
+    "typescript": [
+      "strict typing",
+      "API models",
+      "props interfaces",
+      "no any"
+    ],
+    "react": [
+      "folder structure",
+      "React.memo",
+      "useMemo",
+      "useCallback",
+      "lazy loading",
+      "code splitting",
+      "Context",
+      "Redux",
+      "RTK Query",
+      "Router",
+      "accessibility"
+    ]
+  },
+  "prerequisites": [
+    "week1 — components, props, useState, forms, routing fundamentals",
+    "week2 — APIs, custom hooks, Context, dynamic routes, machine coding Round 2",
+    "week3 — Redux Toolkit, RTK Query, authentication, performance, dashboards",
+    "day22 — machine coding interview, debugging drills, code review, 20 interview questions"
+  ],
+  "expectedOutcome": [
+    "Refactor one previous FrontForge project to production-ready standards",
+    "Apply React.memo, useMemo, useCallback, lazy loading, and code splitting only where measured and appropriate",
+    "Explain every architectural decision: folder structure, Context vs Redux vs RTK Query vs Router",
+    "Answer senior-level interview questions on architecture, performance, scalability, and maintainability",
+    "Document trade-offs and future improvements like a staff engineer in a design review"
+  ],
+  "definitionOfDone": [
+    "One previous project selected and refactored with improved folder structure",
+    "Reusable components and custom hooks extracted where duplication existed",
+    "Loading, error, and empty states verified on all async flows",
+    "Accessibility pass: keyboard navigation, labels, semantic HTML, focus management",
+    "TypeScript strict — no any, typed props and API models throughout",
+    "Performance checklist completed with written justification for each applied optimization",
+    "Architecture discussion document: why this structure, why each state solution, trade-offs, future improvements",
+    "8 senior interview questions answered out loud",
+    "Quiz passed with 70% or higher",
+    "Reflection submitted and refactored code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 24,
+    "title": "Mock Frontend Interview",
+    "summary": "Final day — five timed interview rounds (JavaScript, React, machine coding, project discussion, debugging), self-evaluation rubric, graduation checklist, and you are done."
+  }
+}

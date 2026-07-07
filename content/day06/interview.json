@@ -1,0 +1,129 @@
+{
+  "id": "day06-interview",
+  "metaId": "day06",
+  "title": "Day 06 Interview Prep",
+  "description": "Practice explaining custom hooks, debounce, responsive layout, and reusable architecture.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is a custom hook?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Definition and rules of hooks.",
+      "keyPoints": [
+        "Function starting with use",
+        "Composes built-in hooks",
+        "Shares stateful logic between components",
+        "Rules of Hooks still apply"
+      ],
+      "sampleAnswer": "A custom hook is a reusable function named useSomething that can call useState, useEffect, and other hooks. It extracts shared logic — debounce, theme, fetch — without duplicating code. Components call it like built-in hooks.",
+      "followUps": ["Can hooks call hooks?", "Naming conventions?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is debounce and why use it in search?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Practical performance pattern.",
+      "keyPoints": [
+        "Waits until events stop",
+        "Reduces API calls",
+        "Improves UX and rate limits",
+        "Different from throttle"
+      ],
+      "sampleAnswer": "Debounce delays execution until the user pauses — e.g. 300ms after last keystroke. Search sends one request instead of ten while typing. Throttle fires at most once per interval regardless of pause — different use case.",
+      "followUps": ["Throttle example?", "Debounce implementation with hooks?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "How do you type a custom hook return value?",
+      "difficulty": "easy",
+      "category": "typescript",
+      "whatInterviewerTests": "TypeScript at hook boundaries.",
+      "keyPoints": [
+        "Explicit return type on function",
+        "Generics for flexible value types",
+        "Object or tuple return",
+        "Export type for consumers"
+      ],
+      "sampleAnswer": "I add explicit return type: function useDebounce<T>(value: T, delay: number): T. For multiple values I return { theme, toggleTheme } with a defined type or interface. Generics preserve input types through the hook.",
+      "followUps": ["Type tuple returns?", "Satisfies vs explicit?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Custom hook vs utility function — decision criteria?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Architecture judgment.",
+      "keyPoints": [
+        "Hooks need React state/effects",
+        "Utils for pure transforms",
+        "Hooks follow rules of hooks",
+        "Testability differences"
+      ],
+      "sampleAnswer": "If logic needs useState, useEffect, or context, it is a custom hook. Pure formatting or validation stays a plain function. useDebounce needs effects and timers — hook. formatDate is a util. Calling hooks from utils is invalid.",
+      "followUps": ["Extract hook from component when?", "God hook smell?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How would you implement useDebounce?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Can they write the pattern verbally.",
+      "keyPoints": [
+        "useState for debounced value",
+        "useEffect on value and delay",
+        "setTimeout + clearTimeout cleanup",
+        "Return debounced value"
+      ],
+      "sampleAnswer": "I store debouncedValue in state. useEffect watches value: set timer to update debouncedValue after delay, return cleanup clearing timer. When value changes fast, previous timers cancel. Component reads debouncedValue for fetch or filter.",
+      "followUps": ["Leading vs trailing edge?", "flush debounce on submit?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "How do layout components improve architecture?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Composition at app shell level.",
+      "keyPoints": [
+        "Separate chrome from page content",
+        "Compose Sidebar + Navbar + Outlet area",
+        "Responsive concerns localized",
+        "Match router nested layout"
+      ],
+      "sampleAnswer": "Layout components own persistent shell — sidebar, navbar, responsive breakpoints. Page components own content only. Router nests pages inside layout. Mobile toggle lives in layout, not duplicated per page. Theme and search in navbar compose hooks.",
+      "followUps": ["Slot pattern?", "Layout vs template components?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "useTheme stores preference in localStorage. What pitfalls do you handle?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "SSR, flash, and effect hygiene.",
+      "keyPoints": [
+        "Hydration mismatch if SSR — not our case today",
+        "Read storage in effect to avoid SSR issues",
+        "Sync DOM class when theme changes",
+        "Invalid stored value fallback"
+      ],
+      "sampleAnswer": "On mount I read localStorage in useEffect, default to light if missing or invalid. When theme changes I write storage and set data-theme on html. For SSR apps I defer storage read to avoid hydration mismatch — Vite SPA is simpler.",
+      "followUps": ["prefers-color-scheme media query?", "Context for theme Week 3?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "Team has useDebounce, useDebouncedCallback, and useSearch in three files with overlapping timers. Refactor plan?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Consolidation without breaking consumers.",
+      "keyPoints": [
+        "Audit usages",
+        "Single primitive useDebounce",
+        "Compose higher hooks thinly",
+        "Deprecation and tests"
+      ],
+      "sampleAnswer": "I trace call sites. Core primitive is useDebounce(value, delay). useSearch becomes thin wrapper: debounced query + fetch effect. I deprecate duplicate timer logic, migrate one consumer per PR, add unit tests for timer cleanup. Document in hooks README.",
+      "followUps": ["Shared hooks package?", "Lint rule for duplicate patterns?"],
+      "redFlags": ["Merge blindly into god hook", "No cleanup tests"]
+    }
+  ]
+}

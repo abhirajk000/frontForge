@@ -1,0 +1,276 @@
+{
+  "id": "day10-lesson",
+  "metaId": "day10",
+  "title": "Day 10 — E-Commerce Product Listing",
+  "summary": "Filter, sort, and search product lists with array chaining, type product models, render responsive grids with stable keys, and introduce React.memo for list performance.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 09 optimized server search. Day 10 optimizes list UI. Every e-commerce browse page — Amazon, Flipkart, Myntra — filters, sorts, and renders hundreds of products. You will chain array methods to derive a filtered list, render it in a responsive grid, and prevent unnecessary re-renders with React.memo."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 2 Day 3",
+      "content": "You know useState, map, and keys from Week 1. Today adds filter/sort pipelines and React.memo. Do NOT introduce Context API (Day 12) or Redux (Week 3)."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Sorting, Filtering, Array Chaining"
+    },
+    {
+      "type": "heading",
+      "id": "filtering",
+      "level": 3,
+      "text": "Filtering — narrow the dataset"
+    },
+    {
+      "type": "paragraph",
+      "content": "filter returns a new array matching a predicate. Never mutate the source array. Chain multiple filters for category, price range, and search term."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "filter-products.ts",
+      "code": "const filtered = products\n  .filter((p) => category === 'all' || p.category === category)\n  .filter((p) => p.price >= minPrice && p.price <= maxPrice)\n  .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));"
+    },
+    {
+      "type": "heading",
+      "id": "sorting",
+      "level": 3,
+      "text": "Sorting — order without mutation"
+    },
+    {
+      "type": "paragraph",
+      "content": "sort mutates in place — always copy first with spread or slice. Return negative, zero, or positive from compare function for ascending order."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "const sorted = [...filtered].sort((a, b) => {\n  if (sortBy === 'price-asc') return a.price - b.price;\n  if (sortBy === 'price-desc') return b.price - a.price;\n  return a.name.localeCompare(b.name);\n});"
+    },
+    {
+      "type": "tip",
+      "title": "useMemo for derived lists",
+      "content": "Wrap filter + sort in useMemo([products, category, minPrice, maxPrice, search, sortBy]) so you only recompute when inputs change — not on every render."
+    },
+    {
+      "type": "warning",
+      "title": "Never mutate state arrays",
+      "content": "products.sort() inside render mutates state directly — a React anti-pattern. Always create a new array. This prepares you for immutable updates on Day 12."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Product Models"
+    },
+    {
+      "type": "paragraph",
+      "content": "Define a Product interface matching your data source. Use union types for category enums and optional fields for sale prices or ratings."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/product.ts",
+      "code": "export type ProductCategory = 'electronics' | 'clothing' | 'jewelery' | 'all';\n\nexport interface Product {\n  id: number;\n  title: string;\n  price: number;\n  category: string;\n  image: string;\n  description?: string;\n}\n\nexport type SortOption = 'price-asc' | 'price-desc' | 'name-asc' | 'name-desc';"
+    },
+    {
+      "type": "note",
+      "title": "Separate filter state types",
+      "content": "Define FilterState or individual useState hooks for category, priceMin, priceMax, search, sortBy. Typed state prevents impossible filter combinations at compile time."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Lists, Keys, and React.memo"
+    },
+    {
+      "type": "heading",
+      "id": "list-rendering",
+      "level": 3,
+      "text": "List rendering review"
+    },
+    {
+      "type": "paragraph",
+      "content": "Map filtered products to ProductCard components. Each list item needs a key — React uses keys to match items across re-renders. Wrong keys cause bugs when lists reorder."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "{sortedProducts.map((product) => (\n  <ProductCard key={product.id} product={product} />\n))}"
+    },
+    {
+      "type": "heading",
+      "id": "keys",
+      "level": 3,
+      "text": "Keys — stable and unique"
+    },
+    {
+      "type": "table",
+      "headers": ["Key choice", "Safe?", "Why"],
+      "rows": [
+        ["product.id", "Yes", "Stable unique identifier from data"],
+        ["Array index", "No", "Changes when list is sorted or filtered"],
+        ["Math.random()", "Never", "New key every render — full remount"]
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "react-memo",
+      "level": 3,
+      "text": "React.memo — skip re-render when props unchanged"
+    },
+    {
+      "type": "paragraph",
+      "content": "When parent filter state changes, only cards with changed props should re-render. React.memo wraps ProductCard and shallow-compares props. If product object reference is unchanged, skip render."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "interface ProductCardProps {\n  product: Product;\n}\n\nexport const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {\n  return (\n    <article className=\"product-card\">\n      <img src={product.image} alt={product.title} />\n      <h3>{product.title}</h3>\n      <p>${product.price.toFixed(2)}</p>\n    </article>\n  );\n});"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-memo-yes",
+          "label": "When memo helps",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Large lists where parent re-renders often but individual item props stay the same. Product grids, comment threads, data tables."
+            }
+          ]
+        },
+        {
+          "id": "tab-memo-no",
+          "label": "When memo hurts",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Small lists, props that always change (inline objects/functions), or components that always re-render anyway. Profile before memoizing everything."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — E-Commerce Product Listing"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-category", "text": "Category filter" },
+        { "id": "req-price", "text": "Price range filter" },
+        { "id": "req-search", "text": "Search by product name" },
+        { "id": "req-sort", "text": "Sort by price and name" },
+        { "id": "req-grid", "text": "Responsive product grid" },
+        { "id": "req-memo", "text": "ProductCard wrapped in React.memo" },
+        { "id": "req-keys", "text": "Stable keys using product.id" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "Fake Store API needs no key: https://fakestoreapi.com/products. Use CSS Grid with auto-fill and minmax for responsive columns. Verify memo with React DevTools 'Highlight updates'."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Day 10 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-keys",
+          "title": "Wrong keys",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Inputs lose focus or wrong product shows after sort. Cause: index as key. Fix: product.id — stable across reorder."
+            }
+          ]
+        },
+        {
+          "id": "dbg-rerenders",
+          "title": "Unnecessary re-renders",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: All cards re-render on filter change. Cause: Inline onClick={() => ...} or new object props every render defeats memo. Fix: memo + stable props; useCallback only when profiling shows need."
+            }
+          ]
+        },
+        {
+          "id": "dbg-filter",
+          "title": "Filter bugs",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Products disappear unexpectedly. Cause: Mutating products with .sort(), or off-by-one price comparisons. Fix: Copy before sort; test boundary values."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-filters", "text": "Category and price filters working" },
+        { "id": "done-search", "text": "Search working" },
+        { "id": "done-sort", "text": "Sort working" },
+        { "id": "done-grid", "text": "Responsive grid" },
+        { "id": "done-memo", "text": "React.memo on ProductCard" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

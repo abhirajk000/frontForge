@@ -1,0 +1,38 @@
+{
+  "id": "day22-reflection",
+  "metaId": "day22",
+  "title": "Day 22 Reflection",
+  "description": "Honest post-interview assessment — what held up under pressure and what needs one more rep before Day 23.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Did you finish the Kanban Board in 90 minutes? If not, where did time go — planning, API, styling, or debugging?",
+      "guidance": "Interviewers care about time management as much as completeness.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Which debugging scenario was hardest — infinite render, mutation, deps, keys, API, or routing? Walk through your diagnosis.",
+      "guidance": "Name the tool you used: DevTools, console, ESLint.",
+      "minWords": 45
+    },
+    {
+      "id": "refl-03",
+      "question": "Rate your code review findings: what would a senior engineer flag in your submission?",
+      "guidance": "Cover folder structure, naming, performance, accessibility, or reusability.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-04",
+      "question": "Of the 20 interview questions, which three made you hesitate? Why?",
+      "guidance": "Identify gaps to target before mock interview on Day 24.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-05",
+      "question": "How did you communicate your approach during the machine coding round? What would you say differently next time?",
+      "guidance": "Interview week tests communication, not only code.",
+      "minWords": 30
+    }
+  ]
+}

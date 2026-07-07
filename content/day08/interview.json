@@ -1,0 +1,159 @@
+{
+  "id": "day08-interview",
+  "metaId": "day08",
+  "title": "Day 08 Interview Prep",
+  "description": "Practice useEffect lifecycle, fetch vs Axios, loading strategies, and error boundary concepts from today's roadmap.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is the useEffect lifecycle in functional components?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Basic understanding of when effects run relative to render.",
+      "keyPoints": [
+        "Runs after paint/render",
+        "Setup runs when dependencies change",
+        "Cleanup runs before next effect or unmount",
+        "Not the same as class component lifecycle names but analogous"
+      ],
+      "sampleAnswer": "useEffect schedules work after React commits the render to the DOM. The setup function runs when the component mounts and when dependencies change. If I return a cleanup function, it runs before the next effect execution and on unmount. I use it to sync with APIs, subscriptions, or timers.",
+      "followUps": ["What is the difference between useEffect and useLayoutEffect?", "When is [] dependency array appropriate?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "Fetch vs Axios — when do you use each?",
+      "difficulty": "easy",
+      "category": "architecture",
+      "whatInterviewerTests": "Practical tooling judgment, not dogma.",
+      "keyPoints": [
+        "fetch is native, zero dependency",
+        "Axios offers interceptors, transforms, wider defaults",
+        "Bundle size consideration",
+        "Team standards matter"
+      ],
+      "sampleAnswer": "I default to fetch for simple JSON APIs in Vite/React — no install, tree-shaking friendly. Axios makes sense when I need request/response interceptors for auth tokens across many endpoints, automatic JSON transforms, or cancel tokens at scale. I pick based on project complexity and team conventions.",
+      "followUps": ["How do you attach auth headers with fetch?", "Does fetch support timeouts natively?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What loading strategies do you use in data-fetching UIs?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "UX awareness beyond a single spinner.",
+      "keyPoints": [
+        "Skeleton screens for layout stability",
+        "Disable actions while loading",
+        "Optimistic UI (later weeks)",
+        "Avoid showing stale data during refetch"
+      ],
+      "sampleAnswer": "For dashboards I use skeletons that match final card layout to reduce layout shift. I disable the search button during fetch. I clear or dim stale data when a new query starts so users do not misread old results. Spinners alone are fine for small actions but skeletons scale better for content-heavy views.",
+      "followUps": ["What is optimistic UI?", "How handle loading with Suspense?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain the useEffect dependency array. What happens with [] vs no array vs [query]?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Can they prevent infinite loop bugs?",
+      "keyPoints": [
+        "No array — runs every render",
+        "[] — mount and unmount only",
+        "[query] — when query changes",
+        "Stable references required for object deps"
+      ],
+      "sampleAnswer": "Omitting the array runs the effect after every render — dangerous with setState inside. Empty array runs once on mount, useful for initial data if appropriate. [query] re-runs when query changes — right for refetch-on-search. Dependencies must be stable; inline objects cause repeated runs.",
+      "followUps": ["What does react-hooks/exhaustive-deps warn about?", "How handle functions in deps?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type a nested API response in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Real-world API modeling, not trivial types.",
+      "keyPoints": [
+        "Interfaces per nested object",
+        "Arrays typed as Element[]",
+        "Optional fields with ?",
+        "Separate API types from UI view models if shapes differ"
+      ],
+      "sampleAnswer": "I define interfaces matching API JSON — WeatherResponse with nested MainBlock and WeatherCondition array. I use optional ? for fields that may be absent. If I transform API data for UI, I map to a separate WeatherViewModel so components do not depend on raw API quirks.",
+      "followUps": ["Zod vs interfaces for API validation?", "How handle unknown JSON safely?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "What is an Error Boundary and how is it different from try/catch around fetch?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Introduction-level distinction required by roadmap.",
+      "keyPoints": [
+        "Error boundaries catch render/lifecycle errors in children",
+        "try/catch handles async errors in effects/handlers",
+        "They complement each other",
+        "react-error-boundary package common in modern apps"
+      ],
+      "sampleAnswer": "Error boundaries catch JavaScript errors during rendering in child components and show fallback UI — they do not catch async errors inside useEffect unless you rethrow into render. try/catch around fetch handles network failures. Production apps use both: try/catch for fetch errors, error boundary for unexpected render crashes.",
+      "followUps": ["Can functional components be error boundaries natively?", "What errors are NOT caught?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Your weather app fires two requests when the user double-clicks Search. How do you fix it?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Race conditions and UX edge cases.",
+      "keyPoints": [
+        "Disable button while loading",
+        "Ignore stale responses with cleanup flag or AbortController",
+        "Debounce is Day 09 — mention but not required today",
+        "AbortController cancels in-flight fetch"
+      ],
+      "sampleAnswer": "Immediate fixes: disable submit while isLoading, and use an AbortController or cancelled boolean in useEffect cleanup so only the latest response updates state. For double-click specifically, disabling the button is the fastest win. AbortController.abort() on cleanup is the robust pattern when query changes mid-flight.",
+      "followUps": ["How does AbortController work with fetch?", "Difference from debouncing?"]
+    },
+    {
+      "id": "int-h02",
+      "question": "Network succeeds but weather.weather[0] crashes the app. What failed and how do you harden?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Defensive coding with typed optional data.",
+      "keyPoints": [
+        "Assumed array always populated",
+        "Optional chaining at render",
+        "Validate shape after parse or use type guards",
+        "Fallback UI for partial data"
+      ],
+      "sampleAnswer": "I assumed weather array always has elements. API can return unexpected shapes. I add optional chaining weather?.[0]?.description, validate response with a type guard or Zod after JSON parse, and show 'Data unavailable' instead of crashing. Error boundaries are last resort — validate at the boundary.",
+      "followUps": ["Runtime validation vs TypeScript trust?", "Error boundary vs validation?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "A teammate fetches weather in the component body on every render instead of useEffect. Convince them to refactor — what do you say?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Code review communication and React rules.",
+      "keyPoints": [
+        "Render must stay pure — no side effects during render",
+        "Causes request storm",
+        "useEffect or event handler is correct home",
+        "Mentor tone with concrete bug demonstration"
+      ],
+      "sampleAnswer": "I show Network tab: requests fire every render, including re-renders from unrelated state. I explain render should be a pure function of props and state. Side effects belong in useEffect with proper deps or in event handlers. I pair on moving fetch to submit handler or useEffect with [query], add a test city search, and document the rule in PR comment — not lecture.",
+      "followUps": ["React 19 use() hook?", "React Query alternative?"],
+      "redFlags": ["Side effects in render are fine if it works", "Cannot explain why render must be pure"]
+    },
+    {
+      "id": "int-s02",
+      "question": "How would you structure the weather feature folder for a growing React app?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Scalability thinking from day one of API features.",
+      "keyPoints": [
+        "features/weather/components",
+        "api or services layer for fetch",
+        "types separate from UI",
+        "hooks folder ready for Day 09 extraction"
+      ],
+      "sampleAnswer": "features/weather/ with components WeatherCard, WeatherSkeleton, SearchForm; api/fetchWeather.ts for HTTP; types/weather.ts for interfaces; WeatherPage.tsx composes them. When search logic grows, I extract useWeather(query) on Day 09. Keeps fetch out of JSX and types out of components.",
+      "followUps": ["When split to custom hook?", "Where put loading state?"]
+    }
+  ]
+}

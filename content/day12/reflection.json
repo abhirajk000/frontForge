@@ -1,0 +1,38 @@
+{
+  "id": "day12-reflection",
+  "metaId": "day12",
+  "title": "Day 12 Reflection",
+  "description": "Solidify Context and immutability before Day 13 dynamic routing.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Why did you choose Context + useReducer instead of prop drilling or lifting state?",
+      "guidance": "Mention cart accessed from multiple routes/components.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Show one ADD_ITEM reducer case. How did you avoid mutating state.items?",
+      "guidance": "Mention spread, map, or filter returning new arrays.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Did you hit a mutation bug? What did you do wrong and how did you fix it?",
+      "guidance": "If not, explain how React DevTools reference equality reveals mutation.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "When would Context alone (without useReducer) be enough for cart state?",
+      "guidance": "Simple state, few actions — trade-offs vs reducer.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "What Context pitfalls will you watch for when the app grows in Week 3?",
+      "guidance": "Re-renders, splitting contexts, Redux preview.",
+      "minWords": 25
+    }
+  ]
+}

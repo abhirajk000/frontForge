@@ -1,0 +1,38 @@
+{
+  "id": "day08-reflection",
+  "metaId": "day08",
+  "title": "Day 08 Reflection",
+  "description": "Solidify async React patterns before Day 09 debouncing and custom hooks.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Draw or describe your weather app's state machine: idle, loading, error, success. What triggers each transition?",
+      "guidance": "Use your actual state variable names.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Did you hit infinite API calls or a missing dependency bug? What caused it and how did you fix it?",
+      "guidance": "If not, explain how you would diagnose using Network tab and ESLint.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Why does fetch not throw on HTTP 404? How did you handle that in your code?",
+      "guidance": "Mention response.ok or status checks.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "Fetch vs Axios — which did you use and would you change that decision on a larger team project?",
+      "guidance": "Trade-offs matter more than the choice itself.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "What would you add before showing this weather dashboard in a portfolio review?",
+      "guidance": "Think error boundary mention, accessibility, env var docs, tests.",
+      "minWords": 25
+    }
+  ]
+}

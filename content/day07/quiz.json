@@ -1,0 +1,142 @@
+{
+  "id": "day07-quiz",
+  "metaId": "day07",
+  "title": "Day 07 Quiz — Week 1 Review",
+  "description": "Cumulative quiz across JSX, state, forms, lists, useEffect, routing, and custom hooks before certifying Week 1 complete.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "Week 1 machine coding expects you to build which set of features in 90 minutes?",
+      "options": [
+        { "id": "a", "text": "Redux store and RTK Query" },
+        { "id": "b", "text": "Login page, dashboard, sidebar, and navbar" },
+        { "id": "c", "text": "GraphQL server" },
+        { "id": "d", "text": "Only a landing page" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Day 07 consolidates Week 1: auth-style login UI plus routed dashboard shell.",
+      "difficulty": "easy",
+      "tags": ["machine-coding", "week1"]
+    },
+    {
+      "id": "q02",
+      "type": "multiple-choice",
+      "prompt": "Which topics are fair game in Week 1 machine coding? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "useState and controlled forms" },
+        { "id": "b", "text": "useEffect and fetch" },
+        { "id": "c", "text": "React Router nested layouts" },
+        { "id": "d", "text": "Redux Toolkit" }
+      ],
+      "correctOptionIds": ["a", "b", "c"],
+      "explanation": "Redux is Week 3. Custom hooks from Day 06 are also fair if you built them this week.",
+      "difficulty": "easy",
+      "tags": ["week1", "review"]
+    },
+    {
+      "id": "q03",
+      "type": "true-false",
+      "prompt": "During the machine coding round you may use AI assistants and copy-paste from previous projects.",
+      "correctAnswer": false,
+      "explanation": "Day 07 rules: no AI, no Google, no copy-paste — only official docs. Simulates interview conditions.",
+      "difficulty": "easy",
+      "tags": ["machine-coding"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "Best order to build under time pressure?",
+      "options": [
+        { "id": "a", "text": "Polish CSS first, then routing, then forms last" },
+        { "id": "b", "text": "Scaffold routes and layout shell, login form, then wire navigation and minimal styles" },
+        { "id": "c", "text": "Write all TypeScript types for Week 4 first" },
+        { "id": "d", "text": "Implement fetch before any UI" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Interview strategy: working skeleton first — layout + routes + login — then iterate. Polish if time remains.",
+      "difficulty": "medium",
+      "tags": ["machine-coding", "strategy"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Controlled login inputs use {{blank1}} and {{blank2}}; dashboard child pages render in {{blank3}}.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["value"] },
+        { "id": "blank2", "acceptedAnswers": ["onChange", "onchange"] },
+        { "id": "blank3", "acceptedAnswers": ["Outlet", "outlet"] }
+      ],
+      "explanation": "Week 1 patterns combined: Day 02 forms + Day 05 routing.",
+      "difficulty": "medium",
+      "tags": ["week1", "review"]
+    },
+    {
+      "id": "q06",
+      "type": "code-completion",
+      "prompt": "Complete the hook for Week 1 debounced search (Day 06).",
+      "code": "const debouncedQuery = {{hook}}(query, 300);",
+      "language": "tsx",
+      "blanks": [
+        { "id": "hook", "acceptedAnswers": ["useDebounce"] }
+      ],
+      "explanation": "useDebounce from Day 06 — optional in machine round but good to remember.",
+      "difficulty": "easy",
+      "tags": ["custom-hooks", "week1"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "You have 20 minutes left and login works but dashboard is empty. Highest priority?",
+      "options": [
+        { "id": "a", "text": "Add animations" },
+        { "id": "b", "text": "Sidebar links + Outlet + one dashboard page with placeholder content" },
+        { "id": "c", "text": "Rewrite everything in class components" },
+        { "id": "d", "text": "Install Redux" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Demonstrate routing and layout — core Week 1 deliverable. Placeholder content is acceptable under time pressure.",
+      "difficulty": "medium",
+      "tags": ["machine-coding", "strategy"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "After machine coding, how do you identify weak areas for Week 2?",
+      "acceptedKeywords": ["review", "stuck", "time", "concepts", "practice", "notes"],
+      "sampleAnswer": "Note where I hesitated — routing config, useEffect deps, form validation. Compare against definition of done. Re-read those day lessons and rebuild the weak slice without looking at solutions.",
+      "explanation": "Day 07 is assessment plus self-directed review.",
+      "difficulty": "medium",
+      "tags": ["review"]
+    },
+    {
+      "id": "q09",
+      "type": "code-output",
+      "prompt": "What renders if route path is * in a catch-all 404 route?",
+      "code": "<Route path=\"*\" element={<NotFoundPage />} />",
+      "language": "tsx",
+      "correctOutput": "NotFoundPage",
+      "explanation": "Catch-all matches unknown URLs — Week 1 Day 05 pattern.",
+      "difficulty": "easy",
+      "tags": ["react-router", "week1"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "Official docs are allowed during machine coding because:",
+      "options": [
+        { "id": "a", "text": "Interviewers expect you to know syntax by heart only" },
+        { "id": "b", "text": "Real engineers look up API details — understanding matters more than memorizing Router API" },
+        { "id": "c", "text": "Docs include full solutions" },
+        { "id": "d", "text": "Stack Overflow is the same as official docs" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Understanding beats memorization. Official React and Router docs clarify API — not tutorials with full app code.",
+      "difficulty": "easy",
+      "tags": ["machine-coding"]
+    }
+  ]
+}

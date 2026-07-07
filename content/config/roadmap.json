@@ -1,0 +1,59 @@
+{
+  "id": "frontforge-roadmap",
+  "title": "React Interview Track",
+  "description": "24-day curriculum from React fundamentals to interview readiness.",
+  "weeks": [
+    {
+      "week": 1,
+      "title": "Week 1 — React Foundations",
+      "goal": "Build small React apps, understand JSX, state, forms, and routing basics.",
+      "days": [
+        { "day": 1, "dayId": "day01", "title": "Your First React Application", "mission": "Build your first React application.", "difficulty": "beginner" },
+        { "day": 2, "dayId": "day02", "title": "Professional Login Page", "mission": "Build a production-style login page.", "difficulty": "beginner" },
+        { "day": 3, "dayId": "day03", "title": "Day 03", "mission": "Week 1 curriculum.", "difficulty": "beginner" },
+        { "day": 4, "dayId": "day04", "title": "Day 04", "mission": "Week 1 curriculum.", "difficulty": "beginner" },
+        { "day": 5, "dayId": "day05", "title": "Day 05", "mission": "Week 1 curriculum.", "difficulty": "intermediate" },
+        { "day": 6, "dayId": "day06", "title": "Day 06", "mission": "Week 1 curriculum.", "difficulty": "intermediate" },
+        { "day": 7, "dayId": "day07", "title": "Machine Coding Round 1", "mission": "Week 1 review build.", "difficulty": "intermediate" }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "Week 2 — APIs & Medium Apps",
+      "goal": "Fetch APIs, custom hooks, lists, Context, routing, and machine coding.",
+      "days": [
+        { "day": 8, "dayId": "day08", "title": "Weather Dashboard", "mission": "Build a Weather Dashboard.", "difficulty": "intermediate" },
+        { "day": 9, "dayId": "day09", "title": "Movie Search Application", "mission": "Build movie search with debounce.", "difficulty": "intermediate" },
+        { "day": 10, "dayId": "day10", "title": "Product Listing", "mission": "E-commerce product listing.", "difficulty": "intermediate" },
+        { "day": 11, "dayId": "day11", "title": "Infinite Scrolling", "mission": "Infinite scroll feed.", "difficulty": "intermediate" },
+        { "day": 12, "dayId": "day12", "title": "Shopping Cart", "mission": "Context API cart.", "difficulty": "intermediate" },
+        { "day": 13, "dayId": "day13", "title": "User Profile & Routing", "mission": "Dynamic routes.", "difficulty": "intermediate" },
+        { "day": 14, "dayId": "day14", "title": "Machine Coding Round 2", "mission": "Week 2 review build.", "difficulty": "advanced" }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "Week 3 — Global State & Architecture",
+      "goal": "Redux Toolkit, RTK Query, auth, performance, and dashboards.",
+      "days": [
+        { "day": 15, "dayId": "day15", "title": "Theme Management System", "mission": "Build a Theme Management System.", "difficulty": "intermediate" },
+        { "day": 16, "dayId": "day16", "title": "Todo Manager (Redux Toolkit)", "mission": "Redux Toolkit todos.", "difficulty": "intermediate" },
+        { "day": 17, "dayId": "day17", "title": "Product Management (RTK Query)", "mission": "RTK Query CRUD.", "difficulty": "intermediate" },
+        { "day": 18, "dayId": "day18", "title": "Authentication Flow", "mission": "Auth module.", "difficulty": "intermediate" },
+        { "day": 19, "dayId": "day19", "title": "Admin Dashboard", "mission": "Enterprise dashboard.", "difficulty": "advanced" },
+        { "day": 20, "dayId": "day20", "title": "Performance Lab", "mission": "Optimize React performance.", "difficulty": "advanced" },
+        { "day": 21, "dayId": "day21", "title": "Machine Coding Round 3", "mission": "Week 3 review build.", "difficulty": "advanced" }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "Week 4 — Interview Week",
+      "goal": "Machine coding, debugging, production polish, and mock interviews.",
+      "days": [
+        { "day": 22, "dayId": "day22", "title": "Machine Coding Interview", "mission": "90-minute machine coding.", "difficulty": "advanced" },
+        { "day": 23, "dayId": "day23", "title": "Production Ready Frontend", "mission": "Refactor for production.", "difficulty": "advanced" },
+        { "day": 24, "dayId": "day24", "title": "Mock Frontend Interview", "mission": "Full interview simulation.", "difficulty": "advanced" }
+      ]
+    }
+  ]
+}

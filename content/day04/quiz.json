@@ -1,0 +1,146 @@
+{
+  "id": "day04-quiz",
+  "metaId": "day04",
+  "title": "Day 04 Quiz — useEffect, Fetch, and Async UI",
+  "description": "Verify you understand promises, fetch, useEffect, dependency arrays, and async UI states before Day 05 routing.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "Why should you not call fetch directly in the component body during render?",
+      "options": [
+        { "id": "a", "text": "fetch is not available in browsers" },
+        { "id": "b", "text": "It triggers a side effect on every render and can cause infinite loops or race conditions" },
+        { "id": "c", "text": "TypeScript forbids fetch in components" },
+        { "id": "d", "text": "fetch only works inside useEffect on the first render" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Render should be pure. Side effects like network calls belong in useEffect or event handlers, not unconditional render code.",
+      "difficulty": "easy",
+      "tags": ["react", "useEffect"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "An empty dependency array [] means the effect runs once after the initial mount (in Strict Mode dev you may see double invoke).",
+      "correctAnswer": true,
+      "explanation": "[] tells React the effect does not depend on props/state values that change — typical for mount-only setup. Strict Mode intentionally double-invokes in development to surface bugs.",
+      "difficulty": "medium",
+      "tags": ["react", "useEffect"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "fetch('https://api.github.com/users/missing') resolves with status 404. What should you check before calling response.json() as success?",
+      "options": [
+        { "id": "a", "text": "response.json() automatically throws on 404" },
+        { "id": "b", "text": "response.ok or response.status — fetch does not reject on HTTP errors" },
+        { "id": "c", "text": "response.headers only" },
+        { "id": "d", "text": "Nothing — 404 means empty object" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "fetch resolves on HTTP error status codes like 404 — you must check response.ok or status manually.",
+      "difficulty": "medium",
+      "tags": ["javascript", "fetch"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "What is the purpose of useEffect in React?",
+      "options": [
+        { "id": "a", "text": "Replace useState for async data" },
+        { "id": "b", "text": "Synchronize the component with external systems after render — APIs, subscriptions, DOM" },
+        { "id": "c", "text": "Memoize expensive calculations" },
+        { "id": "d", "text": "Define component props" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "useEffect runs after paint to handle side effects outside the render phase.",
+      "difficulty": "easy",
+      "tags": ["react", "useEffect"]
+    },
+    {
+      "id": "q05",
+      "type": "multiple-choice",
+      "prompt": "Which UI states should a search feature handle? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Loading while request is in flight" },
+        { "id": "b", "text": "Error when network fails or user not found" },
+        { "id": "c", "text": "Empty before user searches" },
+        { "id": "d", "text": "Success showing fetched data" }
+      ],
+      "correctOptionIds": ["a", "b", "c", "d"],
+      "explanation": "Production API UIs always model loading, error, empty, and success — interviewers expect this matrix.",
+      "difficulty": "easy",
+      "tags": ["react", "architecture"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "Declare an async function inside useEffect or use an {{blank1}} function with {{blank2}}/{{blank3}} — never make the effect callback itself async.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["inner", "nested", "IIFE"] },
+        { "id": "blank2", "acceptedAnswers": ["async"] },
+        { "id": "blank3", "acceptedAnswers": ["await"] }
+      ],
+      "explanation": "async effect callbacks return Promises React ignores. Use an inner async function and call it.",
+      "difficulty": "medium",
+      "tags": ["react", "async"]
+    },
+    {
+      "id": "q07",
+      "type": "code-completion",
+      "prompt": "Complete the effect that refetches when username changes.",
+      "code": "useEffect(() => {\n  if (!username) return;\n  fetchUser(username);\n}, [{{deps}}]);",
+      "language": "tsx",
+      "blanks": [
+        { "id": "deps", "acceptedAnswers": ["username"] }
+      ],
+      "explanation": "Values used inside the effect that change over time belong in the dependency array.",
+      "difficulty": "easy",
+      "tags": ["react", "useEffect"]
+    },
+    {
+      "id": "q08",
+      "type": "single-choice",
+      "prompt": "Infinite re-renders after adding useEffect. The effect calls setState and has no dependency array. What is wrong?",
+      "options": [
+        { "id": "a", "text": "fetch is too slow" },
+        { "id": "b", "text": "Effect runs after every render; setState triggers another render — loop" },
+        { "id": "c", "text": "GitHub API requires React Router" },
+        { "id": "d", "text": "useState cannot store API data" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Missing deps means effect runs every render. If it sets state, you get render → effect → setState → render forever.",
+      "difficulty": "medium",
+      "tags": ["react", "debugging"]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Why type API responses with TypeScript interfaces?",
+      "acceptedKeywords": ["autocomplete", "shape", "catch", "errors", "document", "contract"],
+      "sampleAnswer": "Interfaces document the expected JSON shape, catch typos at compile time, and improve autocomplete when rendering user.login or avatar_url.",
+      "explanation": "APIs return JSON — TypeScript does not validate runtime shape without extra tools, but types still help development enormously.",
+      "difficulty": "medium",
+      "tags": ["typescript", "api"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "User types fast and multiple fetches overlap. Older response arrives last and shows stale data. What pattern helps?",
+      "options": [
+        { "id": "a", "text": "Ignore — fetch is always ordered" },
+        { "id": "b", "text": "AbortController or ignore flag in cleanup to cancel/ignore stale requests" },
+        { "id": "c", "text": "Remove useEffect entirely" },
+        { "id": "d", "text": "Use var instead of const" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Cleanup in useEffect can abort fetches or set a cancelled flag — critical for search UIs. Full debounce comes Day 06.",
+      "difficulty": "hard",
+      "tags": ["react", "fetch"]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "day20",
+  "version": "1.0.0",
+  "day": 20,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Optimize React Performance",
+  "subtitle": "Memory, React.memo, useMemo, useCallback, lazy loading, and code splitting",
+  "mission": "Optimize React Performance.",
+  "readingTimeMinutes": 30,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": [
+    "react",
+    "performance",
+    "memo",
+    "useMemo",
+    "useCallback",
+    "lazy",
+    "code-splitting"
+  ],
+  "topics": {
+    "javascript": [
+      "memory",
+      "garbage collection"
+    ],
+    "typescript": [
+      "performance-friendly types"
+    ],
+    "react": [
+      "React.memo",
+      "useMemo",
+      "useCallback",
+      "lazy loading",
+      "code splitting"
+    ]
+  },
+  "prerequisites": [
+    "day19 — admin dashboard with user table and analytics cards",
+    "day17 — product list from RTK Query",
+    "day10 — React.memo introduction from Week 2",
+    "day13 — routing for lazy route splitting"
+  ],
+  "expectedOutcome": [
+    "Explain JavaScript memory and garbage collection basics",
+    "Use performance-friendly TypeScript types without unnecessary widening",
+    "Apply React.memo to prevent unnecessary child re-renders",
+    "Stabilize callbacks with useCallback and derived data with useMemo",
+    "Lazy load routes and heavy components with React.lazy and Suspense",
+    "Measure and compare before/after render performance",
+    "Explain when NOT to memoize in interviews"
+  ],
+  "definitionOfDone": [
+    "Product list optimized with memoized row components",
+    "Expensive filters wrapped in useMemo",
+    "Stable callbacks passed to memoized children",
+    "Dashboard and admin routes lazy loaded",
+    "Before/after comparison documented",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 21,
+    "title": "Machine Coding Round 3",
+    "summary": "Tomorrow is your 150-minute Week 3 review — build authentication, dashboard, Redux store, API integration, and theme system from scratch without referring to previous code."
+  }
+}

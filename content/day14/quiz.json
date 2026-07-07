@@ -1,0 +1,141 @@
+{
+  "id": "day14-quiz",
+  "metaId": "day14",
+  "title": "Day 14 Quiz — Week 2 Cumulative Review",
+  "description": "Cumulative verification of APIs, hooks, Context, routing, performance, and event loop across Week 2.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "During Machine Coding Round 2, you may use ChatGPT if you only ask syntax questions.",
+      "correctAnswer": false,
+      "explanation": "Roadmap rules: no AI during the timed build. Official documentation only.",
+      "difficulty": "easy",
+      "tags": ["machine-coding", "rules"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "First priority when running low on time in a machine coding round?",
+      "options": [
+        { "id": "a", "text": "Perfect CSS animations" },
+        { "id": "b", "text": "End-to-end core flow: list → add to cart → see cart total" },
+        { "id": "c", "text": "Write unit tests for every component" },
+        { "id": "d", "text": "Add Redux Toolkit" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Interviewers evaluate working core features under time pressure. Polish is secondary.",
+      "difficulty": "easy",
+      "tags": ["machine-coding", "strategy"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "Which Week 2 pattern shares cart state across product and cart pages?",
+      "options": [
+        { "id": "a", "text": "Prop drilling through five components" },
+        { "id": "b", "text": "Context API + useReducer" },
+        { "id": "c", "text": "sessionStorage only" },
+        { "id": "d", "text": "Global variables" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Day 12 pattern — CartProvider + reducer dispatches from any route.",
+      "difficulty": "easy",
+      "tags": ["react", "context"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which belong in the Round 2 product filter pipeline? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Search filter" },
+        { "id": "b", "text": "Category filter" },
+        { "id": "c", "text": "useEffect with no deps for filter" },
+        { "id": "d", "text": "Sort by price" }
+      ],
+      "correctOptionIds": ["a", "b", "d"],
+      "explanation": "Search, category, price, and sort compose the listing pipeline. useEffect with no deps causes loops — use useMemo for derivation.",
+      "difficulty": "medium",
+      "tags": ["week2", "filter"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Debounce uses {{blank1}} scheduled as a macrotask. fetch().then() runs as a {{blank2}}.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["setTimeout"] },
+        { "id": "blank2", "acceptedAnswers": ["microtask"] }
+      ],
+      "explanation": "Event loop ordering — microtasks drain before next macrotask.",
+      "difficulty": "medium",
+      "tags": ["javascript", "event-loop"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What is the output order?",
+      "code": "console.log('1');\nsetTimeout(() => console.log('4'), 0);\nPromise.resolve().then(() => console.log('3'));\nconsole.log('2');",
+      "language": "typescript",
+      "correctOutput": "1 2 3 4",
+      "explanation": "Sync 1, 2 → microtask 3 → macrotask 4. Core Day 11 event loop knowledge.",
+      "difficulty": "medium",
+      "tags": ["javascript", "event-loop"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Cart reducer ADD_ITEM finds existing product. Correct update?",
+      "options": [
+        { "id": "a", "text": "state.items.push({ ...product, quantity: 1 })" },
+        { "id": "b", "text": "return { items: state.items.map(i => i.id === id ? { ...i, quantity: i.quantity + 1 } : i) }" },
+        { "id": "c", "text": "product.quantity++" },
+        { "id": "d", "text": "delete state.items[0]" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Immutable map with spread — increment quantity without mutation.",
+      "difficulty": "medium",
+      "tags": ["react", "immutability"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "Name two official doc sites allowed during Machine Coding Round 2.",
+      "acceptedKeywords": ["react.dev", "mdn", "mozilla", "typescript", "reactrouter"],
+      "sampleAnswer": "react.dev for React hooks and patterns; developer.mozilla.org for fetch, arrays, and event loop; reactrouter.com for routing; typescriptlang.org for types.",
+      "explanation": "Know the rules before starting the timer.",
+      "difficulty": "easy",
+      "tags": ["machine-coding", "rules"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the custom hook name following React rules.",
+      "code": "function {{useDebounce}}<T>(value: T, delay: number): T {\n  // implementation\n}",
+      "language": "typescript",
+      "blanks": [
+        { "id": "useDebounce", "acceptedAnswers": ["useDebounce"] }
+      ],
+      "explanation": "Custom hooks must start with use — Day 09 pattern.",
+      "difficulty": "easy",
+      "tags": ["react", "custom-hooks"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "Why use product.id as list key in the Round 2 product grid?",
+      "options": [
+        { "id": "a", "text": "SEO requirement" },
+        { "id": "b", "text": "Stable identity across filter/sort reorder — Day 10" },
+        { "id": "c", "text": "Required for Context API" },
+        { "id": "d", "text": "Makes fetch faster" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Stable keys prevent reconciliation bugs when filters change list order.",
+      "difficulty": "easy",
+      "tags": ["react", "keys"]
+    }
+  ]
+}

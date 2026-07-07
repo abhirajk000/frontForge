@@ -1,0 +1,176 @@
+{
+  "id": "day07-lesson",
+  "metaId": "day07",
+  "title": "Day 07 — Machine Coding Round 1",
+  "summary": "90-minute Week 1 review build: login, dashboard, sidebar, and navbar — from memory, under interview rules, with cumulative quiz and reflection.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "This is not a new concepts day. This is the day product companies simulate — build a working mini-app in 90 minutes while interviewers watch architecture choices, debugging calm, and prioritization. You will rebuild login, dashboard, sidebar, and navbar without peeking at Week 1 solutions. Weak areas become your Week 2 focus list."
+    },
+    {
+      "type": "callout",
+      "variant": "danger",
+      "title": "Rules — read before starting timer",
+      "content": "No AI. No Google. No copy-paste from previous FrontForge code. Only official docs: react.dev, reactrouter.com, typescriptlang.org, vite.dev, developer.mozilla.org. Set a 90-minute timer. When it ends, stop and write your self-review."
+    },
+    {
+      "type": "heading",
+      "id": "review",
+      "level": 2,
+      "text": "Week 1 concept checklist"
+    },
+    {
+      "type": "paragraph",
+      "content": "Everything below was taught on its scheduled day. The machine round may combine them — that is intentional."
+    },
+    {
+      "type": "checklist",
+      "title": "Concepts you should own",
+      "items": [
+        { "id": "c01", "text": "Day 01 — JSX, components, Vite, TypeScript props" },
+        { "id": "c02", "text": "Day 02 — useState, controlled forms, validation, events" },
+        { "id": "c03", "text": "Day 03 — map/lists/keys, children, reusable inputs" },
+        { "id": "c04", "text": "Day 04 — useEffect, fetch, loading/error states" },
+        { "id": "c05", "text": "Day 05 — React Router, Link, Outlet, nested layout, 404" },
+        { "id": "c06", "text": "Day 06 — custom hooks, debounce, responsive shell, theme (stretch)" }
+      ]
+    },
+    {
+      "type": "table",
+      "headers": ["Phase", "Minutes", "Goal"],
+      "rows": [
+        ["Scaffold", "0–15", "Vite + TS + Router shell, empty routes"],
+        ["Login", "15–40", "Controlled form, validation, fake auth"],
+        ["Dashboard", "40–70", "Sidebar, Navbar, Outlet, 2 pages"],
+        ["Wire + fix", "70–85", "Login → dashboard, build passes"],
+        ["Review", "85–90", "Smoke test, git push, notes"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Interview prioritization",
+      "content": "A working ugly app beats a beautiful incomplete form. Navbar can be a single div. Sidebar can be a ul with Link. Placeholder page text is fine. Missing routing is not."
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build — Machine Coding Round 1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Build from scratch or an empty git branch. Simulated login: if email and password pass validation, navigate to /dashboard. Sidebar links to at least dashboard and profile. Navbar shows app name. Main area swaps via Outlet."
+    },
+    {
+      "type": "checklist",
+      "title": "Minimum viable deliverable",
+      "items": [
+        { "id": "mv-login", "text": "Login with email + password + validation" },
+        { "id": "mv-nav", "text": "Navigate to dashboard after login" },
+        { "id": "mv-layout", "text": "Sidebar + Navbar persist on dashboard routes" },
+        { "id": "mv-routes", "text": "Two+ navigable sections via React Router" },
+        { "id": "mv-build", "text": "npm run build succeeds" }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "interview-focus",
+      "level": 2,
+      "text": "Interview focus — cumulative"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "int-jsx",
+          "title": "JSX and components",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Can you scaffold components without copying? PascalCase, typed props, separate files."
+            }
+          ]
+        },
+        {
+          "id": "int-state",
+          "title": "Props, state, forms",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Controlled login, preventDefault, validation before navigate."
+            }
+          ]
+        },
+        {
+          "id": "int-effect",
+          "title": "useEffect and fetch",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Optional stretch: fetch user in profile page. If added, show loading and error — not required for minimum pass."
+            }
+          ]
+        },
+        {
+          "id": "int-router",
+          "title": "Router and hooks",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Nested layout with Outlet. Custom hooks optional bonus. Explain choices in interview section after build."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "after",
+      "level": 2,
+      "text": "After the timer — review weak areas"
+    },
+    {
+      "type": "paragraph",
+      "content": "Identify gaps honestly. Week 2 assumes you can build small React apps independently. If routing slowed you down, redo only DashboardLayout tomorrow morning for 30 minutes — do not repeat all seven days."
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Week 1 complete",
+      "content": "When quiz, interview, reflection, and timed build are done, you have finished Week 1 of FrontForge. Week 2 starts with API-driven Weather Dashboard on Day 08."
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-timer", "text": "90-minute build attempted under rules" },
+        { "id": "done-self-review", "text": "Weak areas documented" },
+        { "id": "done-git", "text": "Push to machine-coding branch" },
+        { "id": "done-quiz", "text": "Cumulative quiz passed" },
+        { "id": "done-interview", "text": "Cumulative interview answered" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

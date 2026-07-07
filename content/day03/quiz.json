@@ -1,0 +1,141 @@
+{
+  "id": "day03-quiz",
+  "metaId": "day03",
+  "title": "Day 03 Quiz — Lists, Keys, and Reusable Components",
+  "description": "Verify you understand map/filter/reduce, children, list rendering, keys, and component composition before Day 04.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "Why does React require a key prop when rendering a list of elements?",
+      "options": [
+        { "id": "a", "text": "Keys encrypt list data for security" },
+        { "id": "b", "text": "Keys help React identify which items changed, were added, or removed across re-renders" },
+        { "id": "c", "text": "Keys are only needed for class components" },
+        { "id": "d", "text": "Keys replace the need for useState in lists" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Keys give React a stable identity per list item so reconciliation can update the DOM efficiently and preserve component state correctly.",
+      "difficulty": "easy",
+      "tags": ["react", "keys"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "Using the array index as key is always the best choice for dynamic lists where items can be reordered or deleted.",
+      "correctAnswer": false,
+      "explanation": "Index keys break when list order changes — React may reuse the wrong DOM nodes and component state. Use stable unique IDs from data when possible.",
+      "difficulty": "medium",
+      "tags": ["react", "keys"]
+    },
+    {
+      "id": "q03",
+      "type": "code-output",
+      "prompt": "What is logged?",
+      "code": "const fields = ['email', 'password'];\nconst labels = fields.map((f) => f.toUpperCase());\nconsole.log(labels.join(','));",
+      "language": "typescript",
+      "correctOutput": "EMAIL,PASSWORD",
+      "explanation": "map transforms each element. join concatenates with the separator.",
+      "difficulty": "easy",
+      "tags": ["javascript", "map"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "What does the children prop represent in React?",
+      "options": [
+        { "id": "a", "text": "Only text nodes — JSX elements cannot be children" },
+        { "id": "b", "text": "Content passed between opening and closing tags of a component" },
+        { "id": "c", "text": "A built-in hook for nested routes" },
+        { "id": "d", "text": "The parent component's state object" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "children is whatever you nest inside a component — elements, text, fragments, or arrays. It enables composition patterns like Card wrapping arbitrary content.",
+      "difficulty": "easy",
+      "tags": ["react", "composition"]
+    },
+    {
+      "id": "q05",
+      "type": "multiple-choice",
+      "prompt": "Which are good reasons to extract reusable form components? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Consistent styling and accessibility across forms" },
+        { "id": "b", "text": "Single place to fix bugs in input behavior" },
+        { "id": "c", "text": "Eliminates the need for useState" },
+        { "id": "d", "text": "Easier testing of isolated UI pieces" }
+      ],
+      "correctOptionIds": ["a", "b", "d"],
+      "explanation": "Reusable components improve consistency and maintainability. State is still required for controlled inputs — extraction does not remove useState.",
+      "difficulty": "medium",
+      "tags": ["react", "architecture"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "To sum validation error counts in an array of fields, use {{blank1}} with an initial value of {{blank2}}.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["reduce"] },
+        { "id": "blank2", "acceptedAnswers": ["0", "zero"] }
+      ],
+      "explanation": "reduce accumulates a single value from an array — common for counts and aggregates.",
+      "difficulty": "medium",
+      "tags": ["javascript", "reduce"]
+    },
+    {
+      "id": "q07",
+      "type": "code-completion",
+      "prompt": "Complete the list render with a stable key from field.id.",
+      "code": "fields.map((field) => (\n  <FieldRow key={{keyExpr}} field={field} />\n));",
+      "language": "tsx",
+      "blanks": [
+        { "id": "keyExpr", "acceptedAnswers": ["field.id"] }
+      ],
+      "explanation": "key must be on the outermost element returned from map — use a stable unique id from data, not Math.random().",
+      "difficulty": "easy",
+      "tags": ["react", "lists"]
+    },
+    {
+      "id": "q08",
+      "type": "single-choice",
+      "prompt": "You have an array of error strings and only want non-empty messages. Which method fits best?",
+      "options": [
+        { "id": "a", "text": "map()" },
+        { "id": "b", "text": "filter()" },
+        { "id": "c", "text": "reduce() only — filter cannot help" },
+        { "id": "d", "text": "sort()" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "filter keeps elements that pass a predicate — ideal for removing empty strings before rendering an error list.",
+      "difficulty": "easy",
+      "tags": ["javascript", "filter"]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Why should reusable input components accept value and onChange as props instead of owning email/password state internally?",
+      "acceptedKeywords": ["controlled", "parent", "reusable", "single source", "flexible"],
+      "sampleAnswer": "The parent form owns state so the library stays reusable across different forms. value and onChange keep inputs controlled while letting each page manage its own state shape.",
+      "explanation": "Interviewers test whether you understand presentational vs container separation even before custom hooks on Day 06.",
+      "difficulty": "medium",
+      "tags": ["react", "composition"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "Console warns: Each child in a list should have a unique key prop. You mapped errors but put key on an inner <span>. What is wrong?",
+      "options": [
+        { "id": "a", "text": "Keys must be numbers only" },
+        { "id": "b", "text": "key belongs on the outermost element returned from map, not a nested child" },
+        { "id": "c", "text": "Lists cannot contain span elements" },
+        { "id": "d", "text": "You must use useEffect to fix keys" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "React reads key on the direct child of the array. Move key to the top-level element in the map callback return.",
+      "difficulty": "medium",
+      "tags": ["react", "debugging"]
+    }
+  ]
+}

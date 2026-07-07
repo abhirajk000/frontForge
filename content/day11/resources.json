@@ -1,0 +1,72 @@
+{
+  "id": "day11-resources",
+  "metaId": "day11",
+  "title": "Day 11 Resources",
+  "description": "Official docs for event loop, Intersection Observer, and pagination patterns.",
+  "resources": [
+    {
+      "id": "res-event-loop",
+      "title": "MDN — Event Loop",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
+      "type": "documentation",
+      "description": "Deep dive on call stack, microtasks, and macrotasks.",
+      "recommended": true
+    },
+    {
+      "id": "res-microtasks",
+      "title": "MDN — Microtask guide",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide",
+      "type": "documentation",
+      "description": "Promise callbacks and queueMicrotask execution order.",
+      "recommended": true
+    },
+    {
+      "id": "res-intersection-observer",
+      "title": "MDN — Intersection Observer API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API",
+      "type": "documentation",
+      "description": "Core API for infinite scroll sentinel detection.",
+      "recommended": true
+    },
+    {
+      "id": "res-intersection-observer-init",
+      "title": "MDN — IntersectionObserver",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver",
+      "type": "documentation",
+      "description": "Constructor, observe, disconnect, and callback entries.",
+      "recommended": true
+    },
+    {
+      "id": "res-useeffect-cleanup",
+      "title": "React — Synchronizing with Effects (Cleanup)",
+      "url": "https://react.dev/learn/synchronizing-with-effects#step-3-add-cleanup-if-needed",
+      "type": "documentation",
+      "description": "Disconnect observer in useEffect cleanup.",
+      "recommended": true
+    },
+    {
+      "id": "res-lazy-loading",
+      "title": "MDN — Lazy loading",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading",
+      "type": "documentation",
+      "description": "Lazy load images in long feeds.",
+      "recommended": false
+    },
+    {
+      "id": "res-ts-dom",
+      "title": "TypeScript — DOM Library Types",
+      "url": "https://www.typescriptlang.org/docs/handbook/dom-manipulation.html",
+      "type": "documentation",
+      "description": "Typing IntersectionObserverEntry and callback parameters.",
+      "recommended": false
+    },
+    {
+      "id": "res-jsonplaceholder",
+      "title": "JSONPlaceholder — Posts API",
+      "url": "https://jsonplaceholder.typicode.com/guide/",
+      "type": "documentation",
+      "description": "Paginated mock API for infinite scroll practice.",
+      "recommended": true
+    }
+  ]
+}

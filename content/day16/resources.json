@@ -1,0 +1,72 @@
+{
+  "id": "day16-resources",
+  "metaId": "day16",
+  "title": "Day 16 Resources",
+  "description": "Official Redux Toolkit documentation for store, slices, and TypeScript.",
+  "resources": [
+    {
+      "id": "res-rtk",
+      "title": "Redux Toolkit — Getting Started",
+      "url": "https://redux-toolkit.js.org/introduction/getting-started",
+      "type": "documentation",
+      "description": "Official RTK introduction and installation.",
+      "recommended": true
+    },
+    {
+      "id": "res-slice",
+      "title": "Redux Toolkit — createSlice",
+      "url": "https://redux-toolkit.js.org/api/createSlice",
+      "type": "documentation",
+      "description": "API reference for slices, reducers, and generated actions.",
+      "recommended": true
+    },
+    {
+      "id": "res-store",
+      "title": "Redux Toolkit — configureStore",
+      "url": "https://redux-toolkit.js.org/api/configureStore",
+      "type": "documentation",
+      "description": "Store setup with defaults and middleware.",
+      "recommended": true
+    },
+    {
+      "id": "res-usage",
+      "title": "Redux — Usage with React",
+      "url": "https://react-redux.js.org/api/hooks",
+      "type": "documentation",
+      "description": "useSelector and useDispatch hooks.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts",
+      "title": "Redux Toolkit — TypeScript Quick Start",
+      "url": "https://redux-toolkit.js.org/tutorials/typescript",
+      "type": "documentation",
+      "description": "Typed store, hooks, and slices pattern.",
+      "recommended": true
+    },
+    {
+      "id": "res-pure",
+      "title": "MDN — Pure Functions",
+      "url": "https://developer.mozilla.org/en-US/docs/Glossary/Pure_function",
+      "type": "documentation",
+      "description": "Pure function definition for reducer interviews.",
+      "recommended": true
+    },
+    {
+      "id": "res-immer",
+      "title": "Redux Toolkit — Immutability with Immer",
+      "url": "https://redux-toolkit.js.org/usage/immer-reducers",
+      "type": "documentation",
+      "description": "How Immer enables mutable syntax with immutable output.",
+      "recommended": true
+    },
+    {
+      "id": "res-style",
+      "title": "Redux — Style Guide",
+      "url": "https://redux.js.org/style-guide",
+      "type": "documentation",
+      "description": "Best practices for reducers, actions, and state shape.",
+      "recommended": false
+    }
+  ]
+}

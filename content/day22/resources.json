@@ -1,0 +1,72 @@
+{
+  "id": "day22-resources",
+  "metaId": "day22",
+  "title": "Day 22 Resources",
+  "description": "Quick-reference docs for interview revision — read only what you need during the 90-minute build.",
+  "resources": [
+    {
+      "id": "res-react-quick",
+      "title": "React — Quick Start",
+      "url": "https://react.dev/learn",
+      "type": "documentation",
+      "description": "Official revision for components, state, effects — allowed in machine coding rounds.",
+      "recommended": true
+    },
+    {
+      "id": "res-fetch-mdn",
+      "title": "MDN — Using the Fetch API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "type": "documentation",
+      "description": "API integration patterns for the Kanban data layer.",
+      "recommended": true
+    },
+    {
+      "id": "res-router",
+      "title": "React Router — Route",
+      "url": "https://reactrouter.com/en/main/route/route",
+      "type": "documentation",
+      "description": "Routing reference for debugging route param bugs.",
+      "recommended": true
+    },
+    {
+      "id": "res-rtk",
+      "title": "Redux Toolkit — Quick Start",
+      "url": "https://redux-toolkit.js.org/tutorials/quick-start",
+      "type": "documentation",
+      "description": "Week 3 Redux revision if you choose store for Kanban state.",
+      "recommended": false
+    },
+    {
+      "id": "res-event-loop",
+      "title": "MDN — Event Loop",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
+      "type": "documentation",
+      "description": "JavaScript revision for async and debounce interview questions.",
+      "recommended": true
+    },
+    {
+      "id": "res-a11y",
+      "title": "WAI-ARIA — Button",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
+      "type": "documentation",
+      "description": "Code review checklist — accessible task actions and column controls.",
+      "recommended": true
+    },
+    {
+      "id": "res-jsonplaceholder",
+      "title": "JSONPlaceholder — Todos API",
+      "url": "https://jsonplaceholder.typicode.com/todos",
+      "type": "tool",
+      "description": "Free mock API for Kanban task seed data during machine coding.",
+      "recommended": true
+    },
+    {
+      "id": "res-devtools",
+      "title": "React — Developer Tools",
+      "url": "https://react.dev/learn/react-developer-tools",
+      "type": "documentation",
+      "description": "Profiler and highlight updates for debugging infinite render bugs.",
+      "recommended": true
+    }
+  ]
+}

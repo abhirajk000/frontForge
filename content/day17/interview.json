@@ -1,0 +1,157 @@
+{
+  "id": "day17-interview",
+  "metaId": "day17",
+  "title": "Day 17 Interview Prep",
+  "description": "Practice RTK Query, caching, React Query comparison, and async API architecture.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is RTK Query and why use it over raw fetch?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Server state tooling awareness.",
+      "keyPoints": [
+        "Caching and deduplication",
+        "Loading/error lifecycle",
+        "Integrates with Redux store",
+        "Generated typed hooks"
+      ],
+      "sampleAnswer": "RTK Query is Redux Toolkit's data fetching layer. It caches responses, deduplicates requests, generates typed hooks, and manages loading/error states. I use it instead of raw fetch in useEffect because it eliminates boilerplate and keeps server cache in Redux DevTools alongside client state.",
+      "followUps": [
+        "What is baseQuery?",
+        "How handle pagination?"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "RTK Query vs React Query — when do you pick each?",
+      "difficulty": "easy",
+      "category": "architecture",
+      "whatInterviewerTests": "Library selection judgment.",
+      "keyPoints": [
+        "RTK Query needs Redux",
+        "React Query standalone",
+        "DevTools unity vs bundle size",
+        "Team familiarity"
+      ],
+      "sampleAnswer": "I pick RTK Query when the app already uses Redux Toolkit — one store, one DevTools timeline. I pick TanStack React Query for greenfield apps without Redux or when minimizing bundle size. Both solve caching; the difference is ecosystem integration.",
+      "followUps": [
+        "Can you use both?",
+        "Migration path?"
+      ]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain providesTags and invalidatesTags.",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Cache invalidation mechanics.",
+      "keyPoints": [
+        "Tags label cache entries",
+        "Invalidation marks stale",
+        "Triggers refetch",
+        "Granular vs list tags"
+      ],
+      "sampleAnswer": "Queries declare providesTags to label their cached data — e.g. a product list provides 'Product'. Mutations declare invalidatesTags to mark those entries stale. RTK Query refetches affected queries automatically. For edits I use { type: 'Product', id } for surgical invalidation instead of refetching everything.",
+      "followUps": [
+        "Optimistic updates?",
+        "Manual cache update?"
+      ]
+    },
+    {
+      "id": "int-m02",
+      "question": "How do you type API endpoints in RTK Query?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Production typing patterns.",
+      "keyPoints": [
+        "Generic on builder.query/mutation",
+        "Product interface",
+        "transformResponse typing",
+        "Hook inference"
+      ],
+      "sampleAnswer": "I define Product interface separately. Endpoints use builder.query<Product[], void> and builder.mutation<Product, CreateProductDto>. transformResponse unwraps ApiResponse<T> if needed. Generated hooks infer return types — components get typed data without casts.",
+      "followUps": [
+        "Error typing?",
+        "Paginated responses?"
+      ]
+    },
+    {
+      "id": "int-m03",
+      "question": "Walk through promise chaining vs async/await.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Async fundamentals underpinning RTK Query.",
+      "keyPoints": [
+        "then chains handlers",
+        "catch handles rejection",
+        "async returns Promise",
+        "Same event loop behavior"
+      ],
+      "sampleAnswer": "Promises represent async results. .then() chains success handlers sequentially; .catch() handles rejections anywhere in the chain. async/await is syntactic sugar — await pauses the async function until the promise settles. RTK Query endpoints are async functions returning data or throwing for baseQuery to catch.",
+      "followUps": [
+        "Promise.all?",
+        "Error boundaries with async?"
+      ]
+    },
+    {
+      "id": "int-h01",
+      "question": "Product list does not update after delete. Debug step by step.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "RTK Query debugging process.",
+      "keyPoints": [
+        "Redux DevTools cache slice",
+        "Mutation success",
+        "Tag matching",
+        "Manual refetch fallback"
+      ],
+      "sampleAnswer": "I confirm delete mutation succeeds in Network tab. In Redux DevTools I check productsApi mutations state. If fulfilled but list stale, I inspect providesTags on getProducts and invalidatesTags on deleteProduct — they must match. I add logging in transformResponse. As fallback I call refetch() from the query hook to isolate cache vs API issues.",
+      "followUps": [
+        "onQueryStarted?",
+        "updateQueryData?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "Two components mount and both fetch products — how many network requests?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Cache deduplication understanding.",
+      "keyPoints": [
+        "One in-flight request",
+        "Shared cache entry",
+        "Subscribers count",
+        "refetchOnMount behavior"
+      ],
+      "sampleAnswer": "With identical query args, RTK Query deduplicates — one network request serves both subscribers. Both hooks read the same cache entry. If I see two requests, args differ or refetchOnMountOrArgChange forces refetch. I verify args serialization in DevTools.",
+      "followUps": [
+        "Stale-while-revalidate?",
+        "Polling?"
+      ]
+    },
+    {
+      "id": "int-s01",
+      "question": "Design server state: RTK Query vs Redux slice for products?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Client vs server state separation.",
+      "keyPoints": [
+        "RTK Query for server cache",
+        "Slice for UI filters",
+        "No duplicate product arrays",
+        "Single source of truth"
+      ],
+      "sampleAnswer": "Server products live in RTK Query cache — fetched, cached, invalidated by mutations. UI state like sort order, selected category filter, and modal open flags live in a client slice. I never copy API products into a manual slice — that duplicates source of truth. Selectors combine query data with UI slice for the view.",
+      "followUps": [
+        "Normalized entities?",
+        "Offline support?"
+      ],
+      "redFlags": [
+        "Storing API data only in useState",
+        "Manual refetch in every mutation handler",
+        "Mixing auth tokens today before Day 18"
+      ]
+    }
+  ]
+}

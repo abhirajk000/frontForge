@@ -1,0 +1,68 @@
+{
+  "id": "day17-challenge",
+  "metaId": "day17",
+  "title": "Build Product Management with RTK Query",
+  "mission": "Build Product Management using RTK Query.",
+  "description": "Implement full product CRUD with RTK Query — typed API layer, query and mutation hooks, loading/error UI, and cache invalidation. No authentication yet.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Create productsApi with createApi, fetchBaseQuery, and Product tag type",
+    "Register productsApi reducer and middleware in configureStore",
+    "Define Product interface and ApiResponse generic in TypeScript",
+    "Implement getProducts query with providesTags",
+    "Implement addProduct, updateProduct, deleteProduct mutations with invalidatesTags",
+    "Build ProductList showing loading spinner and error message",
+    "Build AddProductForm dispatching addProduct mutation",
+    "Build edit and delete actions with optimistic or refetch-on-success UX",
+    "Connect to mock API or json-server for local development"
+  ],
+  "acceptanceCriteria": [
+    "Products load on mount with visible loading state",
+    "Adding a product refreshes the list without manual refetch",
+    "Update and delete reflect in UI after mutation success",
+    "Error states display when API fails",
+    "No auth headers or protected routes — open API only",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Use json-server or MSW for a local /api/products endpoint.",
+    "Export hooks: useGetProductsQuery, useAddProductMutation, etc.",
+    "Keep client state (UI filters) in Redux slice; server data in RTK Query cache.",
+    "Compare loading patterns with Day 8 fetch — RTK Query removes boilerplate.",
+    "Tag individual products with { type: 'Product', id } for granular invalidation."
+  ],
+  "bonus": {
+    "title": "Senior polish",
+    "description": "Optional enhancements for interview depth.",
+    "requirements": [
+      "Optimistic updates with onQueryStarted rollback on error",
+      "Pagination query with page arg and keepUnusedDataFor tuning",
+      "RTK Query DevTools inspection of cache entries"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-cache",
+      "title": "Cache not updating",
+      "symptom": "List stale after add/delete",
+      "cause": "Missing or mismatched invalidatesTags/providesTags",
+      "fix": "Add invalidatesTags: ['Product'] to mutations; verify query providesTags"
+    },
+    {
+      "id": "dbg-duplicate",
+      "title": "Duplicate requests",
+      "symptom": "Multiple identical GET calls in Network tab",
+      "cause": "Different query args or missing deduplication window",
+      "fix": "Normalize query args; check refetchOnMountOrArgChange settings"
+    },
+    {
+      "id": "dbg-invalidation",
+      "title": "Wrong invalidation",
+      "symptom": "Entire app refetches on single product edit",
+      "cause": "Over-broad tag invalidation",
+      "fix": "Use entity tags { type: 'Product', id: productId } for surgical updates"
+    }
+  ]
+}

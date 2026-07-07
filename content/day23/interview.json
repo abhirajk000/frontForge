@@ -1,0 +1,89 @@
+{
+  "id": "day23-interview",
+  "metaId": "day23",
+  "title": "Day 23 Interview Prep — 8 Senior Architecture Questions",
+  "description": "Senior-level discussion on architecture, performance, scalability, and maintainability. Answer out loud after your production refactor — defend every decision like a staff engineer review.",
+  "questions": [
+    {
+      "id": "int-01",
+      "question": "Walk me through your refactored folder structure. Why did you organize it this way?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Can you articulate colocation, scalability, and onboarding benefits — not just copy a template.",
+      "keyPoints": ["Feature folders", "Colocation", "Shared ui layer", "routes separation", "Avoid flat dump"],
+      "sampleAnswer": "I moved to feature-based folders — features/products with components, hooks, api, types colocated. Shared atoms like Button live in components/ui. Routes in routes/. Code that changes together lives together, so a product feature refactor does not touch auth. Trade-off: more directories vs faster navigation for new engineers.",
+      "followUps": ["When would you split a feature further?", "Barrel exports — yes or no?"]
+    },
+    {
+      "id": "int-02",
+      "question": "You used Context in this project. Why not Redux? When would you migrate?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "State management judgment — Week 3 core decision with honest trade-offs.",
+      "keyPoints": ["Update frequency", "DevTools need", "Multiple slices", "Migration trigger", "RTK Query separate"],
+      "sampleAnswer": "Context handles theme and auth snapshot — low-frequency reads, simple toggle actions. I would migrate to Redux when actions multiply, middleware is needed, or slices interact — cart + inventory + UI flags. RTK Query stays separate for server cache regardless. Context performance is fine here because updates are rare and value is memoized.",
+      "followUps": ["Context re-render problem?", "How split contexts?"]
+    },
+    {
+      "id": "int-03",
+      "question": "Explain your performance optimizations. What did you apply and what did you skip?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Measure-first mindset — not memo everything.",
+      "keyPoints": ["Profiler evidence", "React.memo targeted", "useMemo for filter", "useCallback for memo child", "Skipped with reason"],
+      "sampleAnswer": "I profiled the product list — ProductCard re-rendered on unrelated filter state. Wrapped ProductCard in memo and stabilized onAdd with useCallback. useMemo on filtered list because 500 items filtered every keystroke. I skipped memo on layout shells — cheap renders. Lazy-loaded admin route — not needed on first paint. Documented each decision.",
+      "followUps": ["React Compiler change this?", "Virtualization threshold?"]
+    },
+    {
+      "id": "int-04",
+      "question": "How does your app scale if users grow from 100 to 100,000?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Scalability thinking beyond the demo — pagination, caching, code splitting.",
+      "keyPoints": ["Server pagination", "RTK Query cache", "Code splitting", "CDN assets", "Avoid client-side 10k rows"],
+      "sampleAnswer": "Client-side: route-level code splitting already done; virtualize long lists. Server-side: paginate API, RTK Query cache with tag invalidation prevents refetch storms. Auth tokens short-lived with refresh. Static assets on CDN. I would not load 10k products client-side — server pagination is the real fix.",
+      "followUps": ["Normalization in Redux?", "Edge caching strategy?"]
+    },
+    {
+      "id": "int-05",
+      "question": "How do you maintain this codebase six months from now when requirements change?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Maintainability — types, tests, documentation, bounded features.",
+      "keyPoints": ["Typed contracts", "Feature boundaries", "ARCHITECTURE.md", "Incremental refactor", "Lint and CI"],
+      "sampleAnswer": "Feature folders limit blast radius — new payment feature is features/payments, not scattered edits. TypeScript catches API contract drift. ARCHITECTURE.md explains state decisions so the next dev does not reverse them blindly. Content validation in CI for FrontForge-style JSON. I refactor incrementally — vertical slices, not big-bang.",
+      "followUps": ["How enforce architecture?", "Deprecation strategy?"]
+    },
+    {
+      "id": "int-06",
+      "question": "Why RTK Query here instead of manual fetch + useEffect?",
+      "difficulty": "senior",
+      "category": "react",
+      "whatInterviewerTests": "Server state ownership — Week 3 retention under senior scrutiny.",
+      "keyPoints": ["Cache lifecycle", "Invalidation tags", "Deduplication", "Loading/error built-in", "Already on Redux"],
+      "sampleAnswer": "Products need caching, refetch on mutation, and deduplicated in-flight requests. RTK Query gives useGetProductsQuery with isLoading, isError, and invalidateTags on create/update. Manual fetch would reinvent cache maps and race conditions. Since I already have a Redux store for client UI state, RTK Query integrates cleanly.",
+      "followUps": ["Optimistic update example?", "vs React Query standalone?"]
+    },
+    {
+      "id": "int-07",
+      "question": "What accessibility improvements did you make in the production refactor?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Production readiness includes a11y — often skipped in demos.",
+      "keyPoints": ["Semantic HTML", "Labels", "Keyboard nav", "Focus management", "aria-live errors"],
+      "sampleAnswer": "Replaced div onClick with button elements. Added htmlFor labels on all form inputs. Error messages use role=alert. On API failure, focus moves to retry button. Tab order follows visual order. Verified contrast on primary text. These are ship-blockers in production — not nice-to-haves.",
+      "followUps": ["Skip links?", "Screen reader test tools?"]
+    },
+    {
+      "id": "int-08",
+      "question": "Name three trade-offs you made and three things you would improve with another sprint.",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Honest senior communication — imperfection with a plan.",
+      "keyPoints": ["Specific trade-offs", "Not vague", "Future improvements realistic", "Prioritized backlog"],
+      "sampleAnswer": "Trade-offs: (1) client-side filter vs server search — shipped faster but won't scale past 1k items; (2) Context for auth vs full Redux — simpler but harder to time-travel debug; (3) minimal test coverage vs refactor velocity. Next sprint: server pagination, Playwright E2E on checkout flow, error monitoring with Sentry. I would not add micro-frontends — over-engineering for this scale.",
+      "followUps": ["How prioritize backlog?", "Tech debt vs features?"],
+      "redFlags": ["Claims zero trade-offs", "Cannot name a single improvement", "Proposes rewrite instead of incremental fix"]
+    }
+  ]
+}

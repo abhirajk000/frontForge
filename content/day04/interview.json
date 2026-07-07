@@ -1,0 +1,129 @@
+{
+  "id": "day04-interview",
+  "metaId": "day04",
+  "title": "Day 04 Interview Prep",
+  "description": "Practice explaining useEffect, dependency arrays, async data fetching, and API UI state machines.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is useEffect and when do you use it?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Side effect definition — not just syntax.",
+      "keyPoints": [
+        "Runs after render commits to screen",
+        "Synchronizes with external systems",
+        "Fetch, subscriptions, timers, DOM APIs",
+        "Not for transforming data for render — that stays in render"
+      ],
+      "sampleAnswer": "useEffect runs code after React paints the UI. I use it when the component needs to sync with something outside React — fetching data, subscribing to events, or updating document title. I do not use it to compute derived data that could be calculated during render.",
+      "followUps": ["useEffect vs event handler?", "What is a side effect?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is the dependency array in useEffect?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "When effects re-run.",
+      "keyPoints": [
+        "Lists values effect depends on",
+        "Omitted = every render",
+        "[] = mount only (with Strict Mode caveats)",
+        "[a, b] = when a or b change"
+      ],
+      "sampleAnswer": "The dependency array tells React when to re-run the effect. Empty array runs once after mount. Including username re-runs when username changes. Omitting the array runs after every render — dangerous if the effect sets state.",
+      "followUps": ["eslint exhaustive-deps?", "Stale closure in effects?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "How do you fetch data in a React component?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Practical async pattern.",
+      "keyPoints": [
+        "fetch in useEffect or event handler",
+        "async inner function",
+        "loading/error/success state",
+        "check response.ok"
+      ],
+      "sampleAnswer": "I store data, loading, and error in useState. On search submit or in useEffect when query changes, I call an async function: set loading, fetch, check response.ok, parse JSON into typed state, catch errors, finally clear loading. I never fetch unconditionally during render.",
+      "followUps": ["Why not async effect callback?", "React Query later?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain async/await vs Promises with fetch.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Async fluency.",
+      "keyPoints": [
+        "fetch returns a Promise",
+        "await pauses inside async function",
+        "try/catch for errors",
+        "Sequential readability"
+      ],
+      "sampleAnswer": "fetch returns a Promise resolving to Response. async/await lets me write sequential code: const res = await fetch(url); const data = await res.json(). Errors throw or require response.ok checks. Under the hood it is still Promises — await is syntactic sugar.",
+      "followUps": ["Promise.all for parallel?", "What rejects fetch?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "What causes infinite loops with useEffect?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Debugging experience.",
+      "keyPoints": [
+        "setState in effect without deps",
+        "Deps that change every render",
+        "Missing primitive stabilization",
+        "Fix: correct deps or move to event handler"
+      ],
+      "sampleAnswer": "An effect that calls setState on every run without a stopping condition loops: render, effect, setState, render. Also unstable deps like inline objects cause repeated runs. I fix by adding proper dependencies, guarding with conditions, or moving fetch to button click instead.",
+      "followUps": ["Strict Mode double mount?", "useRef for mount guard?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "How do you type API responses in TypeScript?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Practical typing at boundaries.",
+      "keyPoints": [
+        "interface for JSON shape",
+        "optional fields with ?",
+        "type assertion after validation",
+        "Runtime validation is separate concern"
+      ],
+      "sampleAnswer": "I define an interface matching documented API fields. After await res.json(), I assign to typed state — optionally as GitHubUser if I trust the API, or validate in production. I mark nullable API fields optional. TypeScript helps development; runtime needs zod or similar for untrusted data.",
+      "followUps": ["Type vs interface for API?", "Handling unknown JSON?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "Should search fetch on every keystroke or on submit? Trade-offs?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Product and performance judgment.",
+      "keyPoints": [
+        "Keystroke = more requests, needs debounce (Day 06)",
+        "Submit = fewer requests, slower feedback",
+        "Abort stale requests",
+        "Rate limits and UX"
+      ],
+      "sampleAnswer": "Submit is simpler and fewer API calls — good for Day 04. Keystroke search feels faster but floods the API without debounce and causes race conditions. I would debounce 300ms, abort prior request, show loading per query. GitHub API has rate limits — product choice matters.",
+      "followUps": ["Implement debounce hook?", "React Query caching?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "Component fetches in useEffect but shows flash of previous user when username changes. Diagnose and fix.",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Race conditions and UX polish.",
+      "keyPoints": [
+        "Stale response overwrites new",
+        "Clear user state when query changes",
+        "AbortController cleanup",
+        "Loading state during transition"
+      ],
+      "sampleAnswer": "Race: slow request for 'a' returns after fast request for 'b'. I clear user and set loading when username changes. I abort previous fetch in effect cleanup. Optionally track requestId and ignore stale responses. I might also key the profile card by username to reset UI.",
+      "followUps": ["Suspense for data fetching?", "Error boundary placement?"],
+      "redFlags": ["Disable all caching blindly", "Ignore loading during transition"]
+    }
+  ]
+}

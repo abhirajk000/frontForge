@@ -1,0 +1,72 @@
+{
+  "id": "day07-resources",
+  "metaId": "day07",
+  "title": "Day 07 Resources — Week 1 Official Reference",
+  "description": "Allowed references during machine coding — official documentation only per Day 07 rules.",
+  "resources": [
+    {
+      "id": "res-react-learn",
+      "title": "React — Learn React",
+      "url": "https://react.dev/learn",
+      "type": "documentation",
+      "description": "Primary reference for components, state, effects, and hooks.",
+      "recommended": true
+    },
+    {
+      "id": "res-state",
+      "title": "React — State: A Component's Memory",
+      "url": "https://react.dev/learn/state-a-components-memory",
+      "type": "documentation",
+      "description": "useState reference for login form under pressure.",
+      "recommended": true
+    },
+    {
+      "id": "res-effects",
+      "title": "React — Synchronizing with Effects",
+      "url": "https://react.dev/learn/synchronizing-with-effects",
+      "type": "documentation",
+      "description": "useEffect and dependency arrays — Day 04 review.",
+      "recommended": true
+    },
+    {
+      "id": "res-lists",
+      "title": "React — Rendering Lists",
+      "url": "https://react.dev/learn/rendering-lists",
+      "type": "documentation",
+      "description": "map and keys — Day 03 review.",
+      "recommended": false
+    },
+    {
+      "id": "res-custom-hooks",
+      "title": "React — Reusing Logic with Custom Hooks",
+      "url": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+      "type": "documentation",
+      "description": "Day 06 stretch goals during machine coding.",
+      "recommended": false
+    },
+    {
+      "id": "res-rr-tutorial",
+      "title": "React Router — Tutorial",
+      "url": "https://reactrouter.com/en/main/start/tutorial",
+      "type": "documentation",
+      "description": "Allowed for Outlet and nested routes during timed build.",
+      "recommended": true
+    },
+    {
+      "id": "res-ts-handbook",
+      "title": "TypeScript — Handbook",
+      "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+      "type": "documentation",
+      "description": "Props and object types when you forget syntax.",
+      "recommended": false
+    },
+    {
+      "id": "res-vite",
+      "title": "Vite — Getting Started",
+      "url": "https://vite.dev/guide/",
+      "type": "documentation",
+      "description": "Scaffold command if starting fresh repo.",
+      "recommended": true
+    }
+  ]
+}

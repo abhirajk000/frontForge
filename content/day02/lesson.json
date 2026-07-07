@@ -1,0 +1,320 @@
+{
+  "id": "day02-lesson",
+  "metaId": "day02",
+  "title": "Day 02 — Professional Login Page",
+  "summary": "Learn objects, spread/rest, TypeScript prop contracts, and useState-driven controlled forms — then build a login page with validation, loading, and error states.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Yesterday you built static UI with props. Today UI becomes interactive. Every production app — Razorpay checkout, Atlassian login, Meta internal tools — has forms. Interviews assume you can explain props vs state, controlled inputs, and why React owns form values in state. You will build a login page that looks simple but demonstrates patterns used in real auth flows."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Build on Day 01",
+      "content": "Reuse your Vite + TypeScript project or create a fresh one. You already know components and JSX. Today adds state — do not introduce useEffect, React Router, or Context. Those come later in Week 1."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Objects, Arrays, Spread, and Rest"
+    },
+    {
+      "type": "paragraph",
+      "content": "Forms are objects. Error messages are arrays. State updates copy objects immutably using spread. These four ideas appear together in almost every React form handler you will write in your career."
+    },
+    {
+      "type": "heading",
+      "id": "objects-arrays",
+      "level": 3,
+      "text": "Objects and arrays as form data"
+    },
+    {
+      "type": "paragraph",
+      "content": "A login form is naturally modeled as an object with email and password fields. Validation errors map field names to messages — another object. When you need to show multiple errors at once, an array of strings works. Senior engineers choose shapes that match how the UI renders, not how databases store data."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "form-shape.ts",
+      "code": "type LoginForm = {\n  email: string;\n  password: string;\n  rememberMe: boolean;\n};\n\ntype FieldErrors = {\n  email?: string;\n  password?: string;\n};\n\nconst initialForm: LoginForm = {\n  email: '',\n  password: '',\n  rememberMe: false,\n};"
+    },
+    {
+      "type": "heading",
+      "id": "spread",
+      "level": 3,
+      "text": "Spread operator — immutable updates"
+    },
+    {
+      "type": "paragraph",
+      "content": "React state must be updated immutably. When the user types in the email field, you do not mutate form.email directly. You create a new object with spread, changing only the email key. React compares references — a new object triggers a re-render; mutation does not."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "const [form, setForm] = useState<LoginForm>(initialForm);\n\n// Update one field — spread the previous state\nconst handleEmailChange = (email: string) => {\n  setForm((previous) => ({ ...previous, email }));\n};\n\n// Clear password only after successful validation\nsetForm((previous) => ({ ...previous, password: '' }));"
+    },
+    {
+      "type": "warning",
+      "title": "Production mistake",
+      "content": "Never do form.email = value on state held in useState. It mutates the existing object reference. React may skip re-renders and DevTools will lie to you. This is one of the top Day 2 debugging scenarios."
+    },
+    {
+      "type": "heading",
+      "id": "rest",
+      "level": 3,
+      "text": "Rest operator — flexible handlers"
+    },
+    {
+      "type": "paragraph",
+      "content": "Rest collects remaining properties. Combined with spread, you can write reusable helpers that update nested form state or forward unknown props to child components — a pattern that scales to design systems on Day 03."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "function omitPassword<T extends { password: string }>(data: T) {\n  const { password, ...safeFields } = data;\n  return safeFields; // log or send to analytics without password\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Interfaces, Type Aliases, and Props"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 01 introduced basic types. Today you define contracts at component boundaries. Interfaces and type aliases both work for props — teams pick one style and stay consistent."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "interface",
+          "label": "Interface",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "interface LoginFormProps {\n  onSubmit: (data: LoginForm) => void;\n  isLoading: boolean;\n  errorMessage?: string;\n}\n\nexport function LoginForm({ onSubmit, isLoading, errorMessage }: LoginFormProps) {\n  // ...\n}"
+            }
+          ]
+        },
+        {
+          "id": "type-alias",
+          "label": "Type alias",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "type LoginFormProps = {\n  onSubmit: (data: LoginForm) => void;\n  isLoading: boolean;\n  errorMessage?: string;\n};\n\nexport function LoginForm(props: LoginFormProps) {\n  const { onSubmit, isLoading, errorMessage } = props;\n  // ...\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "When to use which",
+      "content": "Interfaces extend cleanly with declaration merging — rare in app code. Type aliases express unions and mapped types more naturally. For component props, either is fine. Pick one per codebase."
+    },
+    {
+      "type": "note",
+      "title": "Typing event handlers",
+      "content": "Use React.ChangeEvent<HTMLInputElement> for input changes and React.FormEvent<HTMLFormElement> for submit. Explicit event types prevent passing the wrong handler to the wrong element."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react-props-state",
+      "level": 2,
+      "text": "Props vs State — the interview distinction"
+    },
+    {
+      "type": "table",
+      "headers": ["Props", "State"],
+      "rows": [
+        ["Passed from parent", "Owned inside the component"],
+        ["Read-only from child's perspective", "Updated with setState / useState"],
+        ["Configure how a component behaves", "Track data that changes over time"],
+        ["Example: isLoading from parent", "Example: email input value while typing"]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "One-way data flow: data flows down via props, events flow up via callbacks. The parent can pass isLoading as a prop while the child owns form field values in local state until submit. Auth apps often keep credentials in child state and pass only the submit handler up — or lift state later when multiple children need the same data."
+    },
+    {
+      "type": "heading",
+      "id": "useState",
+      "level": 3,
+      "text": "useState — local component memory"
+    },
+    {
+      "type": "paragraph",
+      "content": "useState returns a value and a setter. Calling the setter schedules a re-render with the new value. Initial state runs once. For a login form you typically need: form fields, isLoading, errorMessage, and showPassword."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "LoginForm.tsx",
+      "code": "import { useState } from 'react';\n\nexport function LoginForm() {\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n  const [rememberMe, setRememberMe] = useState(false);\n  const [showPassword, setShowPassword] = useState(false);\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n\n  // handlers below\n}"
+    },
+    {
+      "type": "heading",
+      "id": "controlled",
+      "level": 3,
+      "text": "Controlled components"
+    },
+    {
+      "type": "paragraph",
+      "content": "A controlled input's value comes from React state. Every keystroke fires onChange, updates state, and React re-renders the input with the new value. The DOM is not the source of truth — React state is. This is the default pattern in production React because it enables validation, formatting, and disabling submit until the form is valid."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "<input\n  id=\"email\"\n  type=\"email\"\n  value={email}\n  onChange={(event) => setEmail(event.target.value)}\n  aria-invalid={Boolean(fieldErrors.email)}\n  aria-describedby={fieldErrors.email ? 'email-error' : undefined}\n/>"
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Uncontrolled is not today's goal",
+      "content": "Uncontrolled inputs use refs and DOM values directly. They have valid use cases but interviews at product companies expect controlled forms for login and settings. Master controlled first."
+    },
+    {
+      "type": "heading",
+      "id": "events",
+      "level": 3,
+      "text": "Event handling — submit vs click"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use onSubmit on the form element, not onClick on the button alone. onSubmit fires on Enter key in inputs — accessibility and UX win. Always call event.preventDefault() to stop a full page reload."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "code": "const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {\n  event.preventDefault();\n  setError(null);\n\n  const validation = validate({ email, password });\n  if (!validation.isValid) {\n    setFieldErrors(validation.errors);\n    return;\n  }\n\n  setIsLoading(true);\n  try {\n    await fakeLogin({ email, password, rememberMe });\n  } catch {\n    setError('Invalid email or password');\n  } finally {\n    setIsLoading(false);\n  }\n};\n\nreturn (\n  <form onSubmit={handleSubmit} noValidate>\n    {/* fields */}\n    <button type=\"submit\" disabled={isLoading}>\n      {isLoading ? 'Signing in…' : 'Sign in'}\n    </button>\n  </form>\n);"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Login Page"
+    },
+    {
+      "type": "paragraph",
+      "content": "Build a login page that could ship on a real SaaS product. No backend required today — simulate login with a timeout and hard-coded credentials or always-fail for error testing. Focus on state, UX, and TypeScript."
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements from the roadmap",
+      "items": [
+        { "id": "req-email", "text": "Email field with format validation" },
+        { "id": "req-password", "text": "Password field with minimum length validation" },
+        { "id": "req-show", "text": "Show/hide password toggle" },
+        { "id": "req-remember", "text": "Remember me checkbox bound to state" },
+        { "id": "req-loading", "text": "Submit button shows loading state and is disabled while loading" },
+        { "id": "req-error", "text": "Error message region for failed login or validation errors" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "Extract InputField and ErrorText components if the form grows — full library extraction is Day 03. Use a validate function that returns { isValid, errors } instead of scattering if statements. Simulate API with setTimeout 1500ms. Test error path by rejecting when password is wrong."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Day 02 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-state",
+          "title": "Wrong state update",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: input shows stale text or UI never updates. Cause: mutating state object or array directly, or using stale closure without functional update. Fix: always use setForm(prev => ({ ...prev, email: value })) when new state depends on old state."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "// Wrong\nform.email = value;\nsetForm(form);\n\n// Right\nsetForm((prev) => ({ ...prev, email: value }));"
+            }
+          ]
+        },
+        {
+          "id": "dbg-input",
+          "title": "Input not updating",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: you type but the field stays empty or frozen. Cause: value prop without onChange, or onChange updating wrong state variable. Fix: pair value={state} with onChange that calls the matching setter. Check you are not passing defaultValue and value together."
+            }
+          ]
+        },
+        {
+          "id": "dbg-event",
+          "title": "Wrong event handling",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: page refreshes on submit or handler never runs. Cause: missing preventDefault, button type=\"submit\" inside form triggering navigation, or onClick on button without preventing double submit. Fix: form onSubmit with preventDefault, type=\"submit\" only on primary button, disable button while isLoading."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-validation", "text": "Validation works" },
+        { "id": "done-loading", "text": "Loading works" },
+        { "id": "done-error", "text": "Error state works" },
+        { "id": "done-responsive", "text": "Responsive layout" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" },
+        { "id": "done-interview", "text": "Answer interview questions" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

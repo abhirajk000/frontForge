@@ -1,0 +1,44 @@
+{
+  "id": "day11",
+  "version": "1.0.0",
+  "day": 11,
+  "week": 2,
+  "track": "react-interview",
+  "title": "Infinite Scrolling",
+  "subtitle": "Event loop deep dive, Intersection Observer, pagination, and lazy loading",
+  "mission": "Build Infinite Scrolling.",
+  "readingTimeMinutes": 30,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": ["react", "infinite-scroll", "intersection-observer", "event-loop", "pagination", "lazy-loading"],
+  "topics": {
+    "javascript": ["event loop", "microtasks", "macrotasks"],
+    "typescript": ["observer types"],
+    "react": ["Intersection Observer", "pagination", "lazy loading"]
+  },
+  "prerequisites": [
+    "day08 — fetch, loading/error states, useEffect cleanup",
+    "day09 — paginated API types and debouncing",
+    "day10 — list rendering, keys, and product models"
+  ],
+  "expectedOutcome": [
+    "Explain event loop, microtasks, and macrotasks in interview terms",
+    "Implement infinite scroll with Intersection Observer API",
+    "Type observer callbacks with TypeScript",
+    "Auto-load pages with loading indicator, end message, and retry",
+    "Clean up observers on unmount to prevent memory leaks"
+  ],
+  "definitionOfDone": [
+    "Scrolling near bottom automatically loads next page",
+    "Loading indicator shows during fetch",
+    "End-of-list message when no more pages",
+    "Retry button on fetch failure",
+    "No duplicate items or infinite render loops",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 12,
+    "title": "Shopping Cart",
+    "summary": "Tomorrow you will manage application-wide cart state with Context API and the reducer pattern — adding immutability discipline to everything you built this week."
+  }
+}

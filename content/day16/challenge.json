@@ -1,0 +1,68 @@
+{
+  "id": "day16-challenge",
+  "metaId": "day16",
+  "title": "Build a Todo Manager with Redux Toolkit",
+  "mission": "Build Todo Manager using Redux Toolkit.",
+  "description": "Implement a full todo application with Redux Toolkit — add, delete, update, filter, and completed task tracking. This is the canonical Redux interview build.",
+  "estimatedMinutes": 240,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Configure Redux store with configureStore and todos slice",
+    "Create todosSlice with addTodo, deleteTodo, updateTodo, toggleTodo, and setFilter reducers",
+    "Type Todo, TodosState, RootState, and AppDispatch",
+    "Create typed useAppDispatch and useAppSelector hooks",
+    "Build TodoInput component that dispatches addTodo",
+    "Build TodoList rendering filtered todos from selectors",
+    "Implement filter buttons: All, Active, Completed",
+    "Display completed tasks count",
+    "Wrap app with Provider at root"
+  ],
+  "acceptanceCriteria": [
+    "Adding a todo updates the list without page refresh",
+    "Deleting and editing todos work via dispatched actions",
+    "Filter switches between all, active, and completed lists",
+    "Completed count reflects toggle state accurately",
+    "Redux DevTools shows actions and immutable state transitions",
+    "npm run build passes with strict TypeScript",
+    "Repository pushed to Git"
+  ],
+  "hints": [
+    "Use crypto.randomUUID() or nanoid for todo ids.",
+    "Keep filter state in the same slice or a ui slice — document your choice.",
+    "Export selectors: selectFilteredTodos, selectActiveCount, selectCompletedCount.",
+    "Use PayloadAction<string> for text payloads and PayloadAction<{ id: string; text: string }> for updates.",
+    "Compare with Day 12 cart useReducer — RTK removes boilerplate."
+  ],
+  "bonus": {
+    "title": "Senior polish",
+    "description": "Optional enhancements for interview depth.",
+    "requirements": [
+      "Persist todos to localStorage with redux-persist or custom middleware",
+      "Add \"clear completed\" bulk action",
+      "Write unit tests for reducers with no React rendering"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-mutation",
+      "title": "State mutation",
+      "symptom": "UI stale after dispatch; console warns about mutation",
+      "cause": "Mutating state outside createSlice or returning wrong reference",
+      "fix": "Only mutate draft state inside createSlice reducers; let Immer produce next state"
+    },
+    {
+      "id": "dbg-reducer",
+      "title": "Reducer bugs",
+      "symptom": "Action fires but state unchanged",
+      "cause": "Reducer not added to configureStore or wrong state path in selector",
+      "fix": "Verify reducer key in store matches selector: state.todos"
+    },
+    {
+      "id": "dbg-filter",
+      "title": "Filter not working",
+      "symptom": "Filter button clicks do nothing",
+      "cause": "Component uses raw items instead of selector",
+      "fix": "Dispatch setFilter and read selectFilteredTodos in list component"
+    }
+  ]
+}

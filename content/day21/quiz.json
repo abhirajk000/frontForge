@@ -1,0 +1,245 @@
+{
+  "id": "day21-quiz",
+  "metaId": "day21",
+  "title": "Day 21 Quiz — Week 3 Review",
+  "description": "Verify integrated understanding of Redux, RTK Query, auth, dashboard, and performance from Week 3.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "In machine coding Round 3 you may refer to previous day project source code.",
+      "correctAnswer": false,
+      "explanation": "Build from scratch without opening Days 15–20 folders — tests recall under pressure.",
+      "difficulty": "easy",
+      "tags": [
+        "machine-coding"
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "First priority in 150-minute Week 3 build?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Perfect CSS animations"
+        },
+        {
+          "id": "b",
+          "text": "Core flow: scaffold, store, API, auth, dashboard shell"
+        },
+        {
+          "id": "c",
+          "text": "Write unit tests for every reducer"
+        },
+        {
+          "id": "d",
+          "text": "Implement OAuth providers"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Ship end-to-end core paths before polish.",
+      "difficulty": "easy",
+      "tags": [
+        "strategy"
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "Where should theme state live in this integrated app?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RTK Query cache"
+        },
+        {
+          "id": "b",
+          "text": "Context or lightweight client slice — infrequent updates"
+        },
+        {
+          "id": "c",
+          "text": "JWT payload only"
+        },
+        {
+          "id": "d",
+          "text": "URL query params only"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Theme fits Context from Day 15 — low-frequency preference state.",
+      "difficulty": "medium",
+      "tags": [
+        "architecture"
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Week 3 build must include? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Authentication with protected routes"
+        },
+        {
+          "id": "b",
+          "text": "Redux store with API integration"
+        },
+        {
+          "id": "c",
+          "text": "Theme system"
+        },
+        {
+          "id": "d",
+          "text": "GraphQL subscriptions"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Round 3 covers auth, Redux/RTK Query, theme, dashboard — not Week 4 topics.",
+      "difficulty": "easy",
+      "tags": [
+        "week3"
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "RTK Query mutations refresh lists using {{blank1}} tags.",
+      "blanks": [
+        {
+          "id": "blank1",
+          "acceptedAnswers": [
+            "invalidatesTags",
+            "invalidates"
+          ]
+        }
+      ],
+      "explanation": "Tag invalidation connects mutations to query refetch.",
+      "difficulty": "easy",
+      "tags": [
+        "rtk-query"
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "ProtectedRoute without hydration loading gate causes?",
+      "code": "// auth starts { status: \"idle\", token: null }\n// then hydrates token from localStorage",
+      "language": "typescript",
+      "correctOutput": "flash redirect",
+      "explanation": "Brief redirect to login before hydration completes — need loading state.",
+      "difficulty": "hard",
+      "tags": [
+        "auth"
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Allowed resources during machine coding build?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ChatGPT and Stack Overflow"
+        },
+        {
+          "id": "b",
+          "text": "Official documentation only"
+        },
+        {
+          "id": "c",
+          "text": "Previous project folders"
+        },
+        {
+          "id": "d",
+          "text": "Teammate screen share"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Exam rules: official docs only — mirrors proctored interview constraints.",
+      "difficulty": "easy",
+      "tags": [
+        "machine-coding"
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "code-completion",
+      "prompt": "Complete store setup with RTK Query middleware.",
+      "code": "export const store = configureStore({\n  reducer: { auth: authReducer, [api.reducerPath]: api.reducer },\n  middleware: (gDM) => gDM().concat(api.{{middleware}}),\n});",
+      "language": "typescript",
+      "blanks": [
+        {
+          "id": "middleware",
+          "acceptedAnswers": [
+            "middleware"
+          ]
+        }
+      ],
+      "explanation": "RTK Query requires its middleware in the store.",
+      "difficulty": "medium",
+      "tags": [
+        "redux"
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "short-answer",
+      "prompt": "Explain how you separate client state, server state, and theme in one app.",
+      "acceptedKeywords": [
+        "Redux",
+        "RTK Query",
+        "Context",
+        "slice",
+        "cache"
+      ],
+      "sampleAnswer": "Client UI state and auth token live in Redux slices. Server data lives in RTK Query cache with generated hooks. Theme preference uses Context from Day 15 with localStorage — infrequent updates, many readers. Each layer has one source of truth.",
+      "explanation": "Architecture question central to Week 3 interviews.",
+      "difficulty": "hard",
+      "tags": [
+        "architecture"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Day 22 tomorrow focuses on? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Machine coding interview simulation"
+        },
+        {
+          "id": "b",
+          "text": "Debugging drills"
+        },
+        {
+          "id": "c",
+          "text": "New Redux fundamentals from scratch"
+        },
+        {
+          "id": "d",
+          "text": "20 interview questions"
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "Day 22 is Week 4 interview simulation — no new Redux theory.",
+      "difficulty": "easy",
+      "tags": [
+        "week4-preview"
+      ]
+    }
+  ]
+}

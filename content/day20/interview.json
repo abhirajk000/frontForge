@@ -1,0 +1,157 @@
+{
+  "id": "day20-interview",
+  "metaId": "day20",
+  "title": "Day 20 Interview Prep",
+  "description": "Practice memoization, lazy loading, code splitting, and performance optimization judgment.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "React.memo vs useMemo vs useCallback?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Core perf API distinction.",
+      "keyPoints": [
+        "memo for components",
+        "useMemo for values",
+        "useCallback for functions",
+        "Shallow compare"
+      ],
+      "sampleAnswer": "React.memo prevents component re-render on shallow-equal props. useMemo caches expensive computed values. useCallback caches function references for stable child props. I use memo on list rows, useMemo on filter pipelines, useCallback on handlers passed to memoized children.",
+      "followUps": [
+        "Custom compare?",
+        "When skip all three?"
+      ]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is code splitting and how do you implement it in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Bundle optimization basics.",
+      "keyPoints": [
+        "Dynamic import",
+        "React.lazy",
+        "Suspense fallback",
+        "Smaller initial load"
+      ],
+      "sampleAnswer": "Code splitting breaks the bundle into chunks loaded on demand. React.lazy(() => import(\"./Admin\")) creates a dynamic import. Suspense shows fallback while chunk loads. I lazy load admin routes and heavy modals not needed on first paint.",
+      "followUps": [
+        "Route-based vs component?",
+        "Prefetching?"
+      ]
+    },
+    {
+      "id": "int-m01",
+      "question": "How do you identify performance bottlenecks in React?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Systematic optimization approach.",
+      "keyPoints": [
+        "React DevTools Profiler",
+        "Measure first",
+        "Render count",
+        "Commit duration"
+      ],
+      "sampleAnswer": "I use React DevTools Profiler to record interactions and see which components re-render and how long commits take. I look for wide render cascades — parent state change re-rendering entire lists. I optimize the biggest wins first, not every component.",
+      "followUps": [
+        "why-did-you-render?",
+        "Production monitoring?"
+      ]
+    },
+    {
+      "id": "int-m02",
+      "question": "Explain garbage collection in JavaScript briefly.",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Memory fundamentals.",
+      "keyPoints": [
+        "Reachability",
+        "Automatic GC",
+        "Closures retain",
+        "Cleanup in effects"
+      ],
+      "sampleAnswer": "JS engines track object reachability from roots. Unreachable objects get garbage collected automatically. Closures keep outer variables alive. In React I prevent leaks by cleaning subscriptions in useEffect return and avoiding unbounded global caches.",
+      "followUps": [
+        "Memory leaks in SPAs?",
+        "WeakMap use cases?"
+      ]
+    },
+    {
+      "id": "int-m03",
+      "question": "When should you NOT memoize?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Optimization judgment.",
+      "keyPoints": [
+        "Cheap renders",
+        "Always changing props",
+        "Comparison overhead",
+        "Profile first"
+      ],
+      "sampleAnswer": "I skip memo when renders are cheap, props always change making comparison pointless, or I have not profiled a real bottleneck. Premature memo adds code complexity. React team says optimize when measured problem exists.",
+      "followUps": [
+        "Compiler auto-memo?",
+        "Virtual DOM cost?"
+      ]
+    },
+    {
+      "id": "int-h01",
+      "question": "ProductRow is memoized but still re-renders every parent update. Why?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Memo debugging.",
+      "keyPoints": [
+        "Inline functions",
+        "Object props",
+        "Context consumption",
+        "Shallow compare fail"
+      ],
+      "sampleAnswer": "Parent passes onDelete={() => ...} inline — new reference each render. Or ProductRow consumes Context that changes every parent update — memo only checks props not context. Fix: useCallback for handlers; split context; memo with custom compare for specific props only.",
+      "followUps": [
+        "useMemo context value?",
+        "Selector granularity?"
+      ]
+    },
+    {
+      "id": "int-h02",
+      "question": "useMemo filter returns stale products after API update. Debug.",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Dependency array debugging.",
+      "keyPoints": [
+        "Missing products dep",
+        "RTK Query reference",
+        "Derived state",
+        "Refetch timing"
+      ],
+      "sampleAnswer": "Dependency array missing products or using stale closure over old array reference. I verify products from useGetProductsQuery is in deps. If mutating array in place without new reference, memo wont recompute — RTK Query returns new references on update so deps should catch it.",
+      "followUps": [
+        "Structural sharing?",
+        "TanStack referential stability?"
+      ]
+    },
+    {
+      "id": "int-s01",
+      "question": "Design perf strategy for 10k row product table.",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Scale beyond memo.",
+      "keyPoints": [
+        "Virtualization",
+        "Server pagination",
+        "Memo rows",
+        "Avoid global re-render"
+      ],
+      "sampleAnswer": "Memo alone fails at 10k DOM nodes. I virtualize with react-window rendering visible rows only, server paginate or infinite scroll, memo row component with stable props, lift selection state carefully, lazy load detail panel. Profile with realistic data volume not 10 demo items.",
+      "followUps": [
+        "Web Workers?",
+        "Concurrent features?"
+      ],
+      "redFlags": [
+        "Memo every component",
+        "Client render 10k nodes",
+        "Optimize without profiling"
+      ]
+    }
+  ]
+}

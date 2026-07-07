@@ -1,0 +1,141 @@
+{
+  "id": "day05-quiz",
+  "metaId": "day05",
+  "title": "Day 05 Quiz — React Router and Nested Layouts",
+  "description": "Verify you understand SPA routing, Link, Outlet, nested routes, and navigation before Day 06 custom hooks.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single-choice",
+      "prompt": "What is a Single Page Application (SPA) in React?",
+      "options": [
+        { "id": "a", "text": "An app with only one component" },
+        { "id": "b", "text": "An app that loads once and updates views client-side without full page reloads" },
+        { "id": "c", "text": "An app without CSS" },
+        { "id": "d", "text": "An app that cannot use APIs" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "SPAs swap views via client-side routing. The server typically serves index.html once; React Router changes the URL and rendered route.",
+      "difficulty": "easy",
+      "tags": ["react", "spa"]
+    },
+    {
+      "id": "q02",
+      "type": "true-false",
+      "prompt": "React Router's Link component causes a full browser page reload like a native <a href> to another origin.",
+      "correctAnswer": false,
+      "explanation": "Link intercepts navigation and updates history client-side without reloading the document — core SPA behavior.",
+      "difficulty": "easy",
+      "tags": ["react-router"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What does Outlet render in React Router v6?",
+      "options": [
+        { "id": "a", "text": "The parent route's path only" },
+        { "id": "b", "text": "The matched child route element in a nested layout" },
+        { "id": "c", "text": "A loading spinner automatically" },
+        { "id": "d", "text": "The 404 page always" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Outlet is a placeholder where child routes render inside a parent layout — sidebar stays, content area swaps.",
+      "difficulty": "easy",
+      "tags": ["react-router", "nested-routes"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which belong in a dashboard nested route layout? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Sidebar with navigation links" },
+        { "id": "b", "text": "Navbar with user menu" },
+        { "id": "c", "text": "Outlet for page content" },
+        { "id": "d", "text": "Full page reload on every link click" }
+      ],
+      "correctOptionIds": ["a", "b", "c"],
+      "explanation": "Layout route wraps persistent chrome; Outlet renders changing page content. SPA avoids full reloads.",
+      "difficulty": "easy",
+      "tags": ["react-router", "layout"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Use {{blank1}} instead of <a> for internal app navigation, and {{blank2}} for unknown paths.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["Link"] },
+        { "id": "blank2", "acceptedAnswers": ["*", "catch-all", "404 route"] }
+      ],
+      "explanation": "Link preserves SPA navigation; a catch-all route like path='*' renders 404.",
+      "difficulty": "medium",
+      "tags": ["react-router"]
+    },
+    {
+      "id": "q06",
+      "type": "code-completion",
+      "prompt": "Complete the layout component import for nested child rendering.",
+      "code": "import { Link, {{component}} } from 'react-router-dom';",
+      "language": "tsx",
+      "blanks": [
+        { "id": "component", "acceptedAnswers": ["Outlet"] }
+      ],
+      "explanation": "Outlet renders matched child routes inside a parent layout route.",
+      "difficulty": "medium",
+      "tags": ["react-router"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "NavLink is preferred over Link when you need:",
+      "options": [
+        { "id": "a", "text": "External URLs only" },
+        { "id": "b", "text": "Active styling based on current route" },
+        { "id": "c", "text": "To bypass React Router" },
+        { "id": "d", "text": "Server-side rendering only" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "NavLink applies active className or style when its to prop matches the current location.",
+      "difficulty": "easy",
+      "tags": ["react-router"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "Why use nested routes instead of conditionally rendering pages in App.tsx?",
+      "acceptedKeywords": ["URL", "bookmark", "layout", "outlet", "scale", "navigation"],
+      "sampleAnswer": "Nested routes sync UI with the URL, enable back/forward and deep links, keep layout DRY with Outlet, and scale as routes grow without giant switch statements.",
+      "explanation": "Interviewers want URL-driven architecture, not manual page state.",
+      "difficulty": "medium",
+      "tags": ["react-router", "architecture"]
+    },
+    {
+      "id": "q09",
+      "type": "single-choice",
+      "prompt": "Clicking sidebar Link goes to /profile but URL changes and content stays on Dashboard. Likely cause?",
+      "options": [
+        { "id": "a", "text": "useEffect missing" },
+        { "id": "b", "text": "Route path typo, wrong Outlet placement, or child route not registered" },
+        { "id": "c", "text": "TypeScript error" },
+        { "id": "d", "text": "Link requires fetch API" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "URL changes mean router works; content stuck means route config or Outlet mismatch — classic Day 05 bug.",
+      "difficulty": "medium",
+      "tags": ["react-router", "debugging"]
+    },
+    {
+      "id": "q10",
+      "type": "code-output",
+      "prompt": "What does closure enable in an event handler inside a route component?",
+      "code": "function DashboardLayout() {\n  const title = 'FrontForge';\n  const handleClick = () => console.log(title);\n  return <button onClick={handleClick}>Log</button>;\n}",
+      "language": "tsx",
+      "correctOutput": "FrontForge",
+      "explanation": "handleClick closes over title from the render where it was created — fundamental JS for handlers in routed components.",
+      "difficulty": "easy",
+      "tags": ["javascript", "closures"]
+    }
+  ]
+}

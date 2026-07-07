@@ -1,0 +1,141 @@
+{
+  "id": "day08-quiz",
+  "metaId": "day08",
+  "title": "Day 08 Quiz — APIs, useEffect, and UI States",
+  "description": "Verify fetch/async patterns, TypeScript API types, useEffect dependencies, and loading/error/empty state handling.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "fetch() automatically throws an error when the server responds with HTTP 404.",
+      "correctAnswer": false,
+      "explanation": "fetch resolves successfully for 4xx/5xx responses. You must check response.ok or response.status manually.",
+      "difficulty": "easy",
+      "tags": ["javascript", "fetch"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What does optional chaining weather?.main?.temp prevent?",
+      "options": [
+        { "id": "a", "text": "API rate limiting" },
+        { "id": "b", "text": "Runtime error when accessing properties on null or undefined" },
+        { "id": "c", "text": "Infinite re-renders" },
+        { "id": "d", "text": "CORS failures" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Optional chaining short-circuits to undefined instead of throwing when an intermediate value is nullish.",
+      "difficulty": "easy",
+      "tags": ["javascript", "optional-chaining"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "When should you use useEffect for weather fetching?",
+      "options": [
+        { "id": "a", "text": "For every fetch — never use event handlers" },
+        { "id": "b", "text": "When you need to synchronize UI with an external system after render, e.g. when a query state changes" },
+        { "id": "c", "text": "Only on class components" },
+        { "id": "d", "text": "To replace useState entirely" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "useEffect is for side effects that synchronize with external systems. Button-click fetch can live in a handler; refetch-on-query-change fits useEffect.",
+      "difficulty": "medium",
+      "tags": ["react", "useEffect"]
+    },
+    {
+      "id": "q04",
+      "type": "multiple-choice",
+      "prompt": "Which cause infinite API calls in useEffect? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "No dependency array when the effect calls setState" },
+        { "id": "b", "text": "Dependency array [query] when query only changes on submit" },
+        { "id": "c", "text": "Dependency on an object literal created inline each render" },
+        { "id": "d", "text": "Empty dependency array [] on mount-only fetch" }
+      ],
+      "correctOptionIds": ["a", "c"],
+      "explanation": "Missing deps with setState re-triggers every render. Inline object deps are new references every render. [] runs once; stable [query] runs when query changes.",
+      "difficulty": "hard",
+      "tags": ["react", "useEffect", "debugging"]
+    },
+    {
+      "id": "q05",
+      "type": "fill-blank",
+      "prompt": "Check HTTP success with {{blank1}} before calling response.json(). Handle failures in a {{blank2}} block.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["response.ok", "ok"] },
+        { "id": "blank2", "acceptedAnswers": ["catch", "try/catch"] }
+      ],
+      "explanation": "response.ok is true for status 200–299. Async errors from fetch and thrown HTTP errors belong in catch.",
+      "difficulty": "medium",
+      "tags": ["javascript", "fetch"]
+    },
+    {
+      "id": "q06",
+      "type": "code-output",
+      "prompt": "What is logged?",
+      "code": "const data = null;\nconsole.log(data?.wind?.speed ?? 0);",
+      "language": "typescript",
+      "correctOutput": "0",
+      "explanation": "Optional chaining returns undefined when data is null; nullish coalescing falls back to 0.",
+      "difficulty": "easy",
+      "tags": ["javascript", "optional-chaining"]
+    },
+    {
+      "id": "q07",
+      "type": "single-choice",
+      "prompt": "Why show a loading skeleton instead of only a spinner?",
+      "options": [
+        { "id": "a", "text": "Skeletons use less memory than spinners" },
+        { "id": "b", "text": "Skeleton preserves layout and reduces perceived layout shift when data arrives" },
+        { "id": "c", "text": "Google requires skeletons for SEO" },
+        { "id": "d", "text": "useEffect only works with skeleton components" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Skeletons mirror final content shape — a core loading strategy in production dashboards.",
+      "difficulty": "medium",
+      "tags": ["react", "loading"]
+    },
+    {
+      "id": "q08",
+      "type": "short-answer",
+      "prompt": "When would you choose fetch over Axios in a new React project?",
+      "acceptedKeywords": ["built-in", "no dependency", "bundle", "simple", "native"],
+      "sampleAnswer": "fetch is built into browsers — no extra dependency, smaller bundle, sufficient for straightforward JSON APIs. Axios adds interceptors, automatic JSON transform, and wider browser support — useful at scale but not required on day one.",
+      "explanation": "Interviewers want trade-offs, not fetch is always better.",
+      "difficulty": "medium",
+      "tags": ["architecture", "fetch"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the interface for nested weather data.",
+      "code": "interface WeatherResponse {\n  name: string;\n  main: { temp: number; humidity: number };\n  weather: {{type}}[];\n}",
+      "language": "typescript",
+      "blanks": [
+        { "id": "type", "acceptedAnswers": ["WeatherCondition", "weathercondition"] }
+      ],
+      "explanation": "Nested array types reference a named interface describing each element — matches OpenWeather-style responses.",
+      "difficulty": "medium",
+      "tags": ["typescript", "api"]
+    },
+    {
+      "id": "q10",
+      "type": "single-choice",
+      "prompt": "What is an Error Boundary (introduction)?",
+      "options": [
+        { "id": "a", "text": "A try/catch inside every useEffect" },
+        { "id": "b", "text": "A React class or library component that catches render errors in children and shows fallback UI" },
+        { "id": "c", "text": "A TypeScript interface for API errors" },
+        { "id": "d", "text": "A CSS border around error messages" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Error boundaries catch errors during rendering in child trees — different from try/catch around async fetch. Deep implementation comes later; know the concept today.",
+      "difficulty": "medium",
+      "tags": ["react", "error-boundaries"]
+    }
+  ]
+}

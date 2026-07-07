@@ -1,0 +1,413 @@
+{
+  "id": "day01-lesson",
+  "metaId": "day01",
+  "title": "Day 01 — Your First React Application",
+  "summary": "Learn the modern JavaScript and TypeScript foundations you need, understand why React exists, and build a responsive landing page with reusable components.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Today is not about memorizing React APIs. Today is about building the mental model that every senior frontend engineer uses daily: declarative UI, component composition, and a toolchain that keeps feedback loops fast. By the end of this lesson you will scaffold a real project, write your first components, and ship a landing page you can put on GitHub tonight."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "How to use this lesson",
+      "content": "Read for 20–25 minutes. Then spend 2–3 hours building. Do not copy-paste full solutions — type the code yourself. When you get stuck, read the debugging section before searching Stack Overflow."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript Foundations You Will Use Every Day"
+    },
+    {
+      "type": "paragraph",
+      "content": "React code is JavaScript. TypeScript is JavaScript with types. If your JS fundamentals are shaky, React will feel magical in the worst way — things work until they don't, and you won't know why. These six concepts appear in almost every React file you will write this month."
+    },
+    {
+      "type": "heading",
+      "id": "let-const",
+      "level": 3,
+      "text": "let vs const — immutability as a habit"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use const by default. Use let only when a binding must be reassigned. Never use var in modern React codebases — function scope and hoisting cause bugs that are painful to trace in larger apps. In production teams, const signals intent: this reference should not be reassigned. That discipline matters because React state updates create new values; mutating existing objects is one of the most common sources of UI bugs."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "bindings.ts",
+      "code": "const appName = 'FrontForge';\nlet activeSection = 'hero';\n\n// Prefer const for functions too\nconst formatTitle = (title: string) => `${title} — FrontForge`;\n\nactiveSection = 'features'; // OK with let\n// appName = 'Other'; // Error — signals accidental mutation"
+    },
+    {
+      "type": "tip",
+      "title": "Interview signal",
+      "content": "When interviewers ask about immutability on Day 1, they are planting seeds for state updates on Day 2+. React re-renders when it detects new state references. const does not make values immutable — it prevents rebinding the variable."
+    },
+    {
+      "type": "heading",
+      "id": "arrow-functions",
+      "level": 3,
+      "text": "Arrow functions — the default in React"
+    },
+    {
+      "type": "paragraph",
+      "content": "Functional components are functions. Event handlers are functions. Custom hooks will be functions. Arrow functions give you concise syntax and lexical this binding. You rarely need this in modern React, but arrow functions are the team default because they read cleanly inside JSX-heavy files."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "type Feature = { title: string; description: string };\n\nconst FeatureCard = ({ title, description }: Feature) => (\n  <article>\n    <h3>{title}</h3>\n    <p>{description}</p>\n  </article>\n);\n\nconst features = [\n  { title: 'Fast', description: 'Vite-powered dev server' },\n  { title: 'Typed', description: 'TypeScript from day one' },\n];\n\nconst list = features.map((feature) => (\n  <FeatureCard key={feature.title} {...feature} />\n));"
+    },
+    {
+      "type": "heading",
+      "id": "template-literals",
+      "level": 3,
+      "text": "Template literals — readable dynamic strings"
+    },
+    {
+      "type": "paragraph",
+      "content": "Template literals let you embed expressions inside strings. In UI work you will use them for dynamic class names, accessible labels, and debug messages. They are clearer than concatenation and easier to review in PRs."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "const user = 'Abhiraj';\nconst sectionId = 'hero';\n\nconst greeting = `Welcome back, ${user}`;\nconst sectionLabel = `Navigate to ${sectionId} section`;\n\n// Common React pattern — conditional classes come on Day 10+\nconst isActive = true;\nconst className = `nav-link${isActive ? ' nav-link--active' : ''}`;"
+    },
+    {
+      "type": "heading",
+      "id": "modules",
+      "level": 3,
+      "text": "Modules — import and export"
+    },
+    {
+      "type": "paragraph",
+      "content": "Every React component file is a module. Named exports are preferred for components and utilities because they are explicit in imports and refactor-friendly in large codebases. Default exports are common in page-level files, but many production teams standardize on named exports to avoid rename confusion."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "components/Navbar.tsx",
+      "code": "export type NavbarProps = {\n  brand: string;\n};\n\nexport function Navbar({ brand }: NavbarProps) {\n  return <header>{brand}</header>;\n}"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "App.tsx",
+      "code": "import { Navbar } from './components/Navbar';\n\nexport function App() {\n  return <Navbar brand=\"FrontForge\" />;\n}"
+    },
+    {
+      "type": "warning",
+      "title": "Common mistake",
+      "content": "Import path typos and wrong export type (default vs named) cause silent blank screens or build errors. If a component renders nothing, check the import line first."
+    },
+    {
+      "type": "heading",
+      "id": "destructuring",
+      "level": 3,
+      "text": "Destructuring — how props feel natural"
+    },
+    {
+      "type": "paragraph",
+      "content": "Destructuring is why React props feel ergonomic. Instead of props.title, props.description, you unpack exactly what the component needs. This documents the component contract at the function signature — a small readability win that compounds across hundreds of components."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "type HeroProps = {\n  title: string;\n  subtitle: string;\n  ctaLabel: string;\n};\n\n// Destructure in the parameter list\nfunction Hero({ title, subtitle, ctaLabel }: HeroProps) {\n  return (\n    <section>\n      <h1>{title}</h1>\n      <p>{subtitle}</p>\n      <button type=\"button\">{ctaLabel}</button>\n    </section>\n  );\n}"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — catch mistakes before users do"
+    },
+    {
+      "type": "paragraph",
+      "content": "TypeScript is not a separate language you learn after JavaScript. It is JavaScript plus a compile-time safety net. Companies like Atlassian, Microsoft, and Razorpay use TypeScript in production React codebases because it turns entire classes of runtime bugs into editor errors."
+    },
+    {
+      "type": "heading",
+      "id": "why-typescript",
+      "level": 3,
+      "text": "Why TypeScript in a React project?"
+    },
+    {
+      "type": "table",
+      "headers": ["Without TypeScript", "With TypeScript"],
+      "rows": [
+        ["Pass wrong prop types silently", "Editor shows prop mismatch immediately"],
+        ["Refactor a component name manually", "Rename symbol updates all imports"],
+        ["Guess API response shape", "Define interfaces once, reuse everywhere"],
+        ["Debug undefined at runtime in production", "Catch nullable access during development"]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "Trade-off: TypeScript adds upfront typing cost. For a landing page today, that cost is small. For a 200-component dashboard later, it pays for itself every sprint."
+    },
+    {
+      "type": "heading",
+      "id": "basic-types",
+      "level": 3,
+      "text": "Basic types and inference"
+    },
+    {
+      "type": "paragraph",
+      "content": "Start explicit on component props. Let TypeScript infer local variables when obvious. This is the balance senior engineers use — explicit at boundaries, inferred inside functions."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "type Feature = {\n  id: string;\n  title: string;\n  description: string;\n  isHighlighted: boolean;\n};\n\nconst features: Feature[] = [\n  {\n    id: 'speed',\n    title: 'Ship faster',\n    description: 'Hot Module Replacement keeps you in flow',\n    isHighlighted: true,\n  },\n];\n\n// Inference works here — no need to annotate\nconst count = features.length;\nconst titles = features.map((f) => f.title);"
+    },
+    {
+      "type": "note",
+      "title": "Vite already includes TypeScript",
+      "content": "When you run npm create vite@latest with the react-ts template, TypeScript is configured. You are not installing it from scratch — you are learning to read and write the types it enforces."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — the mental model"
+    },
+    {
+      "type": "heading",
+      "id": "why-react",
+      "level": 3,
+      "text": "Why React exists"
+    },
+    {
+      "type": "paragraph",
+      "content": "Before component libraries, teams manipulated the DOM directly. That scales poorly: business rules, UI state, and DOM updates become tangled. React popularized declarative UI — you describe what the UI should look like for a given state, and React figures out how to update the DOM efficiently."
+    },
+    {
+      "type": "quote",
+      "content": "React is a library for building user interfaces where UI is a function of state.",
+      "attribution": "Simplified from the React docs mental model"
+    },
+    {
+      "type": "paragraph",
+      "content": "When to choose React: large interactive UIs, teams that need composable components, ecosystems with hiring depth. When to reconsider: static content sites with minimal interactivity might be better served by simpler tools. Interviewers want you to know React is a trade-off, not a religion."
+    },
+    {
+      "type": "heading",
+      "id": "virtual-dom",
+      "level": 3,
+      "text": "Virtual DOM — introduction only"
+    },
+    {
+      "type": "paragraph",
+      "content": "React keeps a lightweight representation of your UI in memory. When state changes, React builds a new representation, diffs it against the previous one, and applies the minimum DOM updates. You do not manage DOM patches manually. This is why React feels fast enough for complex dashboards while keeping code readable. Deep performance tuning comes in Week 3 — today, understand the concept."
+    },
+    {
+      "type": "heading",
+      "id": "jsx",
+      "level": 3,
+      "text": "JSX — not HTML"
+    },
+    {
+      "type": "paragraph",
+      "content": "JSX is syntax sugar that looks like HTML inside JavaScript. Babel/Vite compiles it to React.createElement calls. JSX is stricter than HTML: close every tag, use className instead of class, use htmlFor instead of for, and wrap multiple siblings in a fragment or parent element."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "jsx-valid",
+          "label": "Valid JSX",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "tsx",
+              "code": "function Footer() {\n  return (\n    <footer className=\"site-footer\">\n      <p>&copy; 2026 FrontForge</p>\n    </footer>\n  );\n}"
+            }
+          ]
+        },
+        {
+          "id": "jsx-invalid",
+          "label": "Invalid JSX",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "tsx",
+              "code": "function BrokenFooter() {\n  return (\n    <footer class=\"site-footer\">\n      <p>Missing closing tag\n    </footer>\n  );\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "components",
+      "level": 3,
+      "text": "Functional components"
+    },
+    {
+      "type": "paragraph",
+      "content": "A React component is a function that returns UI. Name components with PascalCase. Keep components small and focused — Navbar should not also fetch weather data. That separation is what makes codebases maintainable at companies shipping weekly."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "components/Hero.tsx",
+      "code": "type HeroProps = {\n  title: string;\n  subtitle: string;\n};\n\nexport function Hero({ title, subtitle }: HeroProps) {\n  return (\n    <section aria-labelledby=\"hero-title\">\n      <h1 id=\"hero-title\">{title}</h1>\n      <p>{subtitle}</p>\n    </section>\n  );\n}"
+    },
+    {
+      "type": "tip",
+      "title": "Production habit",
+      "content": "Add aria-labelledby or aria-label on sections early. Accessibility is not a Week 4 afterthought — interviewers at Adobe and Microsoft notice semantic HTML on junior portfolios."
+    },
+    {
+      "type": "heading",
+      "id": "vite",
+      "level": 3,
+      "text": "Vite and project structure"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create React App dominated for years but Vite is now the default choice for new projects: instant dev server startup, fast HMR, and sensible defaults. A clean Day 1 structure might look like this:"
+    },
+    {
+      "type": "code",
+      "language": "text",
+      "code": "src/\n  components/\n    Navbar.tsx\n    Hero.tsx\n    Features.tsx\n    Footer.tsx\n  App.tsx\n  main.tsx\n  index.css"
+    },
+    {
+      "type": "paragraph",
+      "content": "Why this structure scales: components folder grows by feature later (Week 3+), but on Day 1 flat is fine. What matters is separation — one component per file, props typed, no 300-line App.tsx."
+    },
+    {
+      "type": "heading",
+      "id": "devtools",
+      "level": 3,
+      "text": "React Developer Tools"
+    },
+    {
+      "type": "paragraph",
+      "content": "Install the React Developer Tools browser extension today. You will inspect component trees, see props, and debug re-renders later. Senior engineers use DevTools daily — get comfortable now."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build-mission",
+      "level": 2,
+      "text": "Build Mission — Landing Page"
+    },
+    {
+      "type": "paragraph",
+      "content": "Build a responsive landing page for a fictional product (your own idea is better than copying). You are practicing composition: small components assembled into a page. State comes tomorrow — today everything can be static props."
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-navbar", "text": "Navbar with brand name and 3–4 navigation links" },
+        { "id": "req-hero", "text": "Hero section with headline, subheadline, and primary CTA button" },
+        { "id": "req-features", "text": "Features section with at least 3 feature cards" },
+        { "id": "req-footer", "text": "Footer with copyright and at least one link" },
+        { "id": "req-responsive", "text": "Layout works on mobile (375px) and desktop (1280px)" },
+        { "id": "req-reusable", "text": "At least 4 components in separate files with typed props" }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Hints, not solutions",
+      "content": "Start with Navbar and Footer — they frame the page. Pass feature data as an array and map it to FeatureCard components. Use CSS flexbox or grid in index.css. If you finish early, add a secondary CTA or a subtle hover state on cards."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — mistakes you will make today"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "debug-jsx",
+          "title": "JSX syntax error",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Vite overlay shows Unexpected token or Adjacent JSX elements must be wrapped. Cause: unclosed tags, class instead of className, or multiple root elements without a fragment. Fix: wrap siblings in <>...</> or a <div>, fix attribute names, and ensure every opening tag has a closing tag."
+            }
+          ]
+        },
+        {
+          "id": "debug-return",
+          "title": "Missing return",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Component renders nothing. Cause: you defined a function body with curly braces but forgot return. Fix: either use implicit return with parentheses — () => (<div />) — or add an explicit return statement."
+            },
+            {
+              "type": "code",
+              "language": "tsx",
+              "code": "// Wrong\nfunction Hero() {\n  <h1>Title</h1>;\n}\n\n// Right\nfunction Hero() {\n  return <h1>Title</h1>;\n}"
+            }
+          ]
+        },
+        {
+          "id": "debug-import",
+          "title": "Wrong component import",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Element type is invalid or Cannot read properties of undefined. Cause: default vs named export mismatch, wrong file path, or typo in component name. Fix: match export style — if file has export function Navbar, import { Navbar } from './components/Navbar'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Before you close your editor",
+      "items": [
+        { "id": "done-quiz", "text": "Complete the quiz below" },
+        { "id": "done-interview", "text": "Answer interview questions out loud" },
+        { "id": "done-reflection", "text": "Write reflection notes" },
+        { "id": "done-git", "text": "git add, commit, and push your landing page" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

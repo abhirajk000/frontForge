@@ -1,0 +1,72 @@
+{
+  "id": "day08-resources",
+  "metaId": "day08",
+  "title": "Day 08 Resources",
+  "description": "Official docs for useEffect, fetch, and API typing — read after building the dashboard.",
+  "resources": [
+    {
+      "id": "res-useeffect",
+      "title": "React — Synchronizing with Effects",
+      "url": "https://react.dev/learn/synchronizing-with-effects",
+      "type": "documentation",
+      "description": "Official useEffect mental model, dependencies, and cleanup.",
+      "recommended": true
+    },
+    {
+      "id": "res-effect-deps",
+      "title": "React — Removing Effect Dependencies",
+      "url": "https://react.dev/learn/removing-effect-dependencies",
+      "type": "documentation",
+      "description": "How to fix unstable dependencies and avoid infinite loops.",
+      "recommended": true
+    },
+    {
+      "id": "res-fetch-mdn",
+      "title": "MDN — Using the Fetch API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "type": "documentation",
+      "description": "fetch basics, checking responses, error handling patterns.",
+      "recommended": true
+    },
+    {
+      "id": "res-optional-chaining",
+      "title": "MDN — Optional chaining",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining",
+      "type": "documentation",
+      "description": "Safe access for nested API fields before data loads.",
+      "recommended": false
+    },
+    {
+      "id": "res-openweather",
+      "title": "OpenWeatherMap — Current Weather API",
+      "url": "https://openweathermap.org/current",
+      "type": "documentation",
+      "description": "API used in today's build — sign up for a free API key.",
+      "recommended": true
+    },
+    {
+      "id": "res-error-boundaries",
+      "title": "React — Error Boundaries",
+      "url": "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary",
+      "type": "documentation",
+      "description": "Introduction to error boundaries — interview topic today, deep dive later.",
+      "recommended": true
+    },
+    {
+      "id": "res-vite-env",
+      "title": "Vite — Env Variables and Modes",
+      "url": "https://vite.dev/guide/env-and-mode",
+      "type": "documentation",
+      "description": "How to store VITE_WEATHER_API_KEY safely.",
+      "recommended": true
+    },
+    {
+      "id": "res-async-await",
+      "title": "MDN — async function",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+      "type": "documentation",
+      "description": "Async/await review for fetch chains in effects and handlers.",
+      "recommended": false
+    }
+  ]
+}

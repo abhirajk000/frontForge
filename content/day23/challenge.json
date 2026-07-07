@@ -1,0 +1,97 @@
+{
+  "id": "day23-challenge",
+  "metaId": "day23",
+  "title": "Production Refactor Challenge",
+  "mission": "Production Ready Frontend",
+  "description": "Choose ONE previous FrontForge project and refactor it for production. Improve folder structure, reusable components, custom hooks, performance, accessibility, TypeScript, code quality, error handling, loading states, and responsive design. Then write an architecture discussion defending every decision — no new React concepts, only apply Weeks 1–3 patterns.",
+  "estimatedMinutes": 300,
+  "difficulty": "advanced",
+  "requirements": [
+    "Select exactly ONE project from Weeks 1–3 or Day 22 machine coding submission",
+    "Restructure into feature-based folders: components, hooks, api, types per feature",
+    "Extract at least two reusable components used in multiple places",
+    "Extract at least one custom hook (data fetching, form logic, or UI behavior)",
+    "Apply React.memo, useMemo, or useCallback only where Profiler shows benefit — document each",
+    "Add lazy loading or code splitting for at least one non-critical route or heavy component",
+    "Ensure all async flows have loading, error, and empty states",
+    "Accessibility pass: semantic HTML, form labels, keyboard navigation, focus on errors",
+    "TypeScript strict: typed props, API models, no any — run npm run build clean",
+    "Remove dead code, fix inconsistent naming, enforce single responsibility per file",
+    "Responsive layout verified on mobile viewport (375px) and desktop",
+    "Write ARCHITECTURE.md or PR description: structure, Context vs Redux vs RTK Query vs Router, trade-offs, three future improvements"
+  ],
+  "acceptanceCriteria": [
+    "Interviewer can navigate feature folders and find api, types, hooks within 10 seconds",
+    "At least two duplicated JSX blocks replaced with shared components",
+    "Custom hook is imported and used — not dead code",
+    "Performance doc lists each optimization with measure → change → result OR skip reason",
+    "Tab through primary flow without mouse — all actions reachable",
+    "npm run build passes with zero TypeScript errors",
+    "Error state renders user-facing message with retry on at least one API call",
+    "Architecture doc answers: why this folder structure, why each state solution, trade-offs, future improvements",
+    "Candidate can explain refactor in under 3 minutes out loud",
+    "Refactored code pushed to Git with meaningful commit messages"
+  ],
+  "hints": [
+    "Start with a 15-minute audit: list the top 5 gaps from Day 22 code review before touching code.",
+    "Refactor in vertical slices — one feature folder at a time — not a big-bang rewrite.",
+    "Extract hooks when you see the same useEffect + useState pattern in two components.",
+    "Profile before memo: React DevTools → Profiler → record interaction → find hot components.",
+    "Keep original project branch; refactor on a new branch for easy before/after comparison.",
+    "Architecture doc is interview prep for Day 24 Round 4 — write it as if presenting to a staff engineer."
+  ],
+  "bonus": {
+    "title": "Production polish",
+    "description": "Only after core refactor acceptance criteria are met.",
+    "requirements": [
+      "Error boundary wrapping feature routes",
+      "Skeleton loaders matching final layout dimensions",
+      "localStorage persistence for user preferences",
+      "Unit tests on one custom hook or pure utility function"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-memo-prop",
+      "title": "React.memo Not Working",
+      "symptom": "Memoized child still re-renders every parent update; Profiler shows no improvement",
+      "cause": "Parent passes inline object or arrow function as prop — new reference every render defeats shallow compare",
+      "fix": "useCallback for handlers, useMemo for object props passed to memoized children — or lift state down"
+    },
+    {
+      "id": "dbg-context-rerender",
+      "title": "Context Causes App-Wide Re-renders",
+      "symptom": "Changing theme re-renders entire component tree including unrelated features",
+      "cause": "Context provider value is a new object literal every render: value={{ theme, toggle }}",
+      "fix": "Memoize context value with useMemo; split ThemeContext from AuthContext; consider selectors"
+    },
+    {
+      "id": "dbg-lazy-suspense",
+      "title": "Lazy Route Shows Blank Screen",
+      "symptom": "Navigating to lazy-loaded route shows white screen; no error in console",
+      "cause": "Missing Suspense boundary around lazy component, or incorrect default export in dynamic import",
+      "fix": "Wrap Routes in Suspense with fallback; ensure lazy(() => import('./X')) targets default export"
+    },
+    {
+      "id": "dbg-ts-prop",
+      "title": "TypeScript Props Mismatch After Extract",
+      "symptom": "Extracted component shows TS errors; optional props treated as required",
+      "cause": "Shared component interface does not match all call sites after refactor",
+      "fix": "Define strict props interface; use optional fields with defaults; fix all call sites before moving on"
+    },
+    {
+      "id": "dbg-a11y-focus",
+      "title": "Focus Trap on Error",
+      "symptom": "After API error, keyboard user cannot reach retry button; focus lost",
+      "cause": "Error panel rendered without focus management; conditional render unmounts focused element",
+      "fix": "useRef + useEffect to focus error heading or retry button when error state becomes true"
+    },
+    {
+      "id": "dbg-responsive",
+      "title": "Mobile Layout Breaks After Refactor",
+      "symptom": "Desktop layout fine; mobile shows horizontal scroll and clipped buttons",
+      "cause": "Fixed widths copied from desktop refactor; flex/grid not adjusted for small viewports",
+      "fix": "Mobile-first CSS; min-width 0 on flex children; test at 375px in DevTools device mode"
+    }
+  ]
+}

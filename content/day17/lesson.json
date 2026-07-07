@@ -1,0 +1,266 @@
+{
+  "id": "day17-lesson",
+  "metaId": "day17",
+  "title": "Day 17 — Product Management using RTK Query",
+  "summary": "Layer server state on your Redux store with RTK Query — typed API models, query and mutation hooks, automatic caching, and tag invalidations for product CRUD.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Day 16 gave you client state with Redux Toolkit — todos, filters, actions. Real apps also need server state: products from an API that loads, caches, refetches, and updates after mutations. RTK Query ships with Redux Toolkit and solves this without bolting on a separate library. Today you build product CRUD with loading and error handling — the same pattern Flipkart and Swiggy use for catalog management."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Scope boundary",
+      "content": "Today covers RTK Query and product CRUD only. Do NOT introduce authentication (Day 18), admin dashboards (Day 19), or performance memoization labs (Day 20). Your API calls are open — auth headers come tomorrow."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Promise Chaining and Async Patterns"
+    },
+    {
+      "type": "paragraph",
+      "content": "RTK Query abstracts fetch, but interviews still test promise fundamentals. A promise represents a future value. .then() chains success handlers; .catch() handles failures. async/await is syntactic sugar over promises — easier to read, same underlying mechanics."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "fetch('/api/products')\n  .then(res => {\n    if (!res.ok) throw new Error('HTTP ' + res.status);\n    return res.json();\n  })\n  .then(data => console.log(data))\n  .catch(err => console.error(err));\n\n// Equivalent async/await:\nasync function loadProducts() {\n  try {\n    const res = await fetch('/api/products');\n    if (!res.ok) throw new Error('HTTP ' + res.status);\n    return await res.json();\n  } catch (err) {\n    console.error(err);\n  }\n}"
+    },
+    {
+      "type": "tip",
+      "title": "Production connection",
+      "content": "RTK Query uses async thunks internally. When an interviewer asks \"what happens under the hood,\" say: each query hook dispatches a lifecycle action — pending, fulfilled, rejected — and stores result metadata in the cache slice."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — API Models and Generic Responses"
+    },
+    {
+      "type": "paragraph",
+      "content": "Define Product once and reuse across endpoints. Generic wrappers like ApiResponse<T> standardize pagination and error shapes — interviewers love seeing typed API contracts instead of any everywhere."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/api.ts",
+      "code": "export interface Product {\n  id: string;\n  name: string;\n  price: number;\n  category: string;\n  inStock: boolean;\n}\n\nexport interface ApiResponse<T> {\n  data: T;\n  total: number;\n  page: number;\n}\n\nexport type ProductListResponse = ApiResponse<Product[]>;"
+    },
+    {
+      "type": "warning",
+      "title": "Type the transformResponse",
+      "content": "If your API wraps data in { data: [...] }, use transformResponse in the endpoint definition so hooks return Product[] directly — components should not unwrap envelopes."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — RTK Query"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-setup",
+          "label": "createApi",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "createApi defines a slice of Redux state for server data. Register its reducer and middleware in configureStore alongside your client slices from Day 16."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "export const productsApi = createApi({\n  reducerPath: 'productsApi',\n  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),\n  tagTypes: ['Product'],\n  endpoints: (builder) => ({\n    getProducts: builder.query<Product[], void>({\n      query: () => '/products',\n      providesTags: ['Product'],\n    }),\n  }),\n});"
+            }
+          ]
+        },
+        {
+          "id": "tab-queries",
+          "label": "Query hooks",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Auto-generated hooks like useGetProductsQuery subscribe to cache entries. They return { data, isLoading, isError, error, refetch } — wire these to your loading and error UI from Day 8."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "const { data: products, isLoading, isError, error } = useGetProductsQuery();\n\nif (isLoading) return <Spinner />;\nif (isError) return <ErrorMessage error={error} />;\nreturn <ProductList products={products ?? []} />;"
+            }
+          ]
+        },
+        {
+          "id": "tab-mutations",
+          "label": "Mutations & cache",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Mutations change server data. Use invalidatesTags so related queries refetch automatically — no manual cache surgery after add or delete."
+            },
+            {
+              "type": "code",
+              "language": "typescript",
+              "code": "addProduct: builder.mutation<Product, Omit<Product, 'id'>>({\n  query: (body) => ({ url: '/products', method: 'POST', body }),\n  invalidatesTags: ['Product'],\n}),\n\n// In component:\nconst [addProduct, { isLoading }] = useAddProductMutation();"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "title": "Cache deduplication",
+      "content": "Two components calling useGetProductsQuery() share one request and one cache entry. RTK Query deduplicates in-flight requests — explain this when asked about duplicate API calls."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Product CRUD"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        {
+          "id": "req-fetch",
+          "text": "Fetch and display products with loading spinner"
+        },
+        {
+          "id": "req-add",
+          "text": "Add product form with mutation hook"
+        },
+        {
+          "id": "req-update",
+          "text": "Update product inline or via modal"
+        },
+        {
+          "id": "req-delete",
+          "text": "Delete product with confirmation"
+        },
+        {
+          "id": "req-error",
+          "text": "Show error UI when fetch or mutation fails"
+        }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — RTK Query mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-cache",
+          "title": "Cache not updating after mutation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: New product added but list stale. Cause: Mutation missing invalidatesTags or providesTags mismatch. Fix: Add invalidatesTags: ['Product'] to mutation; ensure query providesTags returns [{ type: 'Product' }]."
+            }
+          ]
+        },
+        {
+          "id": "dbg-duplicate",
+          "title": "Duplicate requests",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Network tab shows repeated GET /products. Cause: Different query args create separate cache keys, or refetchOnMountOrArgChange misconfigured. Fix: Use consistent args; tune refetchOnFocus/refetchOnReconnect defaults."
+            }
+          ]
+        },
+        {
+          "id": "dbg-invalidation",
+          "title": "Wrong invalidation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Unrelated queries refetch unnecessarily. Cause: Over-broad tag like invalidatesTags: ['Product'] when granular tags needed. Fix: Use { type: 'Product', id } for entity-level invalidation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Interview Focus — RTK Query vs React Query"
+    },
+    {
+      "type": "paragraph",
+      "content": "Both solve server state caching. RTK Query integrates with existing Redux store and DevTools — pick it when you already use Redux Toolkit. React Query (TanStack Query) is standalone and lighter if you have no Redux. Say: \"I choose RTK Query when client and server state live in one Redux store with unified DevTools.\""
+    },
+    {
+      "type": "quote",
+      "content": "RTK Query is an optional addon included in the Redux Toolkit package, and its functionality is built on top of the other APIs in Redux Toolkit.",
+      "attribution": "Redux Toolkit documentation"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        {
+          "id": "done-crud",
+          "text": "Product CRUD works with loading/error states"
+        },
+        {
+          "id": "done-cache",
+          "text": "Cache invalidates after mutations"
+        },
+        {
+          "id": "done-typed",
+          "text": "Product and response types defined"
+        },
+        {
+          "id": "done-git",
+          "text": "Git push"
+        }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

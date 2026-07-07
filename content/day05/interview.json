@@ -1,0 +1,129 @@
+{
+  "id": "day05-interview",
+  "metaId": "day05",
+  "title": "Day 05 Interview Prep",
+  "description": "Practice explaining SPA routing, nested routes, Link vs anchor, and dashboard layout architecture.",
+  "questions": [
+    {
+      "id": "int-e01",
+      "question": "What is client-side routing in React?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "SPA basics.",
+      "keyPoints": [
+        "URL changes without full document reload",
+        "React Router maps URL to components",
+        "History API",
+        "Enables shareable deep links"
+      ],
+      "sampleAnswer": "Client-side routing updates the URL and swaps React components without reloading the page. React Router listens to URL changes and renders the matching route. Users get fast navigation and bookmarkable URLs like /settings.",
+      "followUps": ["Server config for SPAs?", "Hash vs browser router?"]
+    },
+    {
+      "id": "int-e02",
+      "question": "What is the difference between Link and a regular anchor tag?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Practical router knowledge.",
+      "keyPoints": [
+        "Link for internal app routes",
+        "Prevents full reload",
+        "Anchor for external URLs",
+        "NavLink adds active state"
+      ],
+      "sampleAnswer": "Link navigates within the SPA using client-side history. Regular <a href> triggers full page load — fine for external sites. I use Link for internal routes and <a target='_blank'> for external docs.",
+      "followUps": ["useNavigate vs Link?", "Prefetching routes?"]
+    },
+    {
+      "id": "int-e03",
+      "question": "What are nested routes?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Layout persistence pattern.",
+      "keyPoints": [
+        "Parent route renders layout",
+        "Child routes render in Outlet",
+        "Shared sidebar/navbar",
+        "URL reflects hierarchy"
+      ],
+      "sampleAnswer": "Nested routes let a parent layout — sidebar and navbar — wrap multiple child pages. Outlet marks where the child route renders. /dashboard/settings shows layout plus Settings content without duplicating chrome.",
+      "followUps": ["Index routes?", "Layout routes without path?"]
+    },
+    {
+      "id": "int-m01",
+      "question": "Explain SPA vs traditional multi-page application.",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Trade-off awareness.",
+      "keyPoints": [
+        "SPA: one load, client navigation",
+        "MPA: server returns new HTML per request",
+        "SEO and initial load trade-offs",
+        "When each fits"
+      ],
+      "sampleAnswer": "SPAs load once then route client-side — fast transitions, app-like feel. MPAs fetch new HTML per navigation — simpler SEO and smaller initial JS sometimes. React dashboards are typically SPAs; marketing sites might be MPA or hybrid.",
+      "followUps": ["SSR with React?", "Code splitting per route?"]
+    },
+    {
+      "id": "int-m02",
+      "question": "How does Outlet work with React Router v6?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Hands-on router API.",
+      "keyPoints": [
+        "Renders active child route element",
+        "Placed in layout component",
+        "Multiple levels possible",
+        "Without Outlet child routes invisible"
+      ],
+      "sampleAnswer": "Outlet is a placeholder in the parent layout. React Router renders whichever child route matches the current URL into that slot. My DashboardLayout has Sidebar, Navbar, and main with Outlet — children swap inside main only.",
+      "followUps": ["Nested Outlet levels?", "Error boundaries per route?"]
+    },
+    {
+      "id": "int-m03",
+      "question": "What is a closure and why does it matter in route components?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "JS fundamentals in React context.",
+      "keyPoints": [
+        "Function captures variables from outer scope",
+        "Event handlers close over render values",
+        "Stale closure with effects — Day 04 tie-in",
+        "Not router-specific but universal"
+      ],
+      "sampleAnswer": "A closure is when a function remembers variables from where it was defined. Click handlers in ProfilePage close over props and state from that render. Understanding closures explains stale values in effects and callbacks — core JS for React.",
+      "followUps": ["Stale closure in useEffect?", "useCallback purpose?"]
+    },
+    {
+      "id": "int-h01",
+      "question": "How would you structure routes for a growing admin app with 20+ pages?",
+      "difficulty": "hard",
+      "category": "architecture",
+      "whatInterviewerTests": "Scalable routing design.",
+      "keyPoints": [
+        "Feature-based route modules",
+        "Layout routes per section",
+        "Lazy load with React.lazy",
+        "404 and unauthorized routes"
+      ],
+      "sampleAnswer": "I group routes by feature — users, billing, settings — each exporting route config. Shared DashboardLayout wraps authenticated routes. I lazy-load heavy pages. Catch-all 404 and protected route wrapper for auth later. Central router file imports feature routes.",
+      "followUps": ["Route loaders?", "Protected routes pattern?"]
+    },
+    {
+      "id": "int-s01",
+      "question": "User reports 404 on refresh at /dashboard/settings in production. Local dev works. What happened?",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "SPA deployment knowledge.",
+      "keyPoints": [
+        "Server must fallback to index.html",
+        "Dev server does this automatically",
+        "nginx/Netlify/Vercel rewrite rules",
+        "Not a React Router code bug alone"
+      ],
+      "sampleAnswer": "Direct hit or refresh requests /dashboard/settings from the server. Without fallback, server looks for that file and 404s. Fix: configure server to serve index.html for all routes so React Router takes over. Vite dev hides this — production needs rewrite config.",
+      "followUps": ["Hash router workaround?", "SSR routing?"],
+      "redFlags": ["Blame React Router only", "Suggest removing nested routes"]
+    }
+  ]
+}

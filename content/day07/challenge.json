@@ -1,0 +1,73 @@
+{
+  "id": "day07-challenge",
+  "metaId": "day07",
+  "title": "Machine Coding Round 1 — Week 1 Review Build",
+  "mission": "Machine Coding Round 1",
+  "description": "90-minute timed build from scratch without AI, Google, or copying previous code. Build login, dashboard, sidebar, and navbar using only Week 1 concepts and official documentation.",
+  "estimatedMinutes": 90,
+  "difficulty": "intermediate",
+  "requirements": [
+    "Set a 90-minute timer before starting",
+    "Do not use AI tools, Google, or copy-paste from prior FrontForge days",
+    "Official React, TypeScript, React Router, and MDN docs only",
+    "Scaffold Vite + React + TypeScript fresh or use empty branch — no peeking at old solutions",
+    "Login page: email, password, controlled inputs, basic validation, submit handler",
+    "After login (simulated OK), navigate to dashboard — useState or router",
+    "Dashboard layout with sidebar and navbar persisting across views",
+    "At least two navigable sections (e.g. dashboard home, profile) via React Router",
+    "Outlet or equivalent nested routing for main content area",
+    "TypeScript props on components",
+    "Mobile-usable layout — minimal responsive CSS acceptable"
+  ],
+  "acceptanceCriteria": [
+    "Timer stopped at or before 90 minutes",
+    "Login form validates empty fields before proceed",
+    "User can reach dashboard after successful login (fake auth OK)",
+    "Sidebar links change main content without full page reload",
+    "Navbar visible on dashboard views",
+    "App builds with npm run build",
+    "Self-review document lists 3 weak Week 1 topics and 3 strengths",
+    "Attempt pushed to Git with tag or branch machine-coding-day07"
+  ],
+  "hints": [
+    "Minute 0–15: Vite scaffold, folder structure, BrowserRouter skeleton.",
+    "Minute 15–40: LoginForm with useState — copy structure from memory, not files.",
+    "Minute 40–70: DashboardLayout, Sidebar, Navbar, Outlet, two child routes.",
+    "Minute 70–85: Wire login → navigate to /dashboard; fix broken routes.",
+    "Minute 85–90: Smoke test, README self-review, git push.",
+    "If stuck on routes 10+ minutes, read reactrouter.com Outlet docs only."
+  ],
+  "bonus": {
+    "title": "Stretch goals (only if time remains)",
+    "description": "Extra credit — not required for pass.",
+    "requirements": [
+      "useDebounce search in navbar",
+      "Theme toggle with localStorage",
+      "Loading state on simulated login",
+      "404 page for unknown routes"
+    ]
+  },
+  "debuggingScenarios": [
+    {
+      "id": "dbg-time",
+      "title": "Running out of time",
+      "symptom": "60 minutes in and only login exists",
+      "cause": "Over-polishing CSS or perfect validation before layout shell",
+      "fix": "Hard stop at M40 for login — switch to layout + placeholder pages; style later"
+    },
+    {
+      "id": "dbg-blank",
+      "title": "Blank dashboard after login",
+      "symptom": "Navigate succeeds but white main area",
+      "cause": "Missing Outlet or route not nested under layout",
+      "fix": "Check React Router docs — layout Route wraps children with Outlet in same commit"
+    },
+    {
+      "id": "dbg-panic",
+      "title": "Forgot syntax under pressure",
+      "symptom": "Freeze on useState or Route syntax",
+      "cause": "Relied on AI during Week 1 daily builds",
+      "fix": "Official react.dev useState page; write minimal example on paper; continue — partial credit beats blank"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "id": "day15-quiz",
+  "metaId": "day15",
+  "title": "Day 15 Quiz — Context, this, and Theme Architecture",
+  "description": "Verify understanding of this/call/apply/bind, Context API typing, theme provider patterns, persistence, and global state trade-offs.",
+  "passingScorePercent": 70,
+  "retryAllowed": true,
+  "showExplanations": true,
+  "questions": [
+    {
+      "id": "q01",
+      "type": "true-false",
+      "prompt": "Arrow functions have their own this binding that refers to the enclosing lexical scope.",
+      "correctAnswer": false,
+      "explanation": "Arrow functions do NOT have their own this — they inherit this from the enclosing scope. Regular functions get this from how they are called.",
+      "difficulty": "easy",
+      "tags": ["javascript", "this"]
+    },
+    {
+      "id": "q02",
+      "type": "single-choice",
+      "prompt": "What does Function.prototype.bind() return?",
+      "options": [
+        { "id": "a", "text": "The result of calling the function immediately" },
+        { "id": "b", "text": "A new function with this permanently set to the provided value" },
+        { "id": "c", "text": "A copy of the arguments array" },
+        { "id": "d", "text": "undefined" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "bind returns a new function with this fixed. It does not invoke the original function.",
+      "difficulty": "easy",
+      "tags": ["javascript", "bind"]
+    },
+    {
+      "id": "q03",
+      "type": "single-choice",
+      "prompt": "What is the main difference between call() and apply()?",
+      "options": [
+        { "id": "a", "text": "call() is for classes; apply() is for functions" },
+        { "id": "b", "text": "call() accepts arguments individually; apply() accepts an array of arguments" },
+        { "id": "c", "text": "apply() binds this permanently; call() does not" },
+        { "id": "d", "text": "There is no difference" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Both invoke immediately with an explicit this. call(fn, arg1, arg2) vs apply(fn, [arg1, arg2]).",
+      "difficulty": "medium",
+      "tags": ["javascript", "call", "apply"]
+    },
+    {
+      "id": "q04",
+      "type": "single-choice",
+      "prompt": "Where should ThemeProvider be placed in a React app?",
+      "options": [
+        { "id": "a", "text": "Inside every page component that needs theme" },
+        { "id": "b", "text": "At the app root so all descendants can consume theme context" },
+        { "id": "c", "text": "Only inside the theme toggle component" },
+        { "id": "d", "text": "Below the router so routes do not re-render" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Global providers belong at the root — above routes and layout — so every component can access context without duplicate providers.",
+      "difficulty": "easy",
+      "tags": ["react", "context"]
+    },
+    {
+      "id": "q05",
+      "type": "multiple-choice",
+      "prompt": "Which cause unnecessary Context consumer re-renders? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Passing a new object literal as context value every render" },
+        { "id": "b", "text": "Memoizing context value with useMemo and stable dependencies" },
+        { "id": "c", "text": "Including a new function reference in context value without useCallback" },
+        { "id": "d", "text": "Using a primitive string as the only context value" }
+      ],
+      "correctOptionIds": ["a", "c"],
+      "explanation": "New object/function references each render change context value identity, re-rendering all consumers. Primitives and memoized values are stable.",
+      "difficulty": "hard",
+      "tags": ["react", "context", "performance"]
+    },
+    {
+      "id": "q06",
+      "type": "fill-blank",
+      "prompt": "Consume context in functional components with the {{blank1}} hook. Create context with React.{{blank2}}.",
+      "blanks": [
+        { "id": "blank1", "acceptedAnswers": ["useContext"] },
+        { "id": "blank2", "acceptedAnswers": ["createContext"] }
+      ],
+      "explanation": "createContext defines the context object; useContext reads the nearest Provider value.",
+      "difficulty": "easy",
+      "tags": ["react", "context"]
+    },
+    {
+      "id": "q07",
+      "type": "code-output",
+      "prompt": "What is logged?",
+      "code": "const obj = { name: 'Theme', getName() { return this.name; } };\nconst fn = obj.getName;\nconsole.log(fn());",
+      "language": "javascript",
+      "correctOutput": "undefined",
+      "explanation": "fn() is called without a receiver — in non-strict sloppy mode this is global/window; in strict mode undefined. The method lost its this binding when extracted.",
+      "difficulty": "medium",
+      "tags": ["javascript", "this"]
+    },
+    {
+      "id": "q08",
+      "type": "single-choice",
+      "prompt": "When should you NOT use React Context?",
+      "options": [
+        { "id": "a", "text": "For theme preference shared across the entire app" },
+        { "id": "b", "text": "For state that only two nested components need, passable via props" },
+        { "id": "c", "text": "For authentication session available to many routes" },
+        { "id": "d", "text": "For locale/i18n shared globally" }
+      ],
+      "correctOptionId": "b",
+      "explanation": "React docs recommend props for shallow sharing. Context is for truly global or widely consumed state — not a replacement for all prop passing.",
+      "difficulty": "medium",
+      "tags": ["react", "architecture"]
+    },
+    {
+      "id": "q09",
+      "type": "code-completion",
+      "prompt": "Complete the context type definition.",
+      "code": "type ThemeContextValue = {\n  theme: ThemePreference;\n  setTheme: {{type}};\n};",
+      "language": "typescript",
+      "blanks": [
+        { "id": "type", "acceptedAnswers": ["(theme: ThemePreference) => void", "(preference: ThemePreference) => void", "React.Dispatch<React.SetStateAction<ThemePreference>>"] }
+      ],
+      "explanation": "Function types document setter signatures. Dispatch<SetStateAction<T>> is valid when backed by useState.",
+      "difficulty": "medium",
+      "tags": ["typescript", "context"]
+    },
+    {
+      "id": "q10",
+      "type": "short-answer",
+      "prompt": "How do you persist theme to localStorage without causing a flash of the wrong theme on page load?",
+      "acceptedKeywords": ["initializer", "synchronous", "useState", "inline", "script", "before", "render"],
+      "sampleAnswer": "Read localStorage synchronously in the useState initializer function so the first render uses the stored preference. For zero flash, some apps inject a tiny inline script in index.html before React hydrates to set data-theme on html.",
+      "explanation": "Reading in useEffect runs after first paint — causing flash. Synchronous read on init is the minimum fix.",
+      "difficulty": "hard",
+      "tags": ["react", "persistence"]
+    }
+  ]
+}

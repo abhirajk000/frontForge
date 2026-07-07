@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "description": "FrontForge content schema registry. Runtime validation uses Zod implementations in src/content-engine/schemas/.",
+  "schemas": [
+    {
+      "id": "meta",
+      "file": "meta.json",
+      "zod": "src/content-engine/schemas/meta.schema.ts",
+      "export": "metaSchema",
+      "description": "Day metadata: title, mission, topics, definition of done"
+    },
+    {
+      "id": "lesson",
+      "file": "lesson.json",
+      "zod": "src/content-engine/schemas/lesson.schema.ts",
+      "export": "lessonSchema",
+      "description": "Lesson blocks: headings, code, callouts, tables, accordions, tabs"
+    },
+    {
+      "id": "quiz",
+      "file": "quiz.json",
+      "zod": "src/content-engine/schemas/quiz.schema.ts",
+      "export": "quizSchema",
+      "description": "Quiz questions: single/multiple choice, true-false, fill-blank, code-output, code-completion, short-answer"
+    },
+    {
+      "id": "challenge",
+      "file": "challenge.json",
+      "zod": "src/content-engine/schemas/challenge.schema.ts",
+      "export": "challengeSchema",
+      "description": "Build challenge: requirements, acceptance criteria, debugging scenarios"
+    },
+    {
+      "id": "interview",
+      "file": "interview.json",
+      "zod": "src/content-engine/schemas/interview.schema.ts",
+      "export": "interviewSchema",
+      "description": "Interview prep questions with sample answers and follow-ups"
+    },
+    {
+      "id": "reflection",
+      "file": "reflection.json",
+      "zod": "src/content-engine/schemas/reflection.schema.ts",
+      "export": "reflectionSchema",
+      "description": "Reflection prompts for learner journaling"
+    },
+    {
+      "id": "resources",
+      "file": "resources.json",
+      "zod": "src/content-engine/schemas/resources.schema.ts",
+      "export": "resourcesSchema",
+      "description": "Curated external links and documentation"
+    }
+  ],
+  "platformConfig": {
+    "status": "planned",
+    "note": "dashboard.json, navigation.json, roadmap.json, course.json, settings.json, theme.json, skills.json, progress.json, achievements.json, app-config.json, blocks.json require Milestone 3+ schemas and repository loaders before creation."
+  },
+  "dayFolderConvention": "content/dayNN/{meta,lesson,quiz,challenge,interview,reflection,resources}.json"
+}

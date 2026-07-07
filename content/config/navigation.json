@@ -1,0 +1,37 @@
+{
+  "id": "frontforge-nav",
+  "sections": [
+    {
+      "items": [
+        { "id": "mission", "label": "Mission", "href": "/", "icon": "Target" }
+      ]
+    },
+    {
+      "title": "Academy",
+      "items": [
+        { "id": "learn", "label": "Learn", "href": "/learn", "icon": "BookOpen" },
+        { "id": "interview", "label": "Interview", "href": "/roadmap", "icon": "BrainCircuit" },
+        { "id": "skills", "label": "Skills", "href": "/bookmarks", "icon": "Zap" }
+      ]
+    },
+    {
+      "title": "Growth",
+      "items": [
+        { "id": "progress", "label": "Progress", "href": "/progress", "icon": "TrendingUp" },
+        { "id": "achievements", "label": "Achievements", "href": "/achievements", "icon": "Trophy" }
+      ]
+    },
+    {
+      "title": "Workspace",
+      "items": [
+        { "id": "notes", "label": "Notes", "href": "/notes", "icon": "FileText" },
+        { "id": "resources", "label": "Resources", "href": "/resources", "icon": "Package" }
+      ]
+    },
+    {
+      "items": [
+        { "id": "settings", "label": "Settings", "href": "/settings", "icon": "Settings2" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "day15",
+  "version": "1.0.0",
+  "day": 15,
+  "week": 3,
+  "track": "react-interview",
+  "title": "Theme Management System",
+  "subtitle": "Context API deep dive, this/call/apply/bind, and a production-grade global theme provider",
+  "mission": "Build a Theme Management System.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": ["react", "context", "theme", "this", "call-apply-bind", "global-state", "persistence"],
+  "topics": {
+    "javascript": ["this keyword", "call()", "apply()", "bind()"],
+    "typescript": ["context types", "function types"],
+    "react": ["Context API deep dive", "theme provider", "custom theme hook"]
+  },
+  "prerequisites": [
+    "week2 — fetch APIs, custom hooks, loading and error states from Days 8–11",
+    "week2 — Context API introduction and immutability from Day 12 shopping cart",
+    "week2 — dynamic routing and navigation from Day 13",
+    "day14 — machine coding review: product listing, search, filter, pagination, cart without references"
+  ],
+  "expectedOutcome": [
+    "Explain how this behaves in regular functions vs arrow functions",
+    "Use call, apply, and bind to control function context in interview scenarios",
+    "Type a React Context with TypeScript including function types for setters",
+    "Build a ThemeProvider with light, dark, and system modes at the app root",
+    "Extract a useTheme custom hook that any component can consume",
+    "Persist theme preference to localStorage and restore on reload",
+    "Explain Context vs props and when NOT to use Context"
+  ],
+  "definitionOfDone": [
+    "Light, dark, and system theme modes all work and update the UI",
+    "Theme preference persists across page reloads",
+    "ThemeProvider wraps the entire app at the correct tree level",
+    "useTheme hook is consumed by at least one UI control",
+    "Layout is responsive on mobile and desktop",
+    "Code is pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 16,
+    "title": "Todo Manager using Redux Toolkit",
+    "summary": "Tomorrow you will manage application state with Redux Toolkit — slices, actions, selectors, and immutable updates — and compare when Redux beats Context for complex state."
+  }
+}

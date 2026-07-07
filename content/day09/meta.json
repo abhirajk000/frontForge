@@ -1,0 +1,43 @@
+{
+  "id": "day09",
+  "version": "1.0.0",
+  "day": 9,
+  "week": 2,
+  "track": "react-interview",
+  "title": "Movie Search Application",
+  "subtitle": "Debouncing, custom hooks, generic API types, and paginated search",
+  "mission": "Build a Movie Search Application.",
+  "readingTimeMinutes": 25,
+  "estimatedBuildHours": 4,
+  "difficulty": "intermediate",
+  "tags": ["react", "debounce", "custom-hooks", "search", "pagination", "event-loop", "generics"],
+  "topics": {
+    "javascript": ["debouncing", "timers", "event loop introduction"],
+    "typescript": ["generic API types"],
+    "react": ["custom hooks", "search optimization", "controlled inputs"]
+  },
+  "prerequisites": [
+    "week1 — useState, controlled forms, useEffect, and fetch from Days 4–6",
+    "day08 — fetch/async patterns, loading/error/empty states, API interfaces, useEffect cleanup"
+  ],
+  "expectedOutcome": [
+    "Implement debounced search to reduce unnecessary API calls",
+    "Extract reusable useDebounce and useMovieSearch custom hooks",
+    "Type paginated API responses with generic TypeScript interfaces",
+    "Build search with loading, empty, error, and pagination UI states",
+    "Explain debouncing and controlled components in interview terms"
+  ],
+  "definitionOfDone": [
+    "Search input debounces before triggering API requests",
+    "Movie results display in a responsive grid or list",
+    "Loading, empty, and error states handled correctly",
+    "Pagination navigates between result pages",
+    "No request storm on every keystroke in Network tab",
+    "Code pushed to Git"
+  ],
+  "tomorrowPreview": {
+    "day": 10,
+    "title": "E-Commerce Product Listing",
+    "summary": "Tomorrow you will filter, sort, and search product lists with array chaining, React keys, and React.memo — building scalable list UIs without global state."
+  }
+}

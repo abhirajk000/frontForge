@@ -1,0 +1,264 @@
+{
+  "id": "day12-lesson",
+  "metaId": "day12",
+  "title": "Day 12 — Shopping Cart",
+  "summary": "Manage application-wide cart state with immutable updates, TypeScript cart types, Context API, and the useReducer pattern.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "Days 10–11 kept state local to each page. Real e-commerce needs cart state everywhere — product page, navbar badge, checkout. Prop drilling breaks at three levels. Today you learn Context API and useReducer to share cart state immutably across your app."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Week 2 Day 5 — Context arrives today",
+      "content": "Context was intentionally delayed until today. Do NOT use Redux yet — Week 3 covers Redux Toolkit. Today is Context + useReducer only."
+    },
+    {
+      "type": "heading",
+      "id": "javascript",
+      "level": 2,
+      "text": "JavaScript — Immutability and State Updates"
+    },
+    {
+      "type": "heading",
+      "id": "immutability",
+      "level": 3,
+      "text": "Immutability — never mutate React state"
+    },
+    {
+      "type": "paragraph",
+      "content": "React detects changes by reference equality. Mutating an array or object in place keeps the same reference — React skips re-render. Always create new objects and arrays when updating state."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "immutable-updates.ts",
+      "code": "// WRONG — mutates state\nstate.items.push(newItem);\nitem.quantity += 1;\n\n// RIGHT — new references\nconst newItems = [...state.items, newItem];\nconst updatedItems = state.items.map((item) =>\n  item.id === id ? { ...item, quantity: item.quantity + 1 } : item\n);"
+    },
+    {
+      "type": "heading",
+      "id": "array-updates",
+      "level": 3,
+      "text": "Array updates — add, remove, update"
+    },
+    {
+      "type": "table",
+      "headers": ["Operation", "Immutable pattern"],
+      "rows": [
+        ["Add item", "[...items, newItem]"],
+        ["Remove item", "items.filter(i => i.id !== id)"],
+        ["Update item", "items.map(i => i.id === id ? { ...i, qty: n } : i)"],
+        ["Increment existing", "map + spread or filter + concat"]
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Shallow copy trap",
+      "content": "{ ...item, quantity: 5 } creates a new item object — good. [...items] then items[0].quantity = 5 still mutates nested object. Always spread the item you update inside map."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "typescript",
+      "level": 2,
+      "text": "TypeScript — Cart Types"
+    },
+    {
+      "type": "paragraph",
+      "content": "Model cart items and actions as discriminated unions. TypeScript narrows action type inside reducer switch cases."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "types/cart.ts",
+      "code": "export interface CartItem {\n  id: number;\n  title: string;\n  price: number;\n  quantity: number;\n}\n\nexport interface CartState {\n  items: CartItem[];\n}\n\ntype CartAction =\n  | { type: 'ADD_ITEM'; payload: Omit<CartItem, 'quantity'> }\n  | { type: 'REMOVE_ITEM'; payload: { id: number } }\n  | { type: 'UPDATE_QUANTITY'; payload: { id: number; quantity: number } };"
+    },
+    {
+      "type": "tip",
+      "title": "Discriminated unions",
+      "content": "The type field discriminates actions. Inside case 'ADD_ITEM', TypeScript knows payload shape. Same pattern scales to Redux in Week 3."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "react",
+      "level": 2,
+      "text": "React — Context API and useReducer"
+    },
+    {
+      "type": "heading",
+      "id": "context",
+      "level": 3,
+      "text": "Context API — share state without prop drilling"
+    },
+    {
+      "type": "paragraph",
+      "content": "createContext provides a value to all descendants. Provider wraps your app. useContext reads the value. Perfect for theme, auth, and cart — not for every piece of state."
+    },
+    {
+      "type": "code",
+      "language": "tsx",
+      "filename": "context/CartContext.tsx",
+      "code": "const CartContext = createContext<CartContextValue | null>(null);\n\nexport function CartProvider({ children }: { children: ReactNode }) {\n  const [state, dispatch] = useReducer(cartReducer, { items: [] });\n  const value = useMemo(() => ({ state, dispatch }), [state]);\n  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;\n}\n\nexport function useCart() {\n  const ctx = useContext(CartContext);\n  if (!ctx) throw new Error('useCart must be used within CartProvider');\n  return ctx;\n}"
+    },
+    {
+      "type": "heading",
+      "id": "reducer",
+      "level": 3,
+      "text": "useReducer — predictable state transitions"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reducer is a pure function (state, action) => newState. All cart logic lives in one place — easy to test and reason about. dispatch({ type: 'ADD_ITEM', payload: product }) from any component."
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "cartReducer.ts",
+      "code": "function cartReducer(state: CartState, action: CartAction): CartState {\n  switch (action.type) {\n    case 'ADD_ITEM': {\n      const existing = state.items.find((i) => i.id === action.payload.id);\n      if (existing) {\n        return {\n          items: state.items.map((i) =>\n            i.id === action.payload.id\n              ? { ...i, quantity: i.quantity + 1 }\n              : i\n          ),\n        };\n      }\n      return { items: [...state.items, { ...action.payload, quantity: 1 }] };\n    }\n    case 'REMOVE_ITEM':\n      return { items: state.items.filter((i) => i.id !== action.payload.id) };\n    default:\n      return state;\n  }\n}"
+    },
+    {
+      "type": "note",
+      "title": "When Context re-renders",
+      "content": "All useContext consumers re-render when provider value changes. useMemo on value helps only if state reference is stable between unrelated updates. Week 3 covers splitting contexts and Redux for scale."
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "id": "tab-usestate",
+          "label": "useState cart",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Fine for a single component. Breaks when navbar, product page, and cart page all need access."
+            }
+          ]
+        },
+        {
+          "id": "tab-context",
+          "label": "Context + reducer",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Today's pattern — global access, centralized logic, typed actions. Standard before reaching for Redux."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "build",
+      "level": 2,
+      "text": "Build Mission — Shopping Cart"
+    },
+    {
+      "type": "checklist",
+      "title": "Requirements",
+      "items": [
+        { "id": "req-add", "text": "Add to cart from product listing" },
+        { "id": "req-remove", "text": "Remove item from cart" },
+        { "id": "req-quantity", "text": "Increase/decrease quantity" },
+        { "id": "req-total", "text": "Cart total calculation" },
+        { "id": "req-empty", "text": "Empty cart state UI" },
+        { "id": "req-context", "text": "CartContext + useReducer" },
+        { "id": "req-badge", "text": "Navbar cart item count badge" }
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Hints",
+      "content": "Wrap App with CartProvider in main.tsx. Add to Cart on Day 10 ProductCard dispatches ADD_ITEM. Cart page reads state.items and maps to line items. Total: items.reduce((s, i) => s + i.price * i.quantity, 0)."
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "heading",
+      "id": "debugging",
+      "level": 2,
+      "text": "Debugging — Day 12 mistakes"
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "dbg-mutation",
+          "title": "Mutating state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: UI stuck after dispatch. Cause: push or direct property assignment in reducer. Fix: return new state with spread/map/filter."
+            }
+          ]
+        },
+        {
+          "id": "dbg-context",
+          "title": "Wrong Context updates",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: useCart throws or cart empty in navbar. Cause: Component outside Provider. Fix: CartProvider wraps router and all cart consumers."
+            }
+          ]
+        },
+        {
+          "id": "dbg-duplicate",
+          "title": "Duplicate cart rows",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Symptom: Same product appears twice. Cause: ADD_ITEM always appends without checking existing id. Fix: increment quantity if item exists."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-add-remove", "text": "Add and remove working" },
+        { "id": "done-quantity", "text": "Quantity controls working" },
+        { "id": "done-total", "text": "Total correct" },
+        { "id": "done-empty", "text": "Empty cart UI" },
+        { "id": "done-context", "text": "Context shared across routes" },
+        { "id": "done-git", "text": "Git push" },
+        { "id": "done-quiz", "text": "Complete quiz" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}

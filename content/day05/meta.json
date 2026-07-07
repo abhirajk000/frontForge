@@ -1,0 +1,46 @@
+{
+  "id": "day05",
+  "version": "1.0.0",
+  "day": 5,
+  "week": 1,
+  "track": "react-interview",
+  "title": "Dashboard Layout with React Router",
+  "subtitle": "SPA routing, nested layouts, Link, Outlet, and multi-page structure",
+  "mission": "Learn routing by building a dashboard.",
+  "readingTimeMinutes": 20,
+  "estimatedBuildHours": 3,
+  "difficulty": "intermediate",
+  "tags": ["react", "react-router", "routing", "nested-routes", "spa", "layout"],
+  "topics": {
+    "javascript": ["closures"],
+    "typescript": ["route types"],
+    "react": ["React Router", "nested layouts", "navigation", "Link", "Outlet"]
+  },
+  "prerequisites": [
+    "day04 — useEffect and fetch patterns",
+    "day03 — layout components and composition",
+    "day02 — useState and forms"
+  ],
+  "expectedOutcome": [
+    "Install and configure React Router in a Vite app",
+    "Build a dashboard layout with sidebar and navbar using nested routes",
+    "Navigate with Link without full page reloads",
+    "Render child routes with Outlet",
+    "Add a 404 Not Found route",
+    "Explain SPA routing in interviews"
+  ],
+  "definitionOfDone": [
+    "Routes: /, /dashboard, /profile, /settings, and 404 catch-all",
+    "Sidebar and navbar persist across dashboard pages",
+    "Active nav link visually indicated",
+    "404 page for unknown paths",
+    "TypeScript types for route params where used",
+    "Code pushed to Git",
+    "Quiz and interview completed"
+  ],
+  "tomorrowPreview": {
+    "day": 6,
+    "title": "Custom Hooks and Responsive Layout",
+    "summary": "Tomorrow you will extract shared logic into custom hooks, debounce search input, and polish sidebar, navbar, and theme toggle with responsive layout patterns."
+  }
+}

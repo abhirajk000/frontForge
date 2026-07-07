@@ -1,0 +1,209 @@
+{
+  "id": "day22-interview",
+  "metaId": "day22",
+  "title": "Day 22 Interview Prep — 20 Questions",
+  "description": "Full interview simulation: 20 questions across React, JavaScript, TypeScript, architecture, and performance. Answer out loud. Follow-ups are mandatory practice.",
+  "questions": [
+    {
+      "id": "int-01",
+      "question": "Explain the JavaScript event loop in 60 seconds.",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Async fundamentals — appears in every frontend loop.",
+      "keyPoints": ["Call stack", "Task queue / macrotasks", "Microtasks (Promises)", "Non-blocking I/O"],
+      "sampleAnswer": "JavaScript is single-threaded. Synchronous code runs on the call stack. Async callbacks go to the task queue. Promises and queueMicrotask run as microtasks before the next macrotask. The event loop checks if the stack is empty, drains microtasks, then picks the next macrotask. That is why Promise.then runs before setTimeout(0).",
+      "followUps": ["What runs first: setTimeout or Promise.then?", "Where does requestAnimationFrame fit?"]
+    },
+    {
+      "id": "int-02",
+      "question": "What is a closure? Give a React-relevant example.",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Core JS concept tied to hooks and stale closures.",
+      "keyPoints": ["Function remembers outer scope", "Used in debounce", "Stale closure in useEffect", "Module pattern"],
+      "sampleAnswer": "A closure is when a function retains access to variables from its creation scope. In React, a debounce hook closes over timer id. A stale closure bug happens when useEffect captures an old count because deps were wrong — the effect function closed over stale state.",
+      "followUps": ["How fix stale closure in useEffect?", "Closure memory leak scenario?"]
+    },
+    {
+      "id": "int-03",
+      "question": "Implement debounce conceptually — what are the inputs and output behavior?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Can they explain without copying lodash?",
+      "keyPoints": ["Delay timer", "Reset on each call", "Returns function", "clearTimeout on new invocation"],
+      "sampleAnswer": "debounce(fn, ms) returns a wrapper. Each call clears the previous timeout and sets a new one. fn runs only after ms milliseconds of silence. Used for search inputs to avoid firing API on every keystroke.",
+      "followUps": ["Debounce vs throttle?", "How cancel debounce on unmount?"]
+    },
+    {
+      "id": "int-04",
+      "question": "map vs filter vs reduce — when do you use each?",
+      "difficulty": "easy",
+      "category": "javascript",
+      "whatInterviewerTests": "Array fluency for list UIs like Kanban.",
+      "keyPoints": ["map transforms", "filter selects", "reduce accumulates", "Immutable patterns"],
+      "sampleAnswer": "map transforms each element to a new array — rendering DTOs. filter keeps elements matching a predicate — tasks in Done column. reduce accumulates to a single value — counting tasks per column or building a lookup map.",
+      "followUps": ["Immutable groupBy without reduce?", "Performance of chained map/filter?"]
+    },
+    {
+      "id": "int-05",
+      "question": "What is the difference between shallow copy and deep copy of state?",
+      "difficulty": "medium",
+      "category": "javascript",
+      "whatInterviewerTests": "Immutability understanding for Redux and React.",
+      "keyPoints": ["Spread is shallow", "Nested objects need nested spread", "structuredClone", "Mutation bugs"],
+      "sampleAnswer": "Shallow copy duplicates top-level references — {...obj} copies keys but nested objects are still shared. Deep copy clones all levels. React state updates need at least shallow copy at the level you change. Nested cart item update needs {...item, qty: newQty} inside map.",
+      "followUps": ["When is spread enough?", "Immer under the hood?"]
+    },
+    {
+      "id": "int-06",
+      "question": "Controlled vs uncontrolled components — which do you default to and why?",
+      "difficulty": "easy",
+      "category": "react",
+      "whatInterviewerTests": "Form handling maturity.",
+      "keyPoints": ["value + onChange", "useRef for uncontrolled", "Validation needs controlled", "File inputs often uncontrolled"],
+      "sampleAnswer": "I default to controlled — value from state, onChange updates state. Enables validation, disabled submit, and predictable testing. Uncontrolled with ref is fine for simple file inputs or integrating non-React libraries.",
+      "followUps": ["Performance of controlled inputs?", "React Hook Form approach?"]
+    },
+    {
+      "id": "int-07",
+      "question": "Explain useEffect — when do you use it and when do you avoid it?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Most common React interview topic.",
+      "keyPoints": ["Sync with external systems", "Not for derived state", "Dependency array", "Cleanup"],
+      "sampleAnswer": "useEffect synchronizes with external systems — APIs, subscriptions, DOM, timers. I avoid it for transforming data that can be computed during render. I avoid it for user events — those belong in handlers. Always specify dependencies; return cleanup for subscriptions.",
+      "followUps": ["useEffect vs useLayoutEffect?", "React 19 use() hook?"]
+    },
+    {
+      "id": "int-08",
+      "question": "Context vs Redux — how do you decide?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Architecture judgment from Week 3.",
+      "keyPoints": ["Update frequency", "DevTools", "Middleware", "Server state separate"],
+      "sampleAnswer": "Context for low-frequency global reads — theme, locale. Redux Toolkit when many actions, selectors, middleware, time-travel debugging, and multiple slices interact. Neither replaces RTK Query for server cache. I do not put everything in either.",
+      "followUps": ["Context performance fix?", "When use Zustand?"]
+    },
+    {
+      "id": "int-09",
+      "question": "What problem does RTK Query solve?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Week 3 RTK Query retention.",
+      "keyPoints": ["Caching", "Invalidation", "Loading/error", "Deduplication", "vs React Query"],
+      "sampleAnswer": "RTK Query manages server state — automatic caching, background refetch, tag invalidation, loading and error flags per endpoint. It deduplicates in-flight requests. I pick it when already on Redux; React Query when I want standalone server state without Redux.",
+      "followUps": ["Cache invalidation example?", "Optimistic updates?"]
+    },
+    {
+      "id": "int-10",
+      "question": "How do protected routes work in React Router?",
+      "difficulty": "medium",
+      "category": "react",
+      "whatInterviewerTests": "Auth flow from Week 3 Day 18.",
+      "keyPoints": ["Guard component", "Redirect to login", "Outlet", "Token check"],
+      "sampleAnswer": "A ProtectedRoute reads auth state — Context or Redux. If authenticated, render Outlet or children. If not, Navigate to /login with replace. Token in memory or localStorage; validate on app init. Never rely on hiding links alone — guard the route.",
+      "followUps": ["JWT refresh strategy?", "Role-based routes?"]
+    },
+    {
+      "id": "int-11",
+      "question": "interface vs type in TypeScript — when do you use each?",
+      "difficulty": "easy",
+      "category": "typescript",
+      "whatInterviewerTests": "TS fluency without dogma.",
+      "keyPoints": ["interface extends merges", "type unions", "Both work for props", "Consistency"],
+      "sampleAnswer": "Both work for React props. I use interface for object shapes that may be extended — API models, component props. I use type for unions, intersections, and mapped types — ThemePreference = 'light' | 'dark'. Consistency across the codebase matters more than the choice.",
+      "followUps": ["declare interface merging?", "satisfies operator?"]
+    },
+    {
+      "id": "int-12",
+      "question": "How do you type useParams for a route like /tasks/:taskId?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "Route typing from Week 2 Day 13.",
+      "keyPoints": ["Params generic", "Undefined handling", "Zod validation optional", "string | undefined"],
+      "sampleAnswer": "const { taskId } = useParams<{ taskId: string }>(). taskId is string | undefined — params can be missing. I guard: if (!taskId) return <NotFound />. For strict apps, validate with Zod or redirect.",
+      "followUps": ["Type-safe router libraries?", "Optional params?"]
+    },
+    {
+      "id": "int-13",
+      "question": "How do you type an API response for a Kanban task list?",
+      "difficulty": "medium",
+      "category": "typescript",
+      "whatInterviewerTests": "API models in machine coding.",
+      "keyPoints": ["Interface per entity", "Status union", "Separate API vs UI types", "Optional fields"],
+      "sampleAnswer": "I define TaskApiResponse matching JSON from the server, then map to Task UI type if shapes differ. status: 'todo' | 'in_progress' | 'done' as union. Keep types in types/task.ts — never inline in components.",
+      "followUps": ["Runtime validation with Zod?", "Generic PaginatedResponse<T>?"]
+    },
+    {
+      "id": "int-14",
+      "question": "Describe your ideal folder structure for a medium React app.",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Code review and project discussion readiness.",
+      "keyPoints": ["Feature folders", "Shared components", "api layer", "hooks", "types", "Avoid deep nesting"],
+      "sampleAnswer": "src/features/kanban/ with components, hooks, api, types per feature. src/components/ui for shared atoms. src/hooks for cross-feature hooks. src/routes for route definitions. Colocate what changes together. Avoid dumping everything in components/ with 40 files flat.",
+      "followUps": ["Monorepo?", "Barrel exports trade-off?"]
+    },
+    {
+      "id": "int-15",
+      "question": "You have 90 minutes to build a Kanban board. Walk me through your first 10 minutes.",
+      "difficulty": "senior",
+      "category": "scenario",
+      "whatInterviewerTests": "Machine coding process and communication.",
+      "keyPoints": ["Clarify requirements", "MVP scope", "Folder sketch", "Data model", "Announce trade-offs"],
+      "sampleAnswer": "Minutes 1–3: clarify — move via buttons OK? API provided? Minutes 4–5: sketch Task type and three columns. Minutes 6–8: scaffold folders and static UI with hardcoded tasks. Minutes 9–10: wire add task locally. I narrate so the interviewer can follow and redirect early.",
+      "followUps": ["What do you cut if 20 minutes left?", "When ask for help?"]
+    },
+    {
+      "id": "int-16",
+      "question": "When do you apply React.memo, useMemo, and useCallback?",
+      "difficulty": "hard",
+      "category": "react",
+      "whatInterviewerTests": "Performance — Week 3 Day 20, not premature optimization.",
+      "keyPoints": ["Measure first", "memo for expensive pure children", "useMemo for expensive compute", "useCallback for stable ref to memo child", "Not everywhere"],
+      "sampleAnswer": "I profile first — React DevTools Profiler. React.memo when a pure child re-renders often with same props. useMemo for expensive filtering of large lists. useCallback when passing handlers to memoized children. I do not wrap every component — memo has cost too.",
+      "followUps": ["React Compiler?", "Virtualization for long lists?"]
+    },
+    {
+      "id": "int-17",
+      "question": "Your Kanban list is slow with 500 tasks. What do you check?",
+      "difficulty": "hard",
+      "category": "scenario",
+      "whatInterviewerTests": "Performance debugging under pressure.",
+      "keyPoints": ["Virtualization", "key stability", "unnecessary context", "Profiler", "Derive don't duplicate"],
+      "sampleAnswer": "Profiler for hot components. Check keys are stable ids. Virtualize with react-window if rendering 500 DOM nodes. Ensure context value is memoized. Filter columns with useMemo from single source array. Avoid passing new inline objects as props each render.",
+      "followUps": ["Web Workers?", "Server pagination?"]
+    },
+    {
+      "id": "int-18",
+      "question": "Code review: a teammate uses any for all API responses. Your comment?",
+      "difficulty": "medium",
+      "category": "scenario",
+      "whatInterviewerTests": "Code review communication skills.",
+      "keyPoints": ["Type safety", "Runtime validation", "Maintainability", "Constructive tone"],
+      "sampleAnswer": "I ask for interfaces matching API contract — catches field renames at compile time. Suggest unknown + type guard or Zod for runtime safety. Offer to pair on types/task.ts. Frame as preventing production undefined crashes, not criticism.",
+      "followUps": ["How enforce in CI?", "Incremental typing strategy?"]
+    },
+    {
+      "id": "int-19",
+      "question": "What accessibility checks do you run before submitting machine coding?",
+      "difficulty": "medium",
+      "category": "architecture",
+      "whatInterviewerTests": "Code review checklist — a11y often forgotten.",
+      "keyPoints": ["Button vs div click", "Labels", "Focus management", "aria-live for errors", "Keyboard nav"],
+      "sampleAnswer": "Buttons are button elements with accessible names. Form inputs have labels. Error messages use role=alert or aria-live. Column move actions are keyboard reachable. Color contrast meets WCAG for text. I tab through the flow once before saying done.",
+      "followUps": ["Skip links?", "Screen reader testing tools?"]
+    },
+    {
+      "id": "int-20",
+      "question": "Why should reusable components matter in a 90-minute interview build?",
+      "difficulty": "senior",
+      "category": "architecture",
+      "whatInterviewerTests": "Reusability vs speed trade-off.",
+      "keyPoints": ["TaskCard reused 3 columns", "Button consistency", "Not over-abstract", "Shows production thinking"],
+      "sampleAnswer": "I extract TaskCard and ColumnShell when used three times — saves time and shows I think beyond the demo. I do not build a full design system — that is over-engineering. One shared Button and Card proves reusability without slowing MVP.",
+      "followUps": ["When is extraction premature?", "Compound component pattern?"],
+      "redFlags": ["Copy-paste JSX three times is faster so skip components", "Cannot name one shared component"]
+    }
+  ]
+}

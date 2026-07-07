@@ -1,0 +1,38 @@
+{
+  "id": "day09-reflection",
+  "metaId": "day09",
+  "title": "Day 09 Reflection",
+  "description": "Solidify debouncing and custom hooks before Day 10 list filtering and sorting.",
+  "prompts": [
+    {
+      "id": "refl-01",
+      "question": "Explain debouncing in your own words. Why does a movie search need it but a login form submit does not?",
+      "guidance": "Compare keystroke-driven search vs explicit submit actions.",
+      "minWords": 50
+    },
+    {
+      "id": "refl-02",
+      "question": "Walk through your useDebounce hook. What state does it hold and when does the debounced value update?",
+      "guidance": "Mention setTimeout, cleanup, and the delay parameter.",
+      "minWords": 40
+    },
+    {
+      "id": "refl-03",
+      "question": "Did you hit stale state or multiple-request bugs? What caused them and how did you fix them?",
+      "guidance": "If not, describe how Network tab and dependency arrays would reveal the issue.",
+      "minWords": 35
+    },
+    {
+      "id": "refl-04",
+      "question": "How does PaginatedResponse<T> make your API layer reusable for future endpoints?",
+      "guidance": "Think about generics vs duplicating page/total fields per type.",
+      "minWords": 30
+    },
+    {
+      "id": "refl-05",
+      "question": "What is one thing you would extract into a second custom hook before adding filters tomorrow?",
+      "guidance": "Consider useMovieSearch vs keeping logic in the page component.",
+      "minWords": 25
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "day19-resources",
+  "metaId": "day19",
+  "title": "Day 19 Resources",
+  "description": "Official documentation for array methods, conditional rendering, and layout.",
+  "resources": [
+    {
+      "id": "res-filter",
+      "title": "MDN — Array.prototype.filter",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter",
+      "type": "documentation",
+      "description": "filter reference for table pipelines.",
+      "recommended": true
+    },
+    {
+      "id": "res-reduce",
+      "title": "MDN — Array.prototype.reduce",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce",
+      "type": "documentation",
+      "description": "reduce for analytics aggregations.",
+      "recommended": true
+    },
+    {
+      "id": "res-conditional",
+      "title": "React — Conditional Rendering",
+      "url": "https://react.dev/learn/conditional-rendering",
+      "type": "documentation",
+      "description": "Patterns for role-based UI.",
+      "recommended": true
+    },
+    {
+      "id": "res-list",
+      "title": "React — Rendering Lists",
+      "url": "https://react.dev/learn/rendering-lists",
+      "type": "documentation",
+      "description": "Keys and list rendering for tables.",
+      "recommended": true
+    },
+    {
+      "id": "res-router-outlet",
+      "title": "React Router — Outlet",
+      "url": "https://reactrouter.com/en/main/components/outlet",
+      "type": "documentation",
+      "description": "Nested dashboard layouts with outlets.",
+      "recommended": true
+    },
+    {
+      "id": "res-sort",
+      "title": "MDN — Array.prototype.sort",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+      "type": "documentation",
+      "description": "Sorting table columns immutably.",
+      "recommended": false
+    },
+    {
+      "id": "res-destructure",
+      "title": "MDN — Destructuring assignment",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment",
+      "type": "documentation",
+      "description": "Object manipulation for filter state updates.",
+      "recommended": false
+    },
+    {
+      "id": "res-a11y-table",
+      "title": "MDN — Table accessibility",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/table_role",
+      "type": "documentation",
+      "description": "Accessible table markup for dashboards.",
+      "recommended": true
+    }
+  ]
+}

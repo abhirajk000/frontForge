@@ -1,0 +1,316 @@
+{
+  "id": "day23-lesson",
+  "metaId": "day23",
+  "title": "Day 23 — Production Ready Frontend",
+  "summary": "15-minute review only: choose one previous project, refactor for production — folder structure, hooks, performance, accessibility, TypeScript, error handling — then defend every decision in a senior architecture discussion.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "mission",
+      "level": 2,
+      "text": "Today's Mission"
+    },
+    {
+      "type": "paragraph",
+      "content": "You have built weather dashboards, movie search, shopping carts, theme systems, Redux todos, RTK Query products, auth flows, admin dashboards, and Kanban boards. Today you stop building new features and start thinking like a senior engineer shipping to production. Pick ONE previous project. Refactor it. Then explain every decision as if a staff engineer is reviewing your PR and your architecture doc."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "No new React concepts",
+      "content": "Everything you apply today was taught in Weeks 1–3. This is refactor and explain only — not a day to learn new libraries, patterns, or frameworks. If you reach for something outside the curriculum, stop and use what you already know."
+    },
+    {
+      "type": "heading",
+      "id": "reading-review",
+      "level": 2,
+      "text": "Reading — 15 Minutes Review Only"
+    },
+    {
+      "type": "paragraph",
+      "content": "Skim this lesson once. Do not read new documentation. You already know the material — today is about applying it under production standards and articulating trade-offs."
+    },
+    {
+      "type": "checklist",
+      "title": "15-minute review sprint",
+      "items": [
+        { "id": "rev-structure", "text": "Recall feature-based folder structure from Week 2 and Week 3 projects" },
+        { "id": "rev-hooks", "text": "List custom hooks you have written: useFetch, useDebounce, useTheme, useAuth" },
+        { "id": "rev-state", "text": "Refresh Context vs Redux vs RTK Query decision matrix from Week 3" },
+        { "id": "rev-perf", "text": "Review React.memo, useMemo, useCallback, lazy, Suspense from Day 20" },
+        { "id": "rev-a11y", "text": "Remember: buttons are buttons, inputs have labels, errors are announced" }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "choose-project",
+      "level": 2,
+      "text": "Step 1 — Choose ONE Previous Project"
+    },
+    {
+      "type": "table",
+      "headers": ["Project", "Best for practicing", "Production gaps to fix"],
+      "rows": [
+        ["Weather Dashboard (Week 2)", "Custom hooks, API error states, responsive layout", "Extract useWeather hook, typed API models, loading skeleton"],
+        ["Movie Search (Week 2)", "Debounce, pagination, empty states", "Split SearchBar and ResultsList, memoize MovieCard"],
+        ["Shopping Cart (Week 2)", "Context, derived state, localStorage", "Typed cart slice, reusable CartItem, accessibility on quantity controls"],
+        ["Redux Todo (Week 3)", "RTK slices, selectors, DevTools", "Feature folder, typed selectors, error boundary on async thunk"],
+        ["RTK Query Products (Week 3)", "Cache, mutations, invalidation", "Separate UI types from API types, lazy-load admin routes"],
+        ["Auth + Dashboard (Week 3)", "Protected routes, role-based UI", "AuthContext cleanup, loading gate, session error handling"],
+        ["Kanban Board (Day 22)", "Machine coding structure under refactor lens", "Extract hooks, performance on long lists, a11y on drag/move"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Pick the project you are weakest at explaining",
+      "content": "Interviewers will drill your portfolio project. Refactoring your weakest build gives you the most interview ROI before tomorrow's mock."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "refactor-checklist",
+      "level": 2,
+      "text": "Step 2 — Production Refactor Checklist"
+    },
+    {
+      "type": "paragraph",
+      "content": "Work through each axis. Not every item needs a change — but every item needs a conscious decision you can defend in an interview."
+    },
+    {
+      "type": "checklist",
+      "title": "Improve these areas",
+      "items": [
+        { "id": "imp-structure", "text": "Folder structure — feature folders with colocated components, hooks, api, types" },
+        { "id": "imp-components", "text": "Reusable components — extract shared UI used 2+ times; no copy-pasted JSX" },
+        { "id": "imp-hooks", "text": "Custom hooks — extract data fetching, form logic, and side effects from components" },
+        { "id": "imp-perf", "text": "Performance — profile first; apply memo, useMemo, useCallback, lazy only where measured" },
+        { "id": "imp-a11y", "text": "Accessibility — semantic HTML, labels, keyboard nav, focus management, aria-live errors" },
+        { "id": "imp-ts", "text": "TypeScript — strict props interfaces, API models, no any, guard optional params" },
+        { "id": "imp-quality", "text": "Code quality — consistent naming, single responsibility, no dead code" },
+        { "id": "imp-errors", "text": "Error handling — try/catch on fetch, user-facing error UI, retry where appropriate" },
+        { "id": "imp-loading", "text": "Loading states — skeletons or spinners on every async path; no layout shift surprises" },
+        { "id": "imp-responsive", "text": "Responsive design — usable on mobile; no horizontal scroll traps; touch targets sized" }
+      ]
+    },
+    {
+      "type": "challenge"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "performance",
+      "level": 2,
+      "text": "Performance Checklist — Apply Only Where Appropriate"
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Senior rule",
+      "content": "Premature optimization fails interviews. Profile with React DevTools first. Document why you applied each optimization — or why you skipped it."
+    },
+    {
+      "type": "table",
+      "headers": ["Tool", "When to apply", "When to skip", "Interview one-liner"],
+      "rows": [
+        ["React.memo", "Pure child re-renders often with same props; expensive render", "Leaf components that always get new props; cheap renders", "Memo prevents re-render when props are shallow-equal"],
+        ["useMemo", "Expensive filter/sort on large lists; stable object for context value", "Simple arithmetic; values that change every render anyway", "Caches computed value between renders when deps unchanged"],
+        ["useCallback", "Handler passed to memoized child; effect dependency needs stable ref", "Handler not passed down; child not memoized", "Returns same function reference when deps unchanged"],
+        ["Lazy loading", "Heavy routes or modals not needed on first paint", "Critical above-the-fold content", "React.lazy + Suspense defers chunk download until needed"],
+        ["Code splitting", "Route-level or feature-level bundles reduce initial JS", "Tiny apps where one bundle is already small", "Dynamic import() creates separate webpack/vite chunks"]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "filename": "routes/AppRoutes.tsx",
+      "code": "import { lazy, Suspense } from 'react';\n\nconst AdminDashboard = lazy(() => import('@/features/admin/AdminDashboard'));\n\nexport function AppRoutes() {\n  return (\n    <Suspense fallback={<PageSkeleton />}>\n      <Routes>\n        <Route path=\"/admin\" element={<AdminDashboard />} />\n      </Routes>\n    </Suspense>\n  );\n}"
+    },
+    {
+      "type": "note",
+      "title": "Document your decisions",
+      "content": "For each optimization you apply, write one sentence: what you measured, what you changed, what improved. For each you skip, write why it was unnecessary. This becomes your architecture discussion script."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "architecture",
+      "level": 2,
+      "text": "Architecture Discussion — Defend Every Decision"
+    },
+    {
+      "type": "paragraph",
+      "content": "After refactoring, prepare to answer these questions out loud. This is exactly what Round 4 on Day 24 looks like — except today you practice on your chosen project first."
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "id": "arch-folder",
+          "title": "Why this folder structure?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Explain feature colocation: components, hooks, api, and types that change together live together. Shared atoms in components/ui. Routes in routes/. Avoid flat components/ with 40 unrelated files. Trade-off: slightly more nesting vs faster onboarding and safer refactors."
+            }
+          ]
+        },
+        {
+          "id": "arch-context",
+          "title": "Why Context?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Context fits low-frequency global reads — theme, locale, auth session snapshot. Wrap provider high, memoize value object, expose custom hook (useTheme). Trade-off: all consumers re-render on value change unless split contexts or memoized — not for high-frequency updates like cart item counts at scale."
+            }
+          ]
+        },
+        {
+          "id": "arch-redux",
+          "title": "Why Redux?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Redux Toolkit when multiple slices interact, you need middleware, time-travel DevTools, and predictable action flows — todos, cart, UI flags. Trade-off: boilerplate vs debuggability. Do not put server cache in Redux if RTK Query handles it."
+            }
+          ]
+        },
+        {
+          "id": "arch-rtk-query",
+          "title": "Why RTK Query?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "RTK Query owns server state — caching, invalidation, loading/error per endpoint, deduplication. Use when already on Redux or you want unified store. Trade-off: learning curve vs rewriting fetch + useEffect + manual cache everywhere."
+            }
+          ]
+        },
+        {
+          "id": "arch-router",
+          "title": "Why React Router?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "URL is shareable state — deep links, back button, protected routes with guards. useParams for dynamic segments, Navigate for redirects, Outlet for nested layouts. Trade-off: client-side routing needs SPA fallback config in production hosting."
+            }
+          ]
+        },
+        {
+          "id": "arch-components",
+          "title": "Why this component structure?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Smart/container components fetch and pass data; presentational components render props. Single responsibility — TaskCard displays, TaskList orchestrates. Trade-off: more files vs easier testing and reuse. Do not over-split into one-line wrappers."
+            }
+          ]
+        },
+        {
+          "id": "arch-tradeoffs",
+          "title": "Trade-offs?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Name at least three honest trade-offs: speed of shipping vs test coverage, Context simplicity vs Redux scalability, client-side filter vs server pagination, memo overhead vs render savings. Senior engineers say what they would do differently with more time."
+            }
+          ]
+        },
+        {
+          "id": "arch-future",
+          "title": "Future improvements?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": "Virtualization for long lists, E2E tests with Playwright, runtime API validation with Zod, error monitoring with Sentry, i18n, design tokens. Show you think beyond the demo without over-engineering today."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "code-review",
+      "level": 2,
+      "text": "Code Review — Before and After"
+    },
+    {
+      "type": "paragraph",
+      "content": "Run the same code review you practiced on Day 22 — but this time compare your refactored project against the original. Write a before/after summary a senior engineer would accept in a PR description."
+    },
+    {
+      "type": "table",
+      "headers": ["Axis", "Before refactor", "After refactor", "Interview talking point"],
+      "rows": [
+        ["Folder Structure", "Flat or mixed concerns", "Feature-based with api/types/hooks", "Colocation reduces cross-import churn"],
+        ["Reusability", "Duplicated JSX", "Shared TaskCard, Button, ErrorPanel", "Extract at second use, not first"],
+        ["Performance", "Unmeasured re-renders", "Profiled; memo on hot path only", "Data beats assumptions"],
+        ["Accessibility", "div onClick", "button elements, labels, tab order", "Ship accessible by default"],
+        ["TypeScript", "any on API responses", "Typed models + mapped UI types", "Compile-time catches API drift"]
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Architecture doc required",
+      "content": "Write a short ARCHITECTURE.md or PR description covering: folder structure rationale, state management choices, performance decisions, trade-offs, and three future improvements. You will reuse this verbatim on Day 24 Round 4."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "interview-prep",
+      "level": 2,
+      "text": "Senior Interview Questions — 8 Architecture Questions"
+    },
+    {
+      "type": "paragraph",
+      "content": "Block 45–60 minutes. Answer all 8 questions out loud as if a senior frontend engineer is probing your production refactor. Focus on architecture, performance, scalability, and maintainability — not trivia."
+    },
+    {
+      "type": "quote",
+      "content": "Tell me why you made this decision, what you traded away, and what you would improve with another sprint.",
+      "attribution": "Staff engineer in architecture review"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "heading",
+      "id": "wrap-up",
+      "level": 2,
+      "text": "Wrap-up"
+    },
+    {
+      "type": "checklist",
+      "title": "Definition of Done",
+      "items": [
+        { "id": "done-refactor", "text": "One previous project refactored with production checklist complete" },
+        { "id": "done-perf", "text": "Performance decisions documented — applied and skipped" },
+        { "id": "done-arch", "text": "Architecture discussion written — structure, state, trade-offs, future" },
+        { "id": "done-interview", "text": "8 senior interview questions answered out loud" },
+        { "id": "done-quiz", "text": "Quiz passed" },
+        { "id": "done-git", "text": "Refactored code pushed to Git" }
+      ]
+    },
+    {
+      "type": "quiz-reference"
+    },
+    {
+      "type": "interview-reference"
+    },
+    {
+      "type": "reflection"
+    }
+  ]
+}
