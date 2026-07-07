@@ -89,8 +89,8 @@ const DIFF_STYLES = {
 
 const slideIn = {
   initial: { opacity: 0, x: 32, scale: 0.98 },
-  animate: { opacity: 1, x: 0,  scale: 1,    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } },
-  exit:    { opacity: 0, x: -32, scale: 0.97, transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] } },
+  animate: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] as const } },
+  exit: { opacity: 0, x: -32, scale: 0.97, transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] as const } },
 };
 
 /* ─── TimerRing ──────────────────────────────────────────────────────────── */
@@ -288,7 +288,10 @@ export function QuizEngine({ quiz, onComplete }: QuizEngineProps) {
   };
 
   const hasAnswer = answers[question?.id ?? ''] !== undefined;
-  const correct   = submitted && question ? isCorrect(question, answers[question.id]) : null;
+  const correct =
+    submitted && question && answers[question.id] !== undefined
+      ? isCorrect(question, answers[question.id]!)
+      : null;
 
   /* ── Results screen ─────────────────────────────────────────────────── */
   if (showResults) {

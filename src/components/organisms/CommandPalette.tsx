@@ -4,8 +4,6 @@ import Fuse from 'fuse.js';
 import {
   Search,
   CornerDownLeft,
-  ArrowUp,
-  ArrowDown,
   SearchX,
   BookOpen,
   Zap,
@@ -294,7 +292,9 @@ export function CommandPalette() {
                 ) : grouped ? (
                   /* Grouped view (no query) */
                   Array.from(grouped.entries()).map(([category, items]) => {
-                    const startIdx = flatResults.findIndex((r) => r.id === items[0].id);
+                    const first = items[0];
+                    if (!first) return null;
+                    const startIdx = flatResults.findIndex((r) => r.id === first.id);
                     return (
                       <li key={category}>
                         <p className="label-section px-3 pb-1 pt-2">{category}</p>

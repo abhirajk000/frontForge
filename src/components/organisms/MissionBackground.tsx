@@ -71,16 +71,18 @@ export function MissionBackground() {
       /* Connection lines */
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+          const pi = particles[i]!;
+          const pj = particles[j]!;
+          const dx = pi.x - pj.x;
+          const dy = pi.y - pj.y;
           const distSq = dx * dx + dy * dy;
           if (distSq < MAX_CONNECT_DIST * MAX_CONNECT_DIST) {
             const dist = Math.sqrt(distSq);
             const alpha = (1 - dist / MAX_CONNECT_DIST) * 0.09;
-            const midHue = (particles[i].hue + particles[j].hue) / 2;
+            const midHue = (pi.hue + pj.hue) / 2;
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.moveTo(pi.x, pi.y);
+            ctx.lineTo(pj.x, pj.y);
             ctx.strokeStyle = `hsla(${midHue}, 75%, 60%, ${alpha})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
